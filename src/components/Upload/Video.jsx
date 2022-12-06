@@ -43,10 +43,9 @@ function UploadVideo() {
                 
                 {uploadedVideo.percent !== 0 ?
                     <>
-                        
-                            <div className=''>
-                                <ProgressBar progress={uploadedVideo.percent} height={24} />
-                            </div>
+                        <div className=''>
+                            <ProgressBar title={uploadedVideo.percentText}  progress={uploadedVideo.percent} height={24} />
+                        </div>
                     </>
                     : null
                     

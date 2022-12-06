@@ -1,9 +1,10 @@
+import RecentVideos from "./RecentVideos"
 
 
 const Home = () => {
     return (
         <>
-            Home
+            <RecentVideos/>
         </>
     )
 }

@@ -1,27 +1,14 @@
 import usePersistStore from '@store/persist';
 import toast from 'react-hot-toast'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Button } from '../../UI/Button';
-import { Menu } from '@headlessui/react';
-import Link from 'next/link';
-import DropMenu, { NextLink } from '../../UI/DropMenu';
-import { FaRegUserCircle } from 'react-icons/fa';
-import { HiOutlineCog } from 'react-icons/hi';
-import { MdExitToApp } from 'react-icons/md';
-import { SETTINGS } from '@utils/paths';
-import IsVerified from '../IsVerified';
-import ThemeSwitch from '../ThemeSwitch';
 import { useRouter } from 'next/router';
-import { Orbis } from "@orbisclub/orbis-sdk";
+import { GlobalContext } from '@context/app';
 
-
-
-// let wallet_connect_provider = new WalletConnectProvider({
-//     infuraId: "a40e604c19777d3c49eb8f2e7171cb7e",
-// });
 function UserMenu() {
     const router = useRouter()
     const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()
+    const { orbis } = useContext(GlobalContext);
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -30,23 +17,24 @@ function UserMenu() {
     }, [])
 
     async function checkLogin() {
-        const orbis = new Orbis();
         let res = await orbis.isConnected();
         if (res && res.details !== null) {
             setUser(res.details)
             setLoggedIn(true)
+			console.log("Connected to Ceramic: ", res.result);
         } else {
             setUser({})
             setLoading(false)
+			toast.error("Error connecting to Ceramic.");
         }
     }
     
     async function connect() {
-        const orbis = new Orbis();
         let res = await orbis.connect();
 		if(res.status == 200) {
             setUser(res.did);
             setLoggedIn(true);
+			console.log("Connected to Ceramic: ", res);
 		} else {
 			console.log("Error connecting to Ceramic: ", res);
 			toast.error("Error connecting to Ceramic.");
@@ -54,7 +42,6 @@ function UserMenu() {
     }
     
     async function logout() {
-        const orbis = new Orbis();
         let res = await orbis.logout();
         if (res.result === 'Logged out from Orbis and Ceramic.') {
             console.log(res)

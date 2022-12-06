@@ -1,7 +1,14 @@
-import { getProfileExtraData } from "./getProfileExtraData";
+import React, { useState, useEffect, useRef } from 'react';
+import { shortAddress } from '../functions';
 
-export const getProfileName = (profile) => {
-    const channelExtra = getProfileExtraData(profile);
-    const displayName = channelExtra !== null ? channelExtra.DisplayName !== null ? channelExtra.DisplayName : profile.Username : profile.Username
-    return displayName
+export default function useGetUsername(details, address, did) {
+  if(details && details.username) {
+    return details.username;
+  } else if(details && details.body?.name) {
+    return details.body.name;
+  } else if(address) {
+    return shortAddress(address)
+  } else {
+    return shortAddress(did)
+  }
 }

@@ -1,6 +1,5 @@
-import React from 'react'
 
-const ProgressBar = ({progress, height}) => {
+const ProgressBar = ({title, progress, height}) => {
 	const Parentdiv = {
 		height: height,
 	}
@@ -12,7 +11,7 @@ const ProgressBar = ({progress, height}) => {
 	return (
 	<div className='w-full my-5 bg-secondary rounded-full' style={Parentdiv}>
         <div className='primary-button text-right rounded-full' style={Childdiv}>
-            <span className='text-sm px-3 text-white'>{`${progress}%`}</span>
+				<span className='text-sm px-3 text-white'>{`${progress}%`}</span>
         </div>
 	</div>
 	)

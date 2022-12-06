@@ -1,11 +1,13 @@
 import clsx from 'clsx'
-import { useId } from 'react'
+import { useCallback, useId } from 'react'
 import { Mention, MentionsInput } from 'react-mentions'
 import IsVerified from '../Common/IsVerified'
 import { Orbis } from "@orbisclub/orbis-sdk";
 
-const InputMentions = ({ label, validationError, value, onContentChange, mentionsSelector, ...props }) => {
+const InputMentions = ({ label, validationError, onAdd, value, onContentChange, mentionsSelector, ...props }) => {
     const id = useId()
+
+    //const onAdd = useCallback((...args) => console.log(...args), [])
 
     const fetchSuggestions = async ( query, callback ) => {
         if (!query) return
@@ -41,39 +43,41 @@ const InputMentions = ({ label, validationError, value, onContentChange, mention
             className={mentionsSelector}
             value={value}
             placeholder={props.placeholder}
+            a11ySuggestionsListLabel={"Suggested mentions"}
             onChange={(e) => onContentChange(e.target.value)}
             >
-            <Mention
-                trigger="@"
-                displayTransform={(handle) => `@${handle} `}
-                markup="@__display__ "
-                renderSuggestion={(
-                suggestion,
-                _search,
-                _highlightedDisplay,
-                _index,
-                focused
-                ) => (
-                <div
-                    className={clsx('max-h-52 flex w-full items-center truncate px-3 py-2 space-x-1 hover-primary', {
-                    'dark:bg-[#fff]/[0.1] bg-gray-100': focused
-                    })}
-                >
-                    <img
-                        src={suggestion?.picture}
-                        className="w-7 h-7 rounded-full"
-                        alt={suggestion?.display}
-                        draggable={false}
-                    />
-                    <div className="overflow-hidden">
-                        <p className="leading-4 truncate">
-                            {suggestion?.display}
-                        </p>
-                    </div>  
-                </div>
-                )}
-                data={fetchSuggestions}
-            />
+                <Mention
+                    trigger="@"
+                    displayTransform={(handle) => `@${handle} `}
+                    markup="@__display__ "
+                    onAdd={onAdd}
+                    renderSuggestion={(
+                    suggestion,
+                    _search,
+                    _highlightedDisplay,
+                    _index,
+                    focused
+                    ) => (
+                    <div
+                        className={clsx('max-h-52 flex w-full items-center truncate px-3 py-2 space-x-1 hover-primary', {
+                        'dark:bg-[#fff]/[0.1] bg-gray-100': focused
+                        })}
+                    >
+                        <img
+                            src={suggestion?.picture}
+                            className="w-7 h-7 rounded-full"
+                            alt={suggestion?.display}
+                            draggable={false}
+                        />
+                        <div className="overflow-hidden">
+                            <p className="leading-4 truncate">
+                                {suggestion?.display}
+                            </p>
+                        </div>  
+                    </div>
+                    )}
+                    data={fetchSuggestions}
+                />
             </MentionsInput>
         </div>
         {validationError && (

@@ -7,9 +7,6 @@ import { getFileFromDataURL } from '@utils/functions/getFileFromDataURL'
 import useAppStore from '@store/app'
 import { useEffect, useState } from 'react'
 import usePersistStore from '@store/persist'
-import { WEB3_API_KEY } from '@utils/constants'
-import { v4 as uuidv4 } from 'uuid'
-import { Web3Storage } from 'web3.storage'
 import StorageClient from '@utils/functions/uploadToIpfs'
 
 const DEFAULT_THUMBNAIL_INDEX = 0
@@ -21,37 +18,18 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
     const [selectedThumbnailIndex, setSelectedThumbnailIndex] = useState(-1)
     const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
     const uploadedVideo = useAppStore((state) => state.uploadedVideo)
-    // const client = new Web3Storage({ token: WEB3_API_KEY });
 
     const uploadThumbnail = async (file) => {
         setUploadedVideo({ uploadingThumbnail: true })
         try {
-            // const ext = file.name.split('.').pop();
-            // const fileName = `${uuidv4()}.${ext}`;
-            // const newFile = new File([file], fileName, {type: file.type});
-            // const cid = await client.put([newFile], {
-            //     name: fileName,
-            //     maxRetries: 3,
-            // });
             const imageURI = await new StorageClient().storeFiles(file);
-
-            console.log(imageURI)
-            setUploadedVideo({ uploadingThumbnail: false })
+            afterUpload(imageURI, file.type || 'image/jpeg')
+            return imageURI;
         } catch (error) {
             console.log(error)
+        }finally {
+            setUploadedVideo({ uploadingThumbnail: false })
         }
-        // try {
-        //     const deso = new Deso();
-        //     const request = undefined;  
-        //     const jwt = await deso.identity.getJwt(request);
-        //     const response = await UploadImage(jwt, file, user.profile.PublicKeyBase58Check)
-        //     afterUpload(response.data.ImageURL, file.type || 'image/jpeg')
-        //     return response.data.ImageURL
-        // } catch (error) {
-        //     console.log(error)
-        // } finally {
-        //     setUploadedVideo({ uploadingThumbnail: false })
-        // }
     }
 
     const generateThumbnails = async (file) => {
@@ -62,7 +40,7 @@ const VideoThumbnails = ({ label, afterUpload, file }) => {
             )
             const thumbnails = []
             thumbnailArray.forEach((t) => {
-                thumbnails.push({ url: t, image: '',type: 'image/jpeg' })
+                thumbnails.push({ url: t, image: '', type: 'image/jpeg' })
             })
             setThumbnails(thumbnails)
         } catch (error) {

@@ -1,62 +1,108 @@
-import { VideoCard } from '@app/components/Common/Cards';
-import TimelineShimmer from '@app/components/Shimmers/TimelineShimmer';
-import { Loader2 } from '@app/components/UI/Loader';
-import { NoDataFound } from '@app/components/UI/NoDataFound';
-import { FetchInfiniteLatestFeed } from '@app/data/videos';
-import usePersistStore from '@app/store/persist';
-import { APP } from '@app/utils/constants';
-import { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { VideoCard } from '@components/Common/Cards';
+import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
+import { Loader2 } from '@components/UI/Loader';
+import { NoDataFound } from '@components/UI/NoDataFound';
+import { GlobalContext } from '@context/app';
+import usePersistStore from '@store/persist';
+import { APP, APP_CONTEXT } from '@utils/constants';
+import { useContext, useEffect, useState } from 'react';
 
 function RecentVideos() {
-  const { ref, inView } = useInView()
-  const user = usePersistStore((state) => state.user)
-  const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
-  const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
-  const { isError, error, isSuccess, hasNextPage, isFetchingNextPage, fetchNextPage, data: videos } = FetchInfiniteLatestFeed(-1, reader);  
+  const { orbis, user } = useContext(GlobalContext);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+  const [autoRefresh, setAutoRefresh] = useState(false);
 
   useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage()
-    }
+    setPage(0);
+    load(true, autoRefresh, false, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView, hasNextPage])
+  }, [APP_CONTEXT, user])
 
-  if (isError) {
-    return <NoDataFound 
-      isCenter
-      withImage
-      title="Something went wrong"
-      description="We are unable to fetch the latest videos. Please try again later."
-    />
+  /** Refresh feed with latest post and reset pagination */
+  function refresh() {
+    setPage(0);
+    load(false, false, true, 0);
+  }
+
+  /** Load more posts and add it to the existing array */
+  function loadMore() {
+    let _page = page + 1;
+    load(false, false, false, _page);
+    setPage(_page);
+  }
+
+  /** Load posts from Orbis */
+  async function load(showLoadingState, autoRefresh = false, showRefresh = false, _page) {
+    /** Show loading state if requested */
+    if(showLoadingState) {
+      setLoading(true);
+    }
+
+    /** Show refresh state on the RefreshButton */
+    if(showRefresh) {
+      setRefreshing(true);
+    }
+
+    /** Perform query against Orbis API */
+    let query = orbis.getPosts({context: APP_CONTEXT}, _page);
+    const { data, error, status } = await query;
+
+    /** Handle API query errors */
+    if(error) {
+      console.log("Error querying posts: ", error);
+      return;
+    }
+
+    /** Update state with posts returned */
+    if(data) {
+      if(_page == 0) {
+        setPosts(data);
+      } else {
+        let _posts = [...posts];
+        let __posts = _posts.concat(data);
+        setPosts(__posts);
+      }
+
+    } else {
+      setPosts([]);
+    }
+
+    /** Show feed as loaded */
+    setLoading(false);
+    setRefreshing(false);
+
+    /** If auto refresh is enabled we refresh this query every 5 seconds. */
+    if(autoRefresh) {
+      await sleep(false, 10000);
+      load();
+    }
   }
 
   return (
     <>
       {
-        isSuccess ? (
+        posts && posts.length > 0 ? (
           <>
             <div className="grid gap-x-4 lg:grid-cols-4 md:gap-y-4 gap-y-2 2xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-col-1">
-              {videos.pages.map(page => 
-                page.map(video => {
-                  return (
-                    <VideoCard userProfile={video.ProfileEntryResponse} key={`${video.PostHashHex}`} video={video} />
-                  )
-                })
-              )}
+              {posts.map(video => {
+                return (
+                  <VideoCard key={`${video.stream_id}`} video={video} />
+                )
+              })}
             </div>
-            
-            <div className='loadMore flex items-center justify-center mt-10'>
-              <div className='loadMoreButton'>
-                <div ref={ref} onClick={fetchNextPage} disabled={!hasNextPage || isFetchingNextPage} className='btn'>
-                  {isFetchingNextPage
-                      ? <Loader2 />
-                      : hasNextPage
-                      ? 'Load More'
-                      : 'Nothing more to load'}
-                </div>
+
+            {refreshing ? 
+              <div className="p-15">
+                <Loader2 />
               </div>
-            </div>
+            :
+              <div className="p-15">
+                <div className="btn black" onClick={() => loadMore()}>Load older posts</div>
+              </div>
+            }
           </>
         )
         : (

@@ -1,7 +1,6 @@
 import usePersistStore from '@app/store/persist'
 import { DESO_CONFIG } from '@app/utils/constants'
 import clsx from 'clsx'
-import Deso from 'deso-protocol'
 import React, { useEffect, useState } from 'react'
 import { Button } from './Button'
 
@@ -9,43 +8,7 @@ export const NoDataFound = ({imageSize = 'md:w-20 w-10', image = `/videso.png`, 
   
   const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()
   const [loading, setLoading] = useState(false)
-  const [deso, setDeso] = useState(null)
 
-  useEffect(() => {
-    const deso = new Deso(DESO_CONFIG);
-    setDeso(deso)
-  }, [])
-
-
-  const loginWithDeso = async () => {
-    setLoading(true)
-    try {
-      const request = 3;
-      const response = await deso.identity.login(request);
-      if (response) {
-          const request = {
-            PublicKeyBase58Check: response.key,
-          };
-          try {
-            const data = await deso.user.getSingleProfile(request);
-            setUser({ profile: data.Profile });
-            setLoggedIn(true);
-            setLoading(false)
-          } catch (error) {
-            toast.error(error);
-            console.log(error);
-            setLoading(false)
-          }
-      } else {
-        console.log(response);
-        setLoading(false)
-      }
-    } catch (error) {
-      toast.error(error);
-      console.log(error);
-      setLoading(false)
-    }
-  }
   return (
     <div
       className={clsx('flex flex-col p-1', {
@@ -76,7 +39,6 @@ export const NoDataFound = ({imageSize = 'md:w-20 w-10', image = `/videso.png`, 
       >
         {text}
       </div>
-      {isLoginButton && <div className='my-4'><Button variant="primary" size="md" onClick={() => loginWithDeso()} loading = { loading }>Sign in</Button></div>}
       {isButton && <div className='my-4'>{button}</div>}
     </div>
   )

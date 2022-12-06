@@ -55,16 +55,6 @@ export const toastOptions = {
   duration: 4000,
 }
 
-export const withCSR = (next) => async (ctx) => {
-    const isCSR = ctx.req.url?.startsWith('/_next');
-    if (isCSR) {
-        return {
-            props: {},
-        };
-    }
-    return next?.(ctx)
-}
-
 export const getSecondsFromTime = (time) => {
   const timeSplitted = time.split(':')
   let seconds = 0
@@ -158,39 +148,7 @@ export const getThumbDuration = (duration) => {
  return `${second}s`
 }
 
-export function abbreviateNumber(value, decimals, toUSD ) {
-  let shortValue;
-  const suffixes = ["", "K", "M", "B", "T"];
-  const suffixNum = Math.floor((("" + value.toFixed(0)).length - 1) / 3);
-  if (suffixNum === 0) {
-    // if the number is less than 1000, we should only show at most 2 decimals places
-    decimals = Math.min(2, decimals);
-  }
-  shortValue = (value / Math.pow(1000, suffixNum)).toFixed(decimals);
-  if (toUSD) {
-    shortValue = formatUSD(shortValue, decimals);
-  }
-  return shortValue + suffixes[suffixNum];
-}
-
-export function nanosToUSDNumber(nanos) {
-  return nanos / 1e9;
-}
-
-export function formatUSD(num, decimal) {
-
-  let formatUSDMemo;
-
-  formatUSDMemo = Number(num).toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: decimal,
-    maximumFractionDigits: decimal,
-  });
-  return formatUSDMemo;
-}
-
-const formatBytes = (bytes) => {
+export const formatBytes = (bytes) => {
   if (bytes) {
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
     const i = Math.min(
@@ -202,4 +160,43 @@ const formatBytes = (bytes) => {
   return 'n/a'
 }
 
-export default formatBytes
+/** Wait for x ms in an async function */
+export const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+/** Convert an address into a short address with only the first 7 + last 7 characters */
+export function shortAddress(_address) {
+  if(!_address) {
+    return "-";
+  }
+
+  const _firstChars = _address.substring(0, 5);
+  const _lastChars = _address.substr(_address.length - 5);
+  return _firstChars.concat('-', _lastChars);
+}
+
+/** Returns current timestamp */
+export function getTimestamp() {
+  const cur_timestamp = Math.round(new Date().getTime() / 1000).toString()
+  return cur_timestamp;
+}
+
+/** Returns true if object is an array */
+export function isArray(obj) {
+  return Object.prototype.toString.call(obj) === '[object Array]';
+}
+
+/** Convert local base64 image to a file object that can be pushed to Arweave */
+export async function base64ToFile(dataURL, fileName) {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    return (fetch(dataURL).then(function (result) {
+      return result.arrayBuffer();
+    }));
+}
+
+/** Generate random id */
+export function randomId() {
+  return Math.floor(Math.random() * 10) + 1 * Date.now();
+}
