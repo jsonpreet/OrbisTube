@@ -1,6 +1,7 @@
 import { CardShimmer } from '@components/Shimmers/VideoCardShimmer'
 import dynamic from 'next/dynamic'
-import ChannelInfo from './Info'
+import Actions from './Actions'
+import Info from './Info'
 
 const VideoPlayer = dynamic(() => import('../Player/VideoPlayer'), {
   loading: () => <CardShimmer />,
@@ -23,11 +24,10 @@ const Video = ({ views, video }) => {
             <h1 className="text-lg md:text-2xl font-medium line-clamp-2">
               {video.content.title}
             </h1>
-          {/* <VideoMeta video={video} /> */}
         </div>
         <div className='flex md:flex-row flex-col overflow-hidden justify-between md:items-center mt-3 flex-shrink-0'>
-          <ChannelInfo channel={userProfile} video={video}/>
-          {/* <VideoActions video={video} /> */}
+          <Info channel={userProfile} video={video}/>
+          <Actions video={video} />
         </div>
       </div>
     </>

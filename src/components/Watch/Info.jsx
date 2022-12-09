@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { Button } from '../UI/Button'
 import { GlobalContext } from '@app/context/app'
 
-function ChannelInfo({ video, channel }) {
+function Info({ video, channel }) {
     const { orbis } = useContext(GlobalContext)
     const [followers, setFollowers] = useState(0)
     const [loading, setLoading] = useState(true)
@@ -85,13 +85,13 @@ function ChannelInfo({ video, channel }) {
                         </Link>
                         {!loading ?
                             <span className="text-[14px] leading-4 text-secondary">
-                                {formatNumber(followers)} subscribers
+                                {formatNumber(followers)} {followers > 1 ? `subscribers` : `subscriber`}
                             </span>
                             : <div className="h-2 bg-gray-300 rounded dark:bg-gray-700" />
                         }
                     </div>
                 </div>
-                {channel.did !== user.did ?
+                {channel && channel.did !== user.did ?
                     <div ref={followRef}>
                         {!follow ?
                             <Button className={`${subscribing ? `animate-pulse` : ``}`} variant="dark" onClick={() => onFollow(follow)}>
@@ -111,4 +111,4 @@ function ChannelInfo({ video, channel }) {
     )
 }
 
-export default ChannelInfo
+export default Info

@@ -2,26 +2,18 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FiHome } from 'react-icons/fi'
-import {
-  MdOutlineSubscriptions,
-  MdOutlineVideoLibrary,
-  MdHistory,
-  MdOutlineFeedback
-} from 'react-icons/md'
-import { SHORTS, HISTORY, FEED, HOME, LIBRARY, STORI } from '@utils/paths'
+import { MdOutlineSubscriptions } from 'react-icons/md'
+import { FEED, HOME} from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
-import { FaTwitter } from "react-icons/fa";
-import { IoDiamondOutline } from "react-icons/io5";
 import { APP } from '@app/utils/constants'
 import { useState } from 'react'
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 import SimpleBar from 'simplebar-react';
-import dynamic from 'next/dynamic'
 
 const Sidebar = () => {
   const router = useRouter()
   const [showMore, setShowMore] = useState(false)
-  const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 6;
+  const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 16;
 
 
   const isActivePath = (path) => router.pathname === path
@@ -87,8 +79,7 @@ const Sidebar = () => {
                   )
                 }
               })}
-              
-              {
+              {/* {
                 !showMore ?
                   <div key={`showMore`} onClick={() => setShowMore(!showMore)} className="cursor-pointer rounded-lg px-3 py-2 group hover-primary">
                     <div className="flex items-center">
@@ -103,7 +94,7 @@ const Sidebar = () => {
                       <p className='ml-6'>Show Less</p>
                     </div>
                   </div>
-              }
+              } */}
             </div>
             <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
             <div className='flex w-full px-3 text-sm text-primary mt-4 space-x-1'>

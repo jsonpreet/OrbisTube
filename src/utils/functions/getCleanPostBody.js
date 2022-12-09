@@ -57,15 +57,15 @@ function parseMarkdown(post, characterLimit) {
 
   /** Retrieve mentions in the body */
   let mentionsInBody = post.content.body.toString().match(patternMentions);
-
   /** Compare both and replace in body */
   if(mentionsInBody && mentions && isArray(mentions)) {
     mentionsInBody.forEach(_m => {
+      let m = _m.replace('@', '')
       /** Find mention with the same name */
-      let mention = mentions.find(obj => obj.username === _m);
+      let mention = mentions.find(obj => obj.username === m);
       if(mention !== undefined) {
           body = reactStringReplace(body, _m, (match, i) => (
-              mention.did ? <Link href={"/profile/" + mention.did} key={match + i}>{mention.username}</Link> : <span className="link" key={i}>{mention.username}</span>
+              mention.did ? <Link className='gradientLink' href={`/${_m}`} key={match + i}>@{mention.username}</Link> : <span className='gradientLink' key={i}>@{mention.username}</span>
           ));
       }
     });

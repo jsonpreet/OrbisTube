@@ -4,49 +4,22 @@ import { useContext, useEffect, useState } from 'react'
 import { Button } from '../../UI/Button';
 import { useRouter } from 'next/router';
 import { GlobalContext } from '@context/app';
+import ConnectButton from '../ConnectButton';
 
 function UserMenu() {
     const router = useRouter()
     const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()
-    const { orbis } = useContext(GlobalContext);
+    const { orbis } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        checkLogin()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    async function checkLogin() {
-        let res = await orbis.isConnected();
-        if (res && res.details !== null) {
-            setUser(res.details)
-            setLoggedIn(true)
-			console.log("Connected to Ceramic: ", res.result);
-        } else {
-            setUser({})
-            setLoading(false)
-			toast.error("Error connecting to Ceramic.");
-        }
-    }
-    
-    async function connect() {
-        let res = await orbis.connect();
-		if(res.status == 200) {
-            setUser(res.did);
-            setLoggedIn(true);
-			console.log("Connected to Ceramic: ", res);
-		} else {
-			console.log("Error connecting to Ceramic: ", res);
-			toast.error("Error connecting to Ceramic.");
-		}
-    }
     
     async function logout() {
+        setLoading(true)
         let res = await orbis.logout();
         if (res.result === 'Logged out from Orbis and Ceramic.') {
             console.log(res)
             setLoggedIn(false)
             setUser({})
+            setLoading(false)
         }
     }
 
@@ -125,11 +98,8 @@ function UserMenu() {
                 //         </>
                 //     </div>
                 // </DropMenu>
-            ): (
-                <Button onClick = { () => connect() } loading = { loading }>
-                        Sign In{' '}
-                        <span className="hidden md:inline-block">with DeSo</span>
-                </Button>
+            ) : (
+                <ConnectButton/>
             )
         }
         </>

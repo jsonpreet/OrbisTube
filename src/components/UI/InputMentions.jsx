@@ -4,10 +4,8 @@ import { Mention, MentionsInput } from 'react-mentions'
 import IsVerified from '../Common/IsVerified'
 import { Orbis } from "@orbisclub/orbis-sdk";
 
-const InputMentions = ({ label, validationError, onAdd, value, onContentChange, mentionsSelector, ...props }) => {
+const InputMentions = ({ label, validationError, onFocus, onAdd, value, onContentChange, mentionsSelector, ...props }) => {
     const id = useId()
-
-    //const onAdd = useCallback((...args) => console.log(...args), [])
 
     const fetchSuggestions = async ( query, callback ) => {
         if (!query) return
@@ -39,12 +37,13 @@ const InputMentions = ({ label, validationError, onAdd, value, onContentChange, 
         )}
         <div className="flex flex-col w-full">
             <MentionsInput
-            id={id}
-            className={mentionsSelector}
-            value={value}
-            placeholder={props.placeholder}
-            a11ySuggestionsListLabel={"Suggested mentions"}
-            onChange={(e) => onContentChange(e.target.value)}
+                id={id}
+                className={mentionsSelector}
+                value={value}
+                placeholder={props.placeholder}
+                a11ySuggestionsListLabel={"Suggested mentions"}
+                onChange={(e) => onContentChange(e.target.value)}
+                onFocus={(e) => onFocus(e)}
             >
                 <Mention
                     trigger="@"

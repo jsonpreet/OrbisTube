@@ -149,7 +149,7 @@ const ShareModal = ({ rootRef, show, setShowShare, video }) => {
           </button>
         </div>
       </div>
-      </Modal>
+    </Modal>
   )
 }
 
