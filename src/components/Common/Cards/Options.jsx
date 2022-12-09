@@ -1,13 +1,17 @@
-import usePersistStore from '@app/store/persist'
-import { APP } from '@app/utils/constants'
-import DropMenu from '@app/components/UI/DropMenu'
+import usePersistStore from '@store/persist'
+import DropMenu from '@components/UI/DropMenu'
 import clsx from 'clsx'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FiFlag } from 'react-icons/fi'
 import { RiShareForwardLine } from 'react-icons/ri'
-import WatchLater from '@app/components/Common/WatchLater'
-import { useEffect, useState } from 'react'
+import WatchLater from '@components/Common/WatchLater'
+import { useContext, useEffect, useState } from 'react'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { Menu } from '@headlessui/react'
+import { IoTrashOutline } from 'react-icons/io5'
+import { GlobalContext } from '@app/context/app'
+import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/router'
 
 const VideoOptions = ({
   video,
@@ -15,36 +19,38 @@ const VideoOptions = ({
   isSuggested = false,
   showOnHover = true
 }) => {
+  const router = useRouter()
+  const { orbis } = useContext(GlobalContext)
   const { isLoggedIn, user } = usePersistStore();
   const supabase = useSupabaseClient();
-  const reporterID = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
-  const isVideoOwner = isLoggedIn ? user.profile.PublicKeyBase58Check === video?.ProfileEntryResponse?.PublicKeyBase58Check : false
+  const [showReportModal, setShowReportModal] = useState(false)
+  const isVideoOwner = isLoggedIn ? user.did === video.creator_details?.did : false
   const [alreadyAddedToWatchLater, setAlreadyAddedToWatchLater] = useState(false)
-  const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
 
   useEffect(() => {
     if (video) {
       isAlreadyAddedToWatchLater();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [video])
 
   const isAlreadyAddedToWatchLater = () => {
-    supabase.from('watchlater').select('*').eq('user', reporterID).eq('posthash', video.PostHashHex).then((res) => {
+    supabase.from('watchlater').select('*').eq('user', user.did).eq('posthash', video.stream_id).then((res) => {
       if (res.data.length > 0) {
           setAlreadyAddedToWatchLater(true)
       } else {
           setAlreadyAddedToWatchLater(false)
       }
       if (res.error) {
-          logger.error(video.PostHashHex, 'watched', res.error);
+        console.error(video.stream_id, 'watched', res.error);
       }
     })
   }
 
   const addToWatchLater = () => {
-    supabase.from('watchlater').insert([{ user: reporterID, posthash: video.PostHashHex }]).then((res) => {
+    supabase.from('watchlater').insert([{ user: user.did, posthash: video.stream_id }]).then((res) => {
       if (res.error) {
-          logger.error(video.PostHashHex, 'watched', res.error);
+          console.error(video.stream_id, 'watched', res.error);
       } else {
           setAlreadyAddedToWatchLater(true)
       }
@@ -52,14 +58,22 @@ const VideoOptions = ({
   }
 
   const removeFromWatchLater = () => {
-    supabase.from('watchlater').delete().eq('user', reporterID).eq('posthash', video.PostHashHex).then((res) => {
+    supabase.from('watchlater').delete().eq('user', user.did).eq('posthash', video.stream_id).then((res) => {
       if (res.error) {
-          logger.error(video.PostHashHex, 'watched', res.error);
+          console.error(video.stream_id, 'watched', res.error);
       } else {
           setAlreadyAddedToWatchLater(false)
       }
     })
   }
+
+  // const onHideVideo = async() => {
+  //   let res = await orbis.deletePost(video.stream_id);
+  //   if (res.status === 200) {
+  //     toast.success('Video Deleted!')
+  //     setTimeout(() => router.push('/', undefined, { shallow: true }), 1000)
+  //   }
+  // }
 
   const onClickWatchLater = () => {
     alreadyAddedToWatchLater
@@ -93,15 +107,26 @@ const VideoOptions = ({
             <span className="whitespace-nowrap">Share</span>
           </button>
           {isLoggedIn ? <WatchLater onClickWatchLater={onClickWatchLater} alreadyAddedToWatchLater={alreadyAddedToWatchLater} /> : null}
-          <a
-            href={`https://desoreporting.aidaform.com/content?ReporterPublicKey=${reporterID}&PostHash=${video.PostHashHex}&ReportedAccountPublicKey=${video.ProfileEntryResponse?.PublicKeyBase58Check}&ReportedAccountUsername=${video.ProfileEntryResponse?.Username}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center px-3 py-2 space-x-3 hover-primary"
+          {/* {isVideoOwner && (
+            <>
+              <button
+                type="button"
+                onClick={() => onHideVideo()}
+                className="inline-flex items-center px-3 py-2 space-x-3 text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
+              >
+                <IoTrashOutline size={18} className="ml-0.5" />
+                <span className="whitespace-nowrap">Delete</span>
+              </button>
+            </>
+          )} */}
+          <button
+            type="button"
+            onClick={() => setShowReportModal()}
+            className="inline-flex items-center px-3 py-2 space-x-3 text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
           >
-              <FiFlag size={18} className="ml-0.5" />
-              <span className="whitespace-nowrap">Report</span>
-          </a>
+            <FiFlag size={18} className="ml-0.5" />
+            <span className="whitespace-nowrap">Report</span>
+          </button>
         </div>
       </div>
     </DropMenu>

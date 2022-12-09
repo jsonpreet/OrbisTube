@@ -99,7 +99,7 @@ function UploadForm({onUpload, onCancel}) {
                             <div className='mb-4 flex flex-col space-y-2'>
                                 <label className='font-medium text-sm'>Comments</label>
                                 <div className='flex space-x-3'>
-                                    <div class="flex items-center">
+                                    <div className="flex items-center">
                                         <input
                                             id="bordered-radio-1"
                                             type="radio"
@@ -110,7 +110,7 @@ function UploadForm({onUpload, onCancel}) {
                                         />
                                         <label htmlFor="bordered-radio-1" className="py-1 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">Allow</label>
                                     </div>
-                                    <div class="flex items-center">
+                                    <div className="flex items-center">
                                         <input
                                             id="bordered-radio-2"
                                             type="radio"

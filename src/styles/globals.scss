@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import 'simplebar-react/dist/simplebar.min.css';
+@import '@vime/core/themes/default.css';
 
 html {
   @apply overflow-y-scroll;

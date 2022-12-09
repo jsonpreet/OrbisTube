@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 import DropZone from './DropZone'
 import UploadForm from './Form'
 import toast from 'react-hot-toast'
-import { Player, useCreateAsset } from '@livepeer/react';
+import { useCreateAsset } from '@livepeer/react';
 import { APP_CONTEXT } from '@utils/constants'
 import { GlobalContext } from '@context/app'
 
@@ -74,7 +74,6 @@ function Upload() {
     }, [uploadedVideo])
 
     const submitPost = async () => {
-        console.log('Submiting post')
         try {
             const request = {
                 title: uploadedVideo.title,
@@ -88,6 +87,9 @@ function Upload() {
                     isNSFW: uploadedVideo.isNSFW,
                     isNSFWThumbnail: uploadedVideo.isNSFWThumbnail,
                     Comments: uploadedVideo.allowComments,
+                    VideoUrl: uploadedVideo.videoURL,
+                    isLivePeer: true,
+                    Duration: uploadedVideo.durationInSeconds
                 },
                 body: uploadedVideo.description,
             }
@@ -95,6 +97,7 @@ function Upload() {
             if (res && res.status === 200) {
                 toast.success('Congratulations! Video Published.');
                 setResetUploadedVideo()
+                router.push('/')
             }
         } catch (error) {
             console.log(error)

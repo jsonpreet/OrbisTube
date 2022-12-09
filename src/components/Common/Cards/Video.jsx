@@ -1,13 +1,10 @@
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import ThumbnailOverlays from '../ThumbnailOverlays'
-import IsVerified from '../IsVerified'
+import { useState } from 'react'
+import ThumbnailOverlays from './ThumbnailOverlays'
 import VideoOptions from './Options'
-import axios from 'axios'
 import ShareModal from '../ShareModal'
 import useAppStore from '@store/app'
-import Tooltip from '@components/UI/Tooltip'
 import useDidToAddress from '@utils/functions/getDidToAddress'
 import useGetUsername from '@utils/functions/getProfileName'
 /** Clean time ago for post */
@@ -19,11 +16,7 @@ const VideoCard = ({ video }) => {
   const [showShare, setShowShare] = useState(false)
   const [showReport, setShowReport] = useState(false)
   const uploadedVideo = useAppStore((state) => state.uploadedVideo)
-  const [videoData, setVideoData] = useState('')
-  const [thumbnailUrl, setThumbnailUrl] = useState('/default-black.jpg')
-  const [extraData, setExtraData] = useState('')
   const [views, setViews] = useState(0)
-  console.log(video);
   const { address } = useDidToAddress(video.creator_details?.did);
   const username = useGetUsername(video.creator_details?.profile, address, video.creator_details?.did);
 
@@ -43,12 +36,12 @@ const VideoCard = ({ video }) => {
                 )}
                 alt="thumbnail"
               />
-              {/* <ThumbnailOverlays video={video} data={videoData} /> */}
+              <ThumbnailOverlays video={video} />
             </div>
           </Link>
           <div className="p-2">
             <div className="flex items-start space-x-2.5">
-              <Link href={`/${video.creator_details.did}`} className="flex-none mt-0.5">
+              <Link href={`/@${username}`} className="flex-none mt-0.5">
                 <img
                   className="w-9 h-9 rounded-full"
                   src={video.creator_details?.profile.pfp}
@@ -81,11 +74,11 @@ const VideoCard = ({ video }) => {
                         </span>
                     </div>
                   </div>
-                  {/* <VideoOptions
+                  <VideoOptions
                     video={video}
                     setShowShare={setShowShare}
                     setShowReport={setShowReport}
-                  /> */}
+                  />
                 </div>
               </div>
             </div>

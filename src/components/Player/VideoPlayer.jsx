@@ -3,7 +3,6 @@ import useAppStore from '@store/app'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
-import NextVideo from './NextVideo'
 import PlayerContextMenu from './PlayerContextMenu'
 
 import {
@@ -16,10 +15,9 @@ import {
 } from '@vime/react'
 import { getCurrentDuration } from '@utils/functions/getCurrentDuration'
 import usePersistStore from '@store/persist'
-import { APP } from '@utils/constants'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
-const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
+const PlayerInstance = ({ video, ratio, hls, poster }) => {
   const router = useRouter()
   const playerRef = useRef()
   const supabase = useSupabaseClient()
@@ -32,10 +30,8 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
   const { pathname } = useRouter()
   const upNextVideo = useAppStore((state) => state.upNextVideo)
   const videoWatchTime = useAppStore((state) => state.videoWatchTime)
-  const [showNext, setShowNext] = useState(false)
   const currentVideo = document.getElementsByTagName('video')[0]
-  const currentDuration = getCurrentDuration(videoData.data.Duration);
-  const reader = isLoggedIn ? user.profile.PublicKeyBase58Check : APP.PublicKeyBase58Check;
+  const currentDuration = getCurrentDuration(video.content.data.Duration);
 
   const handleKeyboardShortcuts = () => {
     if (!playerRef.current) return
@@ -85,20 +81,6 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
 
   useEffect(() => {
     if (!currentVideo) return
-    // currentVideo.onplay = () => {
-    //   setisStarted(true);
-    //   console.log('video started');
-    // }
-    // currentVideo.onplaying = () => {
-    //   currentVideo.style.display = 'block'
-    //   setShowNext(false)
-    // }
-    // currentVideo.onended = () => {
-    //   if (upNextVideo) {
-    //     currentVideo.style.display = 'none'
-    //     setShowNext(true)
-    //   }
-    // }
     currentVideo.onloadedmetadata = () => {
       currentVideo.currentTime = Number(videoWatchTime || 0)
     }
@@ -116,18 +98,6 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
     setShowContextMenu(true)
   }
 
-  const playNext = () => {
-    currentVideo.style.display = 'block'
-    setShowNext(false)
-    router.push(`/watch/${upNextVideo?.PostHashHex}`, null, { shallow: false })
-  }
-
-  const cancelPlayNext = (e) => {
-    e.preventDefault()
-    currentVideo.style.display = 'block'
-    setShowNext(false)
-  }
-
   const onTimeUpdate = (event) => {
     const seconds = Math.round(event.detail)
     //console.log(seconds, currentDuration)
@@ -137,28 +107,23 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
   };
 
   const setNewView = () => {
-    const req = {
-      posthash: video.PostHashHex,
-      channel: video.ProfileEntryResponse.Username,
-      user: reader,
-      lastwatched: new Date()
-    }
-    supabase.from('views').insert([req]).then((response) => {
-      if (response.error) {
-        logger.error(video.PostHashHex, 'views', response.error);
-      }
-      return
-    })
+    // const req = {
+    //   posthash: video.PostHashHex,
+    //   channel: video.ProfileEntryResponse.Username,
+    //   user: reader,
+    //   lastwatched: new Date()
+    // }
+    // supabase.from('views').insert([req]).then((response) => {
+    //   if (response.error) {
+    //     logger.error(video.PostHashHex, 'views', response.error);
+    //   }
+    //   return
+    // })
   }
 
 
   return (
-    <div  data-video={`${videoData.id}`} data-src={`${videoData.hls}`}
-      onContextMenu={onContextClick}
-      className={clsx({
-        relative: showNext
-      })}
-    >
+    <div onContextMenu={onContextClick}>
       <div className={`md:relative z-[5] aspect-[16/9]`}>
         <Player
           tabIndex={1}
@@ -179,14 +144,7 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
           </DefaultUi>
         </Player>
       </div>
-      {/* {showNext && (
-        <NextVideo
-          video={upNextVideo}
-          playNext={playNext}
-          cancelPlayNext={cancelPlayNext}
-        />
-      )} */}
-      {showContextMenu && pathname === '/watch/[id]' && !showNext && (
+      {showContextMenu && (
         <PlayerContextMenu
           position={position}
           ref={playerRef}
@@ -200,9 +158,7 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
 }
 
 const VideoPlayer = ({
-  videoData,
   video,
-  source,
   poster,
   ratio = '16:9',
   wrapperClassName,
@@ -212,8 +168,6 @@ const VideoPlayer = ({
   return (
     <div className={clsx('overflow-hidden', wrapperClassName)}>
       <PlayerInstance
-        videoData={videoData}
-        source={source}
         video={video}
         ratio={ratio}
         poster={poster}
