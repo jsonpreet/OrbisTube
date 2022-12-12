@@ -14,6 +14,8 @@ TimeAgo.addLocale(en);
 
 import Loading from '@components/Common/Loading';
 import { lazy, Suspense } from 'react';
+import { DefaultSeo } from 'next-seo';
+import { DEFAULT_SEO } from '@utils/constants';
 const Providers = lazy(() => import('@components/Common/Providers'));
 const Layout = lazy(() => import('@components/Common/Layout'));
 
@@ -22,6 +24,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Suspense fallback={<Loading />}>
+        <DefaultSeo {...DEFAULT_SEO}/>
         <Providers pageProps={pageProps}>
           <Layout>
             <Component {...pageProps} />

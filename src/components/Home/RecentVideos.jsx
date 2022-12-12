@@ -98,10 +98,11 @@ function RecentVideos() {
               <div className="p-15">
                 <Loader2 />
               </div>
-            :
-              <div className="p-15">
-                <div className="btn black" onClick={() => loadMore()}>Load older posts</div>
-              </div>
+            : page > 0 ?
+                <div className="p-15">
+                  <div className="btn black" onClick={() => loadMore()}>Load older posts</div>
+                </div>
+              : null 
             }
           </>
         )

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "../UI/Button";
 import ConnectModal from "./ConnectModal";
 
 function ConnectButton() {
@@ -7,7 +8,7 @@ function ConnectButton() {
     return (
         <>
             <ConnectModal show={showModal} setShowModal={setShowModal}/>
-            <button className="btn md purple pointer" onClick={() => setShowModal(true)}>Connect</button>
+            <Button variant='light' onClick={() => setShowModal(true)}>Connect</Button>
         </>
     )
 }

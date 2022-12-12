@@ -20,7 +20,7 @@ const Sidebar = () => {
   const isActiveCategory = (category) => router.query.category === category
   return (
     <>
-      <div className={`flex flex-col w-64 p-4 primaryBg h-screen pr-0 items-start justify-start overflow-hidden z-10 pt-16 text-[14px] font-light tracking-wide`}>
+      <div className={`flex flex-col w-64 p-4 primaryBg h-screen pr-0 items-start justify-start sidebar-shadow z-10 pt-16 text-[14px] font-light tracking-wide`}>
         <SimpleBar forceVisible="y" style={{ height: `100%`, width: `100%` }}>
           <div className="flex flex-col w-full overflow-hidden pr-4">
             <div className="flex flex-col w-full space-y-1">

@@ -23,7 +23,7 @@ const VideoCard = ({ video }) => {
   return (
     <>
     
-      <div className="group">
+      <div className="relative">
           <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
           <Link href={`/watch/${video.stream_id}`}>
             <div className="relative rounded-none md:rounded-xl aspect-w-16 overflow-hidden aspect-h-9">

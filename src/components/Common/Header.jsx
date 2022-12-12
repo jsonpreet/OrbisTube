@@ -11,14 +11,14 @@ const Header = () => {
   const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
   return (
     <>
-      <div className='fixed items-center flex justify-start md:justify-between flex-row z-30 left-0 right-0 top-0 flex-shrink-0 header-glassy h-16 px-4'>
+      <div className='fixed items-center flex justify-start md:justify-between flex-row z-30 left-0 right-0 top-0 flex-shrink-0 h-16 px-4'>
         <div className="md:w-56 flex md:flex-none flex-1 md:justify-center py-4">
           <Link
             href={HOME}
             className="flex items-center justify-start pb-1 focus:outline-none"
           >
-            <Image src='/videso.png' alt={APP.Name} height={35} width={31} />
-            <span className='font-semibold font-oswald text-gray-700 dark:text-white text-2xl md:text-3xl ml-2'>{APP.Name}</span>
+            <Image src='/o.svg' alt={APP.Name} height={40} width={40} />
+            <span className='font-semibold uppercase font-oswald text-gray-700 dark:text-white text-2xl md:text-3xl ml-2'>Tube</span>
           </Link>
         </div>
         {/* <Search /> */}
