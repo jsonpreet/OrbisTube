@@ -5,23 +5,15 @@ import Image from 'next/image'
 import ThemeSwitch from './ThemeSwitch'
 import usePersistStore from '@app/store/persist'
 import { NewVideoMenu, UserMenu } from './Menu'
+import { Search } from './Search'
 
 
 const Header = () => {
   const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
   return (
     <>
-      <div className='fixed items-center flex justify-start md:justify-between flex-row z-30 left-0 right-0 top-0 flex-shrink-0 h-16 px-4'>
-        <div className="md:w-56 flex md:flex-none flex-1 md:justify-center py-4">
-          <Link
-            href={HOME}
-            className="flex items-center justify-start pb-1 focus:outline-none"
-          >
-            <Image src='/o.svg' alt={APP.Name} height={40} width={40} />
-            <span className='font-semibold uppercase font-oswald text-gray-700 dark:text-white text-2xl md:text-3xl ml-2'>Tube</span>
-          </Link>
-        </div>
-        {/* <Search /> */}
+      <div className='relative items-center flex justify-start md:justify-between flex-row z-30 left-0 right-0 top-0 flex-shrink-0 h-16 px-4'>
+        <Search />
         <div className="flex mr-[2px] flex-row items-center justify-end md:w-56">
           {isLoggedIn ? (
             <>

@@ -7,8 +7,8 @@ import { FEED, HOME} from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
 import { APP } from '@app/utils/constants'
 import { useState } from 'react'
-import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
 import SimpleBar from 'simplebar-react';
+import Image from 'next/image'
 
 const Sidebar = () => {
   const router = useRouter()
@@ -20,8 +20,17 @@ const Sidebar = () => {
   const isActiveCategory = (category) => router.query.category === category
   return (
     <>
-      <div className={`flex flex-col w-64 p-4 primaryBg h-screen pr-0 items-start justify-start sidebar-shadow z-10 pt-16 text-[14px] font-light tracking-wide`}>
-        <SimpleBar forceVisible="y" style={{ height: `100%`, width: `100%` }}>
+      <div className={`flex flex-col w-64 p-4 primaryBg h-screen pr-0 items-start justify-start sidebar-shadow overflow-hidden z-10 pt-0 text-[14px] font-light tracking-wide`}>
+        <div className="md:w-56 flex md:flex-none flex-1 md:justify-center py-4">
+          <Link
+            href={HOME}
+            className="flex items-center justify-start pb-1 focus:outline-none"
+          >
+            <Image src='/o.svg' alt={APP.Name} height={40} width={40} />
+            <span className='font-semibold uppercase font-oswald text-gray-700 dark:text-white text-2xl md:text-3xl ml-2'>Tube</span>
+          </Link>
+        </div>
+        <SimpleBar forceVisible="y" style={{ height: `calc(100vh - 86px)`, width: `100%` }}>
           <div className="flex flex-col w-full overflow-hidden pr-4">
             <div className="flex flex-col w-full space-y-1">
               <Link

@@ -32,6 +32,7 @@
     "clsx": "^1.2.1",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.6",
+    "ethereum-blockies-base64": "^1.0.2",
     "ethers": "^5.7.2",
     "filereader-stream": "^2.0.0",
     "javascript-time-ago": "^2.5.9",

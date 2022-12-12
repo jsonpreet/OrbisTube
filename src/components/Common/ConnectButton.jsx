@@ -8,7 +8,7 @@ function ConnectButton() {
     return (
         <>
             <ConnectModal show={showModal} setShowModal={setShowModal}/>
-            <Button variant='light' onClick={() => setShowModal(true)}>Connect</Button>
+            <Button variant='white' onClick={() => setShowModal(true)}>Connect</Button>
         </>
     )
 }

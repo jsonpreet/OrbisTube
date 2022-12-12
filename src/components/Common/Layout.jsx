@@ -22,14 +22,14 @@ const Layout = ({ children }) => {
                 position="bottom-right"
                 toastOptions={toastOptions}
             />
-            <div className=' flex'>
+            <div className='flex'>
                 <div className='hidden bg-primary fixed z-10 top-0 left-0 md:flex md:flex-shrink-0'>
                     <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
                 </div>
                 <div className='flex flex-col mx-auto flex-1'>
-                    <Header isSidebarCollapsed={isSidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed} />
-                    <div className={`relative md:ml-64 md:mb-0 px-6 bg-gradient-to-br from-[#ffeede] via-[#fcf3f8] to-[#e9d9fe] md:pb-0 h-screen pb-20 mb-10`}>
-                        <div className="pt-16 pb-0 lg:pb-12">
+                    <div className='relative md:ml-64 md:mb-0 px-6 bg-gradient-to-br from-[#ffeede] via-[#fcf3f8] to-[#e9d9fe] md:min-h-[1000px] md:pb-0 pb-20 mb-10'>
+                        <Header isSidebarCollapsed={isSidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed} />
+                        <div className="pt-10 pb-0 lg:pb-12">
                             <div className="">
                                 <div className={`max-w-full w-full mx-auto md:pl-0 p-0 md:pt-0 md:p-5 `}>
                                     {children}

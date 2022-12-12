@@ -1,16 +1,16 @@
 import clsx from 'clsx'
-import { useCallback, useId } from 'react'
+import { useContext, useId } from 'react'
 import { Mention, MentionsInput } from 'react-mentions'
-import IsVerified from '../Common/IsVerified'
-import { Orbis } from "@orbisclub/orbis-sdk";
+import { GlobalContext } from '@app/context/app';
 
 const InputMentions = ({ label, validationError, onFocus, onAdd, value, onContentChange, mentionsSelector, ...props }) => {
     const id = useId()
+    const { orbis } = useContext(GlobalContext)
 
     const fetchSuggestions = async ( query, callback ) => {
         if (!query) return
         try {
-            const orbis = new Orbis();
+            
             let { data: profiles, error } = await orbis.getProfilesByUsername(query);
             if (!error && profiles) {
                 const channels = profiles.map((channel) => ({

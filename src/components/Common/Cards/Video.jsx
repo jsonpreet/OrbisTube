@@ -5,8 +5,8 @@ import ThumbnailOverlays from './ThumbnailOverlays'
 import VideoOptions from './Options'
 import ShareModal from '../ShareModal'
 import useAppStore from '@store/app'
-import useDidToAddress from '@utils/functions/getDidToAddress'
-import useGetUsername from '@utils/functions/getProfileName'
+import { useDidToAddress } from '@utils/functions/getDidToAddress'
+import { getUsername, useGetUsername } from '@utils/functions/getProfileName'
 /** Clean time ago for post */
 import ReactTimeAgo from 'react-time-ago'
 
@@ -41,11 +41,11 @@ const VideoCard = ({ video }) => {
           </Link>
           <div className="p-2">
             <div className="flex items-start space-x-2.5">
-              <Link href={`/@${username}`} className="flex-none mt-0.5">
+              <Link href={`/@${getUsername(video.creator_details.profile, video.did)}`} className="flex-none mt-0.5">
                 <img
                   className="w-9 h-9 rounded-full"
                   src={video.creator_details?.profile.pfp}
-                  alt={username}
+                  alt={getUsername(video?.creator_details.profile, video.did)}
                   draggable={false}
                 />
               </Link>
@@ -59,10 +59,10 @@ const VideoCard = ({ video }) => {
                         {video.content.title}
                     </Link>
                     <Link
-                      href={`/${video.creator_details.did}`}
+                      href={`/@${getUsername(video.creator_details.profile, video.did)}`}
                       className="flex w-fit items-center space-x-1.5 text-[14px] text-light"
                     >
-                      <span>{username}</span>
+                      <span>{getUsername(video.creator_details.profile, video.did)}</span>
                     </Link>
                     <div className="flex overflow-hidden text-[13px] text-light">
                       <span className="whitespace-nowrap">
