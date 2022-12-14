@@ -6,7 +6,7 @@ import DropZone from './DropZone'
 import UploadForm from './Form'
 import toast from 'react-hot-toast'
 import { useCreateAsset } from '@livepeer/react';
-import { APP_CONTEXT } from '@utils/constants'
+import { APP_CONTEXT, VIDEO_CDN_URL } from '@utils/constants'
 import { GlobalContext } from '@context/app'
 
 function Upload() {
@@ -60,7 +60,7 @@ function Upload() {
             setLoading(false);
         }
         if (assets && assets[0] && assets[0].status?.phase === 'ready') {
-            setUploadedVideo({ videoURL: assets[0]?.playbackUrl })
+            setUploadedVideo({ videoURL: `${VIDEO_CDN_URL}/asset/${assets[0]?.playbackId}/video` })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, assets])
@@ -117,8 +117,8 @@ function Upload() {
             return toast.error('All fields required!')
         }
         const file = uploadedVideo.file
-        if (file.size > 4 * (1024 * 1024 * 1024)) {
-            toast.error('File is too large. Please choose a file less than 4GB');
+        if (file.size > 1 * (1024 * 1024 * 1024)) {
+            toast.error('File is too large. Please choose a file less than 1GB');
             return;
         }
         createAsset();

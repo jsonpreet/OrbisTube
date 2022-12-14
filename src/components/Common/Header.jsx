@@ -12,7 +12,7 @@ const Header = () => {
   const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
   return (
     <>
-      <div className='relative items-center flex justify-start md:justify-between flex-row z-30 left-0 right-0 top-0 flex-shrink-0 h-16 px-4'>
+      <div className='relative items-center flex justify-start md:justify-between flex-row z-30 h-16'>
         <Search />
         <div className="flex mr-[2px] flex-row items-center justify-end md:w-56">
           {isLoggedIn ? (

@@ -45,3 +45,4 @@ export const APP_CONTEXT = '21b51aba82824ef290949bdf26ab4427';
 export const WEB3_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDIzNGI1OTY0MUYzODA5ODcwN2NCNzIyZkU1MzVlZTc2MzBmNjZiOTYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzAyNzM1OTg4ODksIm5hbWUiOiJ2b3JiaXMifQ.Kr9ZTOzckP2nEJRwMWW8rhu7WsW9EvxoM8sSnXlfa9M';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://orbistube.xyz';
+export const VIDEO_CDN_URL = 'https://cdn.livepeer.com'

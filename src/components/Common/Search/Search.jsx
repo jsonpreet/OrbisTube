@@ -10,6 +10,7 @@ import { GlobalContext } from '@context/app';
 import Modal from '@components/UI/Modal';
 import { getUsername } from '@utils/functions/getProfileName';
 import { getProfilePicture, ProfilePicture } from '@utils/functions/getProfilePicture';
+import { RiSearch2Line } from 'react-icons/ri';
 
 
 const Search = () => {
@@ -62,23 +63,23 @@ const Search = () => {
         <>
             {isBrowser ? (
                 <>
-                    <div className="md:w-[728px] flex" style={{flex: '0 1 728'}}>
+                    <div className="md:w-96 flex">
                         <div ref={ref} className='w-full mx-auto'>
                             <div className="relative mt-1">
-                                <div className="relative w-full overflow-hidden cursor-default border shadow-inner customBorder bg-primary dark:border-gray-800 rounded-full">
+                                <div className="relative w-full drop-shadow-[0_0px_10px_rgba(0,0,0,0.15)] overflow-hidden cursor-default bg-white dark:bg-black rounded-lg">
                                     <input
-                                        className="w-full py-2.5 pl-3 pr-10 bg-transparent focus:outline-none"
+                                        className="w-full py-2.5 pl-12 pr-3 bg-transparent focus:outline-none"
                                         onChange={(e) => setKeyword(e.target.value)}
                                         placeholder="Search"
                                         value={keyword}
                                     />
-                                    <div className="absolute inset-y-0 right-3 flex items-center pr-2">
-                                        {loading ? <Loader2 className='w-5 h-5'/> : <AiOutlineSearch size={24} />}
+                                    <div className="absolute inset-y-0 left-3 flex items-center pr-2">
+                                        {loading ? <Loader2 className='w-5 h-5'/> : <RiSearch2Line className='text-brand-500' size={24} />}
                                     </div>
                                 </div>
                                 <div
                                     className={clsx(
-                                    'md:absolute w-full mt-1 py-3 text-base bg-white overflow-hidden dark:bg-theme rounded-xl ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm',
+                                    'md:absolute w-full mt-1 py-3 text-base bg-white overflow-hidden dark:bg-theme rounded-lg drop-shadow-xl focus:outline-none sm:text-sm',
                                     { hidden: !showResults}
                                     )}
                                 >

@@ -19,7 +19,7 @@ export const Button = ({className = '', size = 'md', variant = 'primary', loadin
           'bg-red-500 border border-red-500 md:rounded-full': variant === 'danger',
           'dark-button md:rounded-full': variant === 'dark',
           'light-button md:rounded-full': variant === 'light',
-          'bg-white hover:bg-brand-700 md:rounded-full drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)]': variant === 'white',
+          'bg-white hover:bg-brand-700 md:rounded-full drop-shadow-[0_0px_10px_rgba(0,0,0,0.15)]': variant === 'white',
         },
         className
       )}
