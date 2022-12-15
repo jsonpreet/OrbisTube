@@ -26,7 +26,7 @@ const Sidebar = () => {
             href={HOME}
             className="flex items-center justify-start pb-1 focus:outline-none"
           >
-            <Image src='/o.svg' alt={APP.Name} height={40} width={40} />
+            <Image src='/logo.png' alt={APP.Name} height={40} width={40} />
             <span className='font-semibold uppercase font-oswald text-gray-700 dark:text-white text-2xl md:text-3xl ml-2'>Tube</span>
           </Link>
         </div>

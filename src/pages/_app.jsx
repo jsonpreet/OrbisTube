@@ -16,8 +16,8 @@ import Loading from '@components/Common/Loading';
 import { lazy, Suspense } from 'react';
 import { DefaultSeo } from 'next-seo';
 import { DEFAULT_SEO } from '@utils/constants';
-const Providers = lazy(() => import('@components/Common/Providers'));
-const Layout = lazy(() => import('@components/Common/Layout'));
+const Providers = lazy(() => import('../components/Common/Providers'));
+const Layout = lazy(() => import('../components/Common/Layout'));
 
 
 function MyApp({ Component, pageProps }) {

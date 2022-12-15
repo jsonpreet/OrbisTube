@@ -18,8 +18,8 @@ export const Button = ({className = '', size = 'md', variant = 'primary', loadin
           'bg-transparent md:rounded-full': variant === 'secondary',
           'bg-red-500 border border-red-500 md:rounded-full': variant === 'danger',
           'dark-button md:rounded-full': variant === 'dark',
-          'light-button md:rounded-full': variant === 'light',
-          'bg-white hover:bg-brand-700 md:rounded-full drop-shadow-[0_0px_10px_rgba(0,0,0,0.15)]': variant === 'white',
+          'light-button-secondary md:rounded-full': variant === 'light',
+          'bg-white md:rounded-full': variant === 'white',
         },
         className
       )}
@@ -32,7 +32,6 @@ export const Button = ({className = '', size = 'md', variant = 'primary', loadin
         }, { 'text-secondary': variant === 'light' }, 
           { 'dark-button-text': variant === 'dark'}, 
           { 'dark-text': variant === 'none' },
-          { 'dark-text group-hover:text-white': variant === 'white' },
           {'space-x-2': size !== 'small'}
         )}
       >

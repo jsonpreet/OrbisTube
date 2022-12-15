@@ -35,7 +35,6 @@ function Reactions({video, iconSize = '21', showButton = true}) {
         if(error) {
             console.log("Error getting reactions: ", error);
         }
-        console.log(data);
         if (data && data.length > 0) {
             if (data[0].type === 'downvote') {
                 setDisLiked(true)

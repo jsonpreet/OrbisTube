@@ -1,11 +1,11 @@
 import useCleanPostBody from '@utils/functions/getCleanPostBody'
-import useDidToAddress from '@utils/functions/getDidToAddress'
-import useGetUsername from '@utils/functions/getProfileName'
+import { useDidToAddress } from '@utils/functions/getDidToAddress'
+import { useGetUsername } from '@utils/functions/getProfileName'
 import Link from 'next/link'
 import { useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import ReactTimeAgo from 'react-time-ago'
-import Reactions from './Reactions'
+import Reactions from '../Reactions'
 
 const Comment = ({ comment }) => {
     const [characterLimit, setCharacterLimit] = useState(200)

@@ -1,14 +1,10 @@
-
-
 import usePersistStore from '@store/persist'
 import CommentsShimmer from '@components/Shimmers/CommentsShimmer'
-import { NoDataFound } from '@components/UI/NoDataFound'
 import dynamic from 'next/dynamic'
 import { useContext, useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
 import { BiComment } from 'react-icons/bi'
 import NewComment from './NewComment'
-import { GlobalContext } from '@app/context/app'
+import { GlobalContext } from '@context/app'
 
 const Comment = dynamic(() => import('./Comment'))
 

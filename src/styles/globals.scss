@@ -69,7 +69,7 @@ body{
 }
 
 .bg-secondary {
-  @apply dark:bg-[#1b1b1b] bg-gray-100;
+  @apply dark:bg-[#1b1b1b] bg-white;
 }
 
 .bg-dropdown  {
@@ -148,6 +148,10 @@ body{
   @apply text-gray-800 dark:text-white;
 }
 
+.bg-brand {
+  @apply bg-gradient-to-br from-[#ffeede] via-[#fcf3f8] to-[#e9d9fe] dark:from-[#0f0f0f] dark:via-[#0f0f0f] dark:to-[#0f0f0f]
+}
+
 .dropdown-shadow {
   box-shadow: 0px 4px 32px 0px rgba(0,0,0,0.1);
   backdrop-filter: blur(8px);
@@ -166,7 +170,7 @@ body{
 }
 
 .primary-button {
-  @apply bg-gradient-to-r from-brand-700 to-pink-600 hover:from-brand-600 hover:to-brand-600 dark:from-pink-500 dark:to-brand-500 dark:hover:from-brand-600 dark:hover:to-brand-600 text-white;
+  @apply bg-brand-500 hover:bg-brand-700 text-white;
 }
 
 vm-player {

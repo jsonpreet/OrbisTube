@@ -9,7 +9,7 @@ const About = ({views, video }) => {
     const [characterLimit, setCharacterLimit] = useState(200)
 
     return (
-        <div className="flex items-start justify-between w-full bg-secondary p-4 rounded-none md:rounded-xl">
+        <div className="flex items-start justify-between w-full light-button-secondary p-4 rounded-none md:rounded-xl">
             <div className="flex flex-col flex-1 overflow-hidden break-words">
                 <div className='text-[14px] flex space-x-1 items-center font-medium mb-3'>
                     <span><ReactTimeAgo date={video.timestamp * 1000} locale="en-US" /></span>

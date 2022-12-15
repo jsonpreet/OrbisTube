@@ -49,8 +49,11 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
                 setStatus(2);
                 /** Save user details returned by the connect function in state */
                 console.log("Connected to Ceramic: ", res);
-			    toast.success("Connected to Ceramic.");
-                setUser(res.details);
+                toast.success("Connected to Ceramic.");
+                const profile = await getUserDetails(res.did);
+                setUser(profile.result);
+                setLoggedIn(true);
+                setShowModal(false);
                 break;
             default:
                 console.log("Couldn't connect to Ceramic: ", res.error.message);
@@ -76,7 +79,10 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
                 /** Save user details returned by the connect function in state */
                 console.log("Connected to Ceramic: ", res);
 			    toast.success("Connected to Ceramic.");
-                setUser(res.details);
+                const profile = await getUserDetails(res.did);
+                setUser(profile.result);
+                setLoggedIn(true);
+                setShowModal(false);
                 break;
             default:
                 console.log("Couldn't connect to Ceramic: ", res.error.message);
@@ -95,9 +101,9 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
         /** Returns error if any */
         if(error) {
             return {
-            status: 300,
-            result: "Error retrieving user details.",
-            error: error
+                status: 300,
+                result: "Error retrieving user details.",
+                error: error
             }
         }
 

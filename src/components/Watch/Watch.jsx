@@ -9,7 +9,7 @@ import { NextSeo } from "next-seo"
 import { APP } from "@utils/constants"
 import Video from "./Video"
 import About from "./About"
-import Comments from "./Comments"
+import Comments from "./Comments/Comments"
 
 function Watch({ post, loading, isError }) {
     const router = useRouter()
@@ -18,26 +18,6 @@ function Watch({ post, loading, isError }) {
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
     const setVideoWatchTime = useAppStore((state) => state.setVideoWatchTime)
     const [video, setVideo] = useState(post)
-
-    useEffect(() => {
-        // if (orbis) {
-        //     fetchVideo()
-        // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    
-    // const fetchVideo = async () => {
-    //     let { data, error } = await orbis.getPost(post_id);
-    //     if (data && data.stream_id !== null) {
-    //         setLoading(false);
-    //         setVideo(data)
-    //     }
-    //     if (error) {
-    //         console.log(error)
-    //         setLoading(false)
-    //         setIsError(true)
-    //     }
-    // }
 
     if (isError) {
         return <Custom500 />

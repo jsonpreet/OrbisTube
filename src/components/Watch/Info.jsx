@@ -1,5 +1,5 @@
-import useDidToAddress from '@utils/functions/getDidToAddress'
-import useGetUsername from '@utils/functions/getProfileName'
+import { useDidToAddress } from '@utils/functions/getDidToAddress'
+import { useGetUsername } from '@utils/functions/getProfileName'
 import usePersistStore from '@store/persist'
 import { formatNumber } from '@utils/functions'
 import Link from 'next/link'

@@ -27,9 +27,9 @@ const Layout = ({ children }) => {
                     <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
                 </div>
                 <div className='flex flex-col mx-auto flex-1'>
-                    <div className='relative md:ml-64 md:mb-0 px-6 bg-gradient-to-br from-[#ffeede] via-[#fcf3f8] to-[#e9d9fe] md:min-h-[1000px] md:pb-0 pb-20 mb-10'>
+                    <div className='relative md:ml-64 md:mb-0 px-6 bg-brand md:min-h-[1000px] md:pb-0 pb-20 mb-10'>
                         <Header isSidebarCollapsed={isSidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed} />
-                        <div className="pt-10 pb-0 lg:pb-12">
+                        <div className="pt-6 pb-0 lg:pb-12">
                             <div className="">
                                 <div className={`max-w-full w-full mx-auto md:pl-0 p-0 md:pt-0 md:p-5 `}>
                                     {children}

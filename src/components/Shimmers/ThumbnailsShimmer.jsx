@@ -8,7 +8,7 @@ const ThumbnailsShimmer = () => {
     <>
       {thumbnails.map((e, i) => (
         <div key={`${e}_${i}`} className="w-full h-20 rounded-lg animate-pulse">
-          <div className="h-20 bg-gray-300 rounded-lg dark:bg-gray-700" />
+          <div className="h-20 bg-white rounded-lg dark:bg-gray-700" />
         </div>
       ))}
     </>

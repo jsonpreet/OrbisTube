@@ -8,7 +8,7 @@ function ConnectButton() {
     return (
         <>
             <ConnectModal show={showModal} setShowModal={setShowModal}/>
-            <Button variant='white' onClick={() => setShowModal(true)}>Connect</Button>
+            <Button variant='primary' className="drop-shadow-[0_0px_10px_rgba(0,0,0,0.15)]" onClick={() => setShowModal(true)}>Connect</Button>
         </>
     )
 }

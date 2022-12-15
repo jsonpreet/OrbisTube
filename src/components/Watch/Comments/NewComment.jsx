@@ -1,9 +1,9 @@
 import { Button } from '@components/UI/Button'
 import { useState } from 'react'
-import InputMentions from '../UI/InputMentions'
+import InputMentions from '../../UI/InputMentions'
 import { toast } from 'react-hot-toast'
-import useDidToAddress from '@utils/functions/getDidToAddress'
-import useGetUsername from '@utils/functions/getProfileName'
+import { useDidToAddress } from '@utils/functions/getDidToAddress'
+import { useGetUsername } from '@utils/functions/getProfileName'
 
 
 const NewComment = ({ video, refetch }) => {
