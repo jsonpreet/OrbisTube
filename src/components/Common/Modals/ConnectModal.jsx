@@ -130,7 +130,7 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
             ref={rootRef}
             panelClassName="w-full max-w-lg"
         >
-            <div className="w-full mt-2 flex md:max-w-xs justify-center mx-auto flex-col space-y-3">
+            <div className="w-full px-5 mt-2 flex md:max-w-xs justify-center mx-auto flex-col space-y-3">
                 <button
                     onClick={() => connect()}
                     className='bg-[#f57b24] text-white px-4 py-2 rounded-lg'

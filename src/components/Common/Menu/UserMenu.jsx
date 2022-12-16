@@ -36,7 +36,7 @@ function UserMenu() {
                             <ProfilePicture details={user} imgClass='object-cover rounded-full bg-dropdown w-8 h-8 md:w-9 md:h-9'/>
                         </Button>
                     }
-                    >
+                >
                     <div className="py-2 my-1 overflow-hidden rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 divide-y dropdown-shadow max-h-96 bg-dropdown theme-divider border theme-border w-56">
                         <>
                             <div className="pt-2 text-sm">

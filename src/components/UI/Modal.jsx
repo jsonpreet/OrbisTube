@@ -44,12 +44,12 @@ const Modal = ({
             >
               <Dialog.Panel
                 className={clsx(
-                  'w-full p-5 py-5 overflow-x-hidden text-left align-middle transition-all transform shadow-xl bg-primary rounded-2xl',
+                  'w-full py-5 overflow-x-hidden text-left align-middle transition-all transform shadow-xl bg-primary rounded-2xl',
                   panelClassName
                 )}
               >
                 {title && (
-                  <div className="flex items-center justify-between pb-4">
+                  <div className="flex px-5 pb-2 -mt-2 items-center justify-between border-b theme-border mb-4">
                     <Dialog.Title
                       as="h3"
                       className="text-lg font-medium leading-6"

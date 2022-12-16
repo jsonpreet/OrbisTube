@@ -8,11 +8,11 @@ import { GlobalContext } from '@context/app'
 
 const Comment = dynamic(() => import('./Comment'))
 
-const Comments = ({ video }) => {
-    const {isLoggedIn, user } = usePersistStore((state) => state)
+const Comments = ({ video, isVideoOwner }) => {
+    const { orbis, isLoggedIn, user } = useContext(GlobalContext)
     const [loading, setLoading] = useState(true)
-    const { orbis } = useContext(GlobalContext)
     const [comments, setComments] = useState(null)
+
 
     useEffect(() => {
         fetchData();

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../UI/Button";
-import ConnectModal from "./ConnectModal";
+import ConnectModal from "@components/Common/Modals/ConnectModal";
 
 function ConnectButton() {
     const [showModal, setShowModal] = useState(false)

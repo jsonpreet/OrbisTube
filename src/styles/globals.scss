@@ -33,6 +33,10 @@ body{
 	scrollbar-color: #616161;
 }
 
+a:focus, button:focus{
+  outline: none;
+}
+
 .font-oswald {
   font-family: 'Oswald', sans-serif;
 }

@@ -4,25 +4,23 @@ import { Listbox, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { BsCheck } from 'react-icons/bs'
 
-const Category = () => {
-    const uploadedVideo = useAppStore((state) => state.uploadedVideo)
-    const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
+const Category = ({category, setCategory}) => {
 
     return (
         <>
             <div className="flex items-center mb-1 space-x-1.5">
                 <div className="font-medium text-sm mb-1">
-                Category
+                    Category
                 </div>
             </div>
             <Listbox
-                value={uploadedVideo.videoCategory}
-                onChange={(category) => setUploadedVideo({ videoCategory: category })}
+                value={category}
+                onChange={(category) => setCategory( {title: category.title, slug: category.slug } )}
             >
-                <div className="relative z-30 mt-1">
+                <div className="relative mt-1">
                     <Listbox.Button className="w-full text-sm py-2.5 px-3 bg-primary border theme-border rounded-md focus:outline-none text-left">
                         <span className="block truncate">
-                        {uploadedVideo.videoCategory.name}
+                        {category.title}
                         </span>
                         <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                         <BsCheck size={17} />
@@ -52,7 +50,7 @@ const Category = () => {
                                     selected ? 'font-medium' : 'font-normal'
                                     }`}
                                 >
-                                    {category.name}
+                                    {category.title}
                                 </span>
                                 {selected ? (
                                     <span className="absolute inset-y-0 left-0 flex items-center pl-3">

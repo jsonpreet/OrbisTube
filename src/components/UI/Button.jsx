@@ -6,7 +6,7 @@ export const Button = ({className = '', size = 'md', variant = 'primary', loadin
   return (
     <button
       className={clsx(
-        'relative inline-block disabled:opacity-50 rounded-full group',
+        'relative z-0 inline-block disabled:opacity-50 rounded-full group',
         {
           'px-4 py-1.5 text-xs': size === 'sm',
           'px-5 md:py-2 py-1.5 text-sm': size === 'md',
@@ -27,7 +27,7 @@ export const Button = ({className = '', size = 'md', variant = 'primary', loadin
       {...rest}
     >
       <span
-        className={clsx('relative flex items-center justify-center ', {
+        className={clsx('relative z-0 flex items-center justify-center ', {
           'text-white': variant !== 'secondary' && variant !== 'outlined' && variant !== 'light' && variant !== 'dark' && variant !== 'none',
         }, { 'text-secondary': variant === 'light' }, 
           { 'dark-button-text': variant === 'dark'}, 

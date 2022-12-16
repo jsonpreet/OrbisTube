@@ -1,6 +1,5 @@
 import { ThemeProvider } from 'next-themes';
 import '@rainbow-me/rainbowkit/styles.css';
-import usePersistStore from '@store/persist';
 import { Orbis } from '@orbisclub/orbis-sdk';
 import { GlobalContext } from '@context/app';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
@@ -14,7 +13,7 @@ let orbis = new Orbis();
 
 const Providers = ({ children, pageProps }) => {
     const [user, setUser] = useState(null);
-    const [isLoggedIn, setLoggedIn] = useState(null);
+    const [isLoggedIn, setLoggedIn] = useState(false);
     const [supabase] = useState(() => createBrowserSupabaseClient())
     useEffect(() => {
         if(!user) {

@@ -26,7 +26,7 @@ const Video = ({ views, video }) => {
               {video.content.title}
             </h1>
         </div>
-        <div className='flex md:flex-row flex-col overflow-hidden justify-between md:items-center mt-3 flex-shrink-0'>
+        <div className='flex md:flex-row flex-col justify-between md:items-center mt-3 flex-shrink-0'>
           <Info channel={userProfile} video={video}/>
           <Actions video={video} />
         </div>

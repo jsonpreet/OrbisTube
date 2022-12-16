@@ -71,18 +71,18 @@ const Sidebar = () => {
                 if (categories !== 6) {
                   const category = CREATOR_VIDEO_CATEGORIES[categories];
                   return (
-                    <Link key={category.tag.toLowerCase()}
-                      href={`/explore/${category.tag.toLowerCase()}`}
+                    <Link key={category.slug.toLowerCase()}
+                      href={`/explore/${category.slug.toLowerCase()}`}
                       className={clsx(
                         'rounded-lg px-3 py-2 group',
-                        isActiveCategory(category.tag.toLowerCase())
+                        isActiveCategory(category.slug.toLowerCase())
                           ? 'active-primary font-bold'
                           : 'hover-primary'
                       )}
                     >
                       <div className="flex items-center">
                         {category.icon}
-                        <p className='ml-6'>{category.name}</p>
+                        <p className='ml-6'>{category.title}</p>
                       </div>
                     </Link>
                   )

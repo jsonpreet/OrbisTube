@@ -65,7 +65,7 @@ function parseMarkdown(post, characterLimit) {
       let mention = mentions.find(obj => obj.username === m);
       if(mention !== undefined) {
           body = reactStringReplace(body, _m, (match, i) => (
-              mention.did ? <Link className='gradientLink' href={`/${_m}`} key={match + i}>@{mention.username}</Link> : <span className='gradientLink' key={i}>@{mention.username}</span>
+              mention.did ? <Link className='gradientLink' href={`/${m}`} key={match + i}>@{mention.username}</Link> : <span className='gradientLink' key={i}>@{mention.username}</span>
           ));
       }
     });

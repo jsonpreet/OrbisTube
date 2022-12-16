@@ -12,83 +12,83 @@ import { FaGraduationCap, FaBookReader } from "react-icons/fa";
 
 export const CREATOR_VIDEO_CATEGORIES = [
   {
-    name: 'People & Blogs',
-    tag: 'people',
+    title: 'People & Blogs',
+    slug: 'people',
     icon: <FaBookReader size={18} />
   },
   {
-    name: 'Podcast',
-    tag: 'podcast',
+    title: 'Podcast',
+    slug: 'podcast',
     icon: <BsVoicemail size={21} />
   },
   {
-    name: 'Autos & Vehicles',
-    tag: 'vehicles',
+    title: 'Autos & Vehicles',
+    slug: 'vehicles',
     icon: <AiOutlineCar size={20} />
   },
   {
-    name: 'Comedy',
-    tag: 'comedy',
+    title: 'Comedy',
+    slug: 'comedy',
     icon: <BsEmojiLaughing size={20} />
   },
   {
-    name: 'Education',
-    tag: 'education',
+    title: 'Education',
+    slug: 'education',
     icon: <FaGraduationCap size={20} />
   },
   {
-    name: 'Entertainment',
-    tag: 'entertainment',
+    title: 'Entertainment',
+    slug: 'entertainment',
     icon: <GiPopcorn size={20} />
   },
   {
-    name: 'Film & Animation',
-    tag: 'film',
+    title: 'Film & Animation',
+    slug: 'film',
     icon: <CgFilm size={20} />
   },
   {
-    name: 'Gaming',
-    tag: 'gaming',
+    title: 'Gaming',
+    slug: 'gaming',
     icon: <CgGames size={21} />
   },
   {
-    name: 'Howto & Style',
-    tag: 'howto',
+    title: 'Howto & Style',
+    slug: 'howto',
     icon: <BsBrush  size={20} />
   },
   {
-    name: 'Music',
-    tag: 'music',
+    title: 'Music',
+    slug: 'music',
     icon: <CgMusicNote size={21} />
   },
   {
-    name: 'News & Politics',
-    tag: 'news',
+    title: 'News & Politics',
+    slug: 'news',
     icon: <BsNewspaper size={20} />
   },
   {
-    name: 'Nonprofits & Activism',
-    tag: 'nonprofits',
+    title: 'Nonprofits & Activism',
+    slug: 'nonprofits',
     icon: <CgOrganisation size={20} />
   },
   {
-    name: 'Pets & Animals',
-    tag: 'pets',
+    title: 'Pets & Animals',
+    slug: 'pets',
     icon: <MdOutlinePets size={20} />
   },
   {
-    name: 'Science & Technology',
-    tag: 'technology',
+    title: 'Science & Technology',
+    slug: 'technology',
     icon: <CgData size={20} />
   },
   {
-    name: 'Sports',
-    tag: 'sports',
+    title: 'Sports',
+    slug: 'sports',
     icon: <MdOutlineSportsHandball size={20} />
   },
   {
-    name: 'Travel & Events',
-    tag: 'travel',
+    title: 'Travel & Events',
+    slug: 'travel',
     icon: <MdCardTravel size={20} />
   }
 ]

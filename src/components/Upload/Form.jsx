@@ -8,15 +8,15 @@ import InputMentions from '../UI/InputMentions'
 import Category from './Category'
 import UploadVideo from './Video'
 import { HiChevronUpDown } from "react-icons/hi2";
-import { LANGUAGES } from '@app/data/languages'
+import { LANGUAGES } from '@data/languages'
 import { BsCheck } from 'react-icons/bs'
+import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
 
 
 function UploadForm({onUpload, onCancel}) {
     const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
     const uploadedVideo = useAppStore((state) => state.uploadedVideo)
-    const [tags, setTags] = useState([])
-    const [currentTag, setCurrentTag] = useState('')
+    const [category, setCategory] = useState(CREATOR_VIDEO_CATEGORIES[0])
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [language, setLanguage] = useState(LANGUAGES[0])
@@ -47,6 +47,11 @@ function UploadForm({onUpload, onCancel}) {
         setUploadedVideo({ language: language })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[language])
+
+    useEffect(() => {
+        setUploadedVideo({ videoCategory: category })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[category])
     
     return (
         <>
@@ -60,7 +65,7 @@ function UploadForm({onUpload, onCancel}) {
             />
             <div className='md:px-16 px-4 max-w-7xl mx-auto mt-5'>
                 <h3 className='mb-5 text-2xl font-bold'>Upload Video</h3>
-                <div className="grid h-full gap-5 md:grid-cols-2">
+                <div className="grid h-full relative z-10 gap-5 md:grid-cols-2">
                     <div className="flex flex-col rounded-lg p-5 bg-secondary justify-between">
                         <div>
                             <div className='mb-4 flex flex-col space-y-2'>
@@ -94,14 +99,14 @@ function UploadForm({onUpload, onCancel}) {
                                 />
                             </div>
                             <div className="mb-4 ">
-                                <Category />
+                                <Category setCategory={setCategory} category={category} />
                             </div>
                             <div className='mb-4 flex flex-col space-y-2'>
                                 <label className='font-medium text-sm'>Language</label>
                                 <div>
                                     <Combobox value={language} onChange={setLanguage}>
                                     {/* <Listbox value={language} onChange={setLanguage}> */}
-                                        <div className="relative z-20 mt-1">
+                                        <div className="relative mt-1">
                                             <div className="relative w-full cursor-default overflow-hidden bg-primary border theme-border rounded-md text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-300 sm:text-sm">
                                                 <Combobox.Input
                                                     className="w-full border-none py-2.5 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
@@ -200,7 +205,7 @@ function UploadForm({onUpload, onCancel}) {
                         <UploadVideo />
                     </div>
                 </div>
-                <div className="flex items-center space-x-4 justify-start mt-5">
+                <div className="flex relative z-0 items-center space-x-4 justify-start mt-5">
                     <Button
                         loading={uploadedVideo.loading || uploadedVideo.uploadingThumbnail}
                         disabled={uploadedVideo.loading || uploadedVideo.uploadingThumbnail}

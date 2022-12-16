@@ -74,7 +74,7 @@ function Upload() {
                 title: uploadedVideo.title,
                 mentions: uploadedVideo.mentions,
                 context:APP_CONTEXT,
-                tags: [{ slug: uploadedVideo.videoCategory.tag, title: uploadedVideo.videoCategory.name }],
+                tags: [{ slug: uploadedVideo.videoCategory.slug, title: uploadedVideo.videoCategory.title }],
                 data: {
                     Language: uploadedVideo.language,
                     Thumbnail: uploadedVideo.thumbnail,
@@ -88,6 +88,7 @@ function Upload() {
                 },
                 body: uploadedVideo.description,
             }
+            console.log(request);
             let res = await orbis.createPost(request);
             console.log(res);
             if (res && res.status === 200) {

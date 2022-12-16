@@ -19,6 +19,12 @@ function RecentVideos() {
     setPage(0);
     load(true, autoRefresh, false, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    setPage(0);
+    load(true, autoRefresh, false, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [APP_CONTEXT, user])
 
   /** Refresh feed with latest post and reset pagination */

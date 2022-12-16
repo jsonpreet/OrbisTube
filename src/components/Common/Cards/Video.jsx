@@ -1,30 +1,36 @@
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import ThumbnailOverlays from './ThumbnailOverlays'
 import VideoOptions from './Options'
-import ShareModal from '../ShareModal'
+import ShareModal from '@components/Common/Modals/ShareModal'
 import useAppStore from '@store/app'
 import { useDidToAddress } from '@utils/functions/getDidToAddress'
-import { getUsername, useGetUsername } from '@utils/functions/getProfileName'
-/** Clean time ago for post */
+import { getUsername } from '@utils/functions/getProfileName'
 import ReactTimeAgo from 'react-time-ago'
+import { GlobalContext } from '@app/context/app'
+import ReportModal from '@components/Common/Modals/ReportModal'
+import DeleteModal from '@components/Common/Modals/DeleteModal'
+import EditModal from '@components/Common/Modals/EditModal'
 
 
 
 const VideoCard = ({ video }) => {
-  const [showShare, setShowShare] = useState(false)
-  const [showReport, setShowReport] = useState(false)
+  const [showShareModal, setShowShareModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [showReportModal, setShowReportModal] = useState(false)
   const uploadedVideo = useAppStore((state) => state.uploadedVideo)
-  const [views, setViews] = useState(0)
   const { address } = useDidToAddress(video.creator_details?.did);
-  const username = useGetUsername(video.creator_details?.profile, address, video.creator_details?.did);
 
   return (
     <>
-    
-      <div className="relative">
-          <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
+      {video.content.data ?
+        <div className="relative group">
+          <ShareModal video={video} show={showShareModal} setShow={setShowShareModal} />
+          <ReportModal video={video} show={showReportModal} setShow={setShowReportModal} />
+          <DeleteModal video={video} show={showDeleteModal} setShow={setShowDeleteModal} />
+          <EditModal video={video} show={showEditModal} setShow={setShowEditModal} />
           <Link href={`/watch/${video.stream_id}`}>
             <div className="relative rounded-none md:rounded-xl aspect-w-16 overflow-hidden aspect-h-9">
               <img
@@ -39,7 +45,7 @@ const VideoCard = ({ video }) => {
               <ThumbnailOverlays video={video} />
             </div>
           </Link>
-          <div className="p-2">
+          <div className="py-2">
             <div className="flex items-start space-x-2.5">
               <Link href={`/${getUsername(video.creator_details.profile, video.did)}`} className="flex-none mt-0.5">
                 <img
@@ -55,8 +61,8 @@ const VideoCard = ({ video }) => {
                     <Link
                       href={`/watch/${video.stream_id}`}
                       className="text-[15px] font-medium line-clamp-2 break-words"
-                      >
-                        {video.content.title}
+                    >
+                      {video.content.title}
                     </Link>
                     <Link
                       href={`/${getUsername(video.creator_details.profile, video.did)}`}
@@ -69,21 +75,25 @@ const VideoCard = ({ video }) => {
                         {video.count_likes > 1 ? `${video.count_likes} likes` : `${video.count_likes} like`}
                       </span>
                       <span className="middot" />
-                        <span className="whitespace-nowrap">
-                          <ReactTimeAgo date={video.timestamp * 1000} locale="en-US" />
-                        </span>
+                      <span className="whitespace-nowrap">
+                        <ReactTimeAgo date={video.timestamp * 1000} locale="en-US" />
+                      </span>
                     </div>
                   </div>
                   <VideoOptions
                     video={video}
-                    setShowShare={setShowShare}
-                    setShowReport={setShowReport}
+                    setShowShareModal={setShowShareModal}
+                    setShowReportModal={setShowReportModal}
+                    setShowEditModal={setShowEditModal}
+                    setShowDeleteModal={setShowDeleteModal}
                   />
                 </div>
               </div>
             </div>
           </div>
         </div>
+        : null
+      }
     </>
   )
 }

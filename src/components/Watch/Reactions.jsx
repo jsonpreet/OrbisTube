@@ -143,9 +143,9 @@ function Reactions({video, iconSize = '21', showButton = true}) {
                     <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': liked
                     },
-                        { 'space-x-1.5 md:space-x-3': showButton },
+                        { 'space-x-1.5': showButton },
                         { 'mt-1.5': !showButton },
-                        { 'space-x-1.5': likes > 0 }
+                        { 'space-x-1.5 md:space-x-3': likes > 0 }
                     )}>
                         <FiThumbsUp size={iconSize}
                             className={clsx({
@@ -166,9 +166,9 @@ function Reactions({video, iconSize = '21', showButton = true}) {
                     <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': disliked
                     },
-                        { 'space-x-1.5 md:space-x-3':  showButton && disliked },
+                        { 'space-x-1.5':  showButton && disliked },
                         { 'mt-1.5': !showButton },
-                        { 'space-x-1.5': dislikes > 0 }
+                        { 'space-x-1.5 md:space-x-3': dislikes > 0 }
                     )}>
                         <FiThumbsDown size={iconSize}
                             className={clsx({
@@ -190,9 +190,9 @@ function Reactions({video, iconSize = '21', showButton = true}) {
                     <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': reacted
                     },
-                        { 'space-x-1.5 md:space-x-3': showButton && reacted },
+                        { 'space-x-1.5': showButton && reacted },
                         { 'mt-1.5': !showButton },
-                        { 'space-x-1.5': reactions > 0 }
+                        { 'space-x-1.5 md:space-x-3': reactions > 0 }
                     )}>
                         {reacted ? <FaSmile size={iconSize}
                             className={clsx({

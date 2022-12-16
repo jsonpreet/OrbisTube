@@ -1,19 +1,34 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { FiFlag } from 'react-icons/fi'
 import { RiShareForwardLine } from 'react-icons/ri'
-import ShareModal from '../Common/ShareModal'
-import { Button } from '../UI/Button'
+import ShareModal from '@components/Common/Modals/ShareModal'
+import { Button } from '@components/UI/Button'
 import Reactions from './Reactions'
-import { BsThreeDots } from 'react-icons/bs'
-import DropMenu from '../UI/DropMenu'
-import usePersistStore from '@store/persist'
+import { BsPencilSquare, BsThreeDots } from 'react-icons/bs'
+import DropMenu from '@components/UI/DropMenu'
+import { IoTrashOutline } from 'react-icons/io5'
+import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/router'
+import { GlobalContext } from '@context/app'
+import DeleteModal from '@components/Common/Modals/DeleteModal'
+import EditModal from '@components/Common/Modals/EditModal'
+import ReportModal from '@components/Common/Modals/ReportModal'
 
 const Actions = ({ video }) => {
-    const {isLoggedIn, user } = usePersistStore()
+    const router = useRouter()
+    const { orbis, isLoggedIn, user } = useContext(GlobalContext)
     const [showShare, setShowShare] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [showReportModal, setShowReportModal] = useState(false)
+    const isVideoOwner = isLoggedIn ? user.did === video.creator_details?.did : false
+
     return (
         <>
             <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
+            <DeleteModal video={video} show={showDeleteModal} setShow={setShowDeleteModal} />
+            <EditModal video={video} show={showEditModal} setShow={setShowEditModal} />
+            <ReportModal video={video} show={showReportModal} setShow={setShowReportModal} />
             <div className="flex items-center md:justify-end mt-4 space-x-2 md:space-x-4 md:mt-0">
                 <Reactions video={video} />
                 <Button
@@ -21,9 +36,9 @@ const Actions = ({ video }) => {
                     onClick={() => setShowShare(true)}
                     className='h-10'
                 >
-                    <span className="flex items-center space-x-2 md:space-x-3">
+                    <span className="flex items-center space-x-0 md:space-x-3">
                         <RiShareForwardLine size={22} />
-                        <span>Share</span>
+                        <span className='hidden md:block'>Share</span>
                     </span>
                 </Button>
                 <DropMenu
@@ -37,11 +52,35 @@ const Actions = ({ video }) => {
                             </span>
                         </Button>
                     }
-                    >
-                    <div className="py-2 my-1 overflow-hidden rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 w-44">
+                >
+                    <div className="py-2 my-1 rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 w-44">
                         <div className="flex flex-col text-[14px] transition duration-150 ease-in-out rounded-lg">
-                            <FiFlag size={18} className="ml-0.5" />
-                            <span className="whitespace-nowrap">Report</span>
+                            {isVideoOwner && (
+                                <>
+                                    <button 
+                                        onClick={() => setShowEditModal(true)}
+                                        className='inline-flex items-center px-3 py-2 space-x-3 hover-primary'
+                                    >
+                                        <BsPencilSquare size={18} className="ml-0.5" />
+                                        <span className="whitespace-nowrap">Edit Video</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowDeleteModal(true)}
+                                        className="inline-flex items-center px-3 py-2 space-x-3 text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
+                                    >
+                                        <IoTrashOutline size={18} className="ml-0.5" />
+                                        <span className="whitespace-nowrap">Delete</span>
+                                    </button>
+                                </>
+                            )}
+                            <button 
+                                onClick={() => setShowReportModal(true)}
+                                className='inline-flex items-center px-3 py-2 space-x-3 hover-primary'
+                            >
+                                <FiFlag size={18} className="ml-0.5" />
+                                <span className="whitespace-nowrap">Report</span>
+                            </button>
                         </div>
                     </div>
                 </DropMenu>
