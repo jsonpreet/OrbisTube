@@ -18,7 +18,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
-    require('@vidstack/player/tailwind.cjs'),
     require('@tailwindcss/line-clamp')
   ]
 }

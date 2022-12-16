@@ -1,22 +1,56 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import useAppStore from '@store/app'
 import toast from 'react-hot-toast'
 import VideoThumbnails from './VideoThumbnails'
 import { formatBytes } from '@utils/functions'
-import { CardShimmer } from '../Shimmers/VideoCardShimmer'
-import dynamic from 'next/dynamic'
 import ProgressBar from '../UI/ProgressBar'
-import { Player } from '@livepeer/react'
-
-const ExVideoPlayer = dynamic(() => import('../Player/ExVideoPlayer'), {
-  loading: () => <CardShimmer />,
-  ssr: false
-})
+import imageCdn from '@utils/functions/imageCdn'
+import { getIsNSFW } from '@utils/functions/getIsNSFW'
+import * as tf from '@tensorflow/tfjs'
+import clsx from 'clsx'
+import * as nsfwjs from 'nsfwjs'
 
 function UploadVideo() {
     const uploadedVideo = useAppStore((state) => state.uploadedVideo)
     const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
     const videoRef = useRef(null)
+    console.log(uploadedVideo)
+
+    const analyseVideo = async (currentVideo) => {
+        setUploadedVideo({ buttonText: 'Analysing Video...', loading: true })
+        if (currentVideo && !uploadedVideo.isNSFW) {
+            try {
+                const model = await nsfwjs.load()
+                const predictions = await model?.classify(currentVideo, 3)
+                setUploadedVideo({
+                    buttonText: 'Submit Video',
+                    loading: false,
+                    isNSFW: getIsNSFW(predictions)
+                })
+            } catch (error) {
+                console.log('[Error Analyse Video]', error)
+            }
+        }
+    }
+
+    const onDataLoaded = async (event) => {
+        if (videoRef.current?.duration && videoRef.current?.duration !== Infinity) {
+            setUploadedVideo({
+                durationInSeconds: videoRef.current.duration.toFixed(2)
+            })
+        }
+        if (event.target) {
+            const currentVideo = document.getElementsByTagName('video')[0]
+            await analyseVideo(currentVideo)
+        }
+    }
+
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.onloadeddata = onDataLoaded
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [videoRef])
 
     const onThumbnailUpload = (ipfsUrl, thumbnailType) => {
         setUploadedVideo({ thumbnail: ipfsUrl, thumbnailType })
@@ -25,13 +59,24 @@ function UploadVideo() {
         <>
             <div className="flex flex-col w-full">
                 <div className="overflow-hidden relative rounded-xl w-full">
-                    
-                    <ExVideoPlayer
-                        playerRef={videoRef}
-                        poster={uploadedVideo.thumbnail}
-                        source={uploadedVideo.preview}
-                        type={uploadedVideo.videoType || 'video/mp4'}
-                    />
+                    <video
+                        ref={videoRef}
+                        className="w-full aspect-[16/9] bg-black"
+                        disablePictureInPicture
+                        disableRemotePlayback
+                        controlsList="nodownload noplaybackrate"
+                        poster={imageCdn(
+                            uploadedVideo.thumbnail,
+                            'thumbnail'
+                        )}
+                        controls
+                        src={uploadedVideo.preview}
+                    >
+                        <source
+                            src={uploadedVideo.preview}
+                            type={uploadedVideo.videoType || 'video/mp4'}
+                        />
+                    </video>
                     <div className="py-0.5 absolute top-2 px-2 z-10 left-2 text-xs uppercase bg-brand-200 text-black rounded-full">
                         {uploadedVideo.file?.size && (
                             <span className="whitespace-nowrap font-semibold">

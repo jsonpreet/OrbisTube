@@ -8,13 +8,9 @@ export const usePersistStore = create(
       recentlyWatched: [],
       suggestedVideos: [],
       watchLater: [],
-      user: [],
       selectedChannelId: null,
-      isLoggedIn: false,
       notificationCount: 0,
       setAutoPlay: (autoPlay) => set(() => ({ autoPlay })),
-      setLoggedIn: (isLoggedIn) => set(() => ({ isLoggedIn })),
-      setUser: (user) => set(() => ({ user })),
       setNotificationCount: (notificationCount) => set(() => ({ notificationCount })),
       setSelectedChannelId: (id) => set(() => ({ selectedChannelId: id })),
       addToRecentlyWatched: (video) => {

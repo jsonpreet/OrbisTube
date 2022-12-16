@@ -7,8 +7,7 @@ import { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 
 const ConnectModal = ({ rootRef, show, setShowModal }) => {
-    const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()
-    const { orbis } = useContext(GlobalContext)
+    const { orbis, isLoggedIn, setLoggedIn, user, setUser } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const [status, setStatus] = useState(0);
 
@@ -39,9 +38,7 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
         /** Show loading state */
         setStatus(1);
 
-        /** Connect using an Ethereum provider */
-        let provider = await getProvider();
-        let res = await orbis.connect(provider);
+        let res = await orbis.connect();
 
         /** Parse result and update status */
         switch (res.status) {

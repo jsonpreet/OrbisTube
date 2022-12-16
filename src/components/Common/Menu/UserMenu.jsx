@@ -8,8 +8,7 @@ import ConnectButton from '../ConnectButton';
 
 function UserMenu() {
     const router = useRouter()
-    const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()
-    const { orbis } = useContext(GlobalContext)
+    const { orbis, setLoggedIn, isLoggedIn, user, setUser } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     
     async function logout() {

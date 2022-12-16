@@ -1,21 +1,21 @@
 import { ThemeProvider } from 'next-themes';
 import '@rainbow-me/rainbowkit/styles.css';
-import usePersistStore from '@app/store/persist';
+import usePersistStore from '@store/persist';
 import { Orbis } from '@orbisclub/orbis-sdk';
 import { GlobalContext } from '@context/app';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
-import { useEffect, useMemo, useState } from 'react';
-import { LivepeerConfig, createReactClient, studioProvider } from '@livepeer/react';
+import { useEffect, useState } from 'react';
+import { LivepeerConfig } from '@livepeer/react';
 import NextNProgress from 'nextjs-progressbar';
-
+import { livepeerClient, playerTheme } from '@utils/functions/getLivePeer';
 
 let orbis = new Orbis();
 
 const Providers = ({ children, pageProps }) => {
-    const { user, setUser} = usePersistStore()
+    const [user, setUser] = useState(null);
+    const [isLoggedIn, setLoggedIn] = useState(null);
     const [supabase] = useState(() => createBrowserSupabaseClient())
-    const [ready, setReady] = useState(false)
     useEffect(() => {
         if(!user) {
             checkUserIsConnected();
@@ -29,24 +29,15 @@ const Providers = ({ children, pageProps }) => {
         /** If SDK returns user details we save it in state */
         if(res && res.status == 200) {
             setUser(res.details);
+            setLoggedIn(true);
         }
     }
-    const livepeerClient = useMemo(() => {
-        return createReactClient({
-            provider: studioProvider({
-                apiKey: process.env.NEXT_PUBLIC_LIVEPEER_KEY,
-            }),
-        });
-    }, []);
     return (
         <ThemeProvider defaultTheme="light" attribute="class">
-        <NextNProgress color="#db2777" showOnShallow={true} />
-            <SessionContextProvider
-            supabaseClient={supabase}
-            initialSession={pageProps.initialSession}
-            >
-                <LivepeerConfig dehydratedState={pageProps?.dehydratedState} client={livepeerClient}>
-                    <GlobalContext.Provider value={{ user, setUser, orbis }}>
+        <NextNProgress color="#8B5CF6" showOnShallow={true} />
+            <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
+                <LivepeerConfig client={livepeerClient()} theme={playerTheme}>
+                    <GlobalContext.Provider value={{ isLoggedIn, setLoggedIn, user, setUser, orbis }}>
                         {children}
                     </GlobalContext.Provider>
                 </LivepeerConfig>

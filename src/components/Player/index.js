@@ -1,1 +1,0 @@
-export { default as ExVideoPlayer } from './ExVideoPlayer'

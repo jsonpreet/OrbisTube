@@ -33,7 +33,8 @@ function Upload() {
         // we use a `const` assertion here to provide better Typescript types
         // for the returned data
         uploadedVideo.file
-        ? { sources: [{ name: uploadedVideo.file.name, file: uploadedVideo.file }] }
+        ? { sources: [{ name: uploadedVideo.file.name, file: uploadedVideo.file }],
+          noWait: false, }
         : null,
     );
 
@@ -94,6 +95,7 @@ function Upload() {
                 body: uploadedVideo.description,
             }
             let res = await orbis.createPost(request);
+            console.log(res);
             if (res && res.status === 200) {
                 toast.success('Congratulations! Video Published.');
                 setResetUploadedVideo()
@@ -101,6 +103,7 @@ function Upload() {
             }
         } catch (error) {
             console.log(error)
+            setResetUploadedVideo()
             toast.error(`Error: ${error.message}`);
         }
     }

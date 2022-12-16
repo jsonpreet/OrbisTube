@@ -1,7 +1,10 @@
 import { CardShimmer } from '@components/Shimmers/VideoCardShimmer'
 import dynamic from 'next/dynamic'
 import Actions from './Actions'
-import Info from './Info'
+
+const Info = dynamic(() => import('./Info'), {
+  ssr: false
+})
 
 const VideoPlayer = dynamic(() => import('../Player/VideoPlayer'), {
   loading: () => <CardShimmer />,
@@ -15,7 +18,6 @@ const Video = ({ views, video }) => {
     <>
       <VideoPlayer
         source={video.content.data.VideoUrl}
-        hls={video.content.data.VideoUrl}
         video={video}
         poster={video.content.data.Thumbnail}
       />

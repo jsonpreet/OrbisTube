@@ -68,7 +68,7 @@ function Info({ video, channel }) {
         <>
             <div className='flex items-center md:justify-start overflow-hidden flex-1 justify-between space-x-3'>
                 <div className='flex space-x-2'>
-                    <Link href={`/@${username}`} className="flex-none">
+                    <Link href={`/${username}`} className="flex-none">
                         <img
                             className="w-10 h-10 rounded-full"
                             src={channel.profile.pfp}
@@ -78,7 +78,7 @@ function Info({ video, channel }) {
                     </Link>
                     <div className='flex flex-col'>
                         <Link
-                            href={`/@${username}`}
+                            href={`/${username}`}
                             className="flex items-center w-fit space-x-1.5 font-medium"
                         >
                             <span>{username}</span>  

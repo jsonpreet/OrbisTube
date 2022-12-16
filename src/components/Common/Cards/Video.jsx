@@ -31,7 +31,7 @@ const VideoCard = ({ video }) => {
                 src={video.content.data.Thumbnail}
                 draggable={false}
                 className={clsx(
-                  'object-center bg-gray-100 dark:bg-gray-900 w-full h-full md:rounded-xl lg:w-full lg:h-full',
+                  'object-center bg-primary w-full h-full md:rounded-xl lg:w-full lg:h-full',
                   'object-cover'
                 )}
                 alt="thumbnail"
@@ -41,7 +41,7 @@ const VideoCard = ({ video }) => {
           </Link>
           <div className="p-2">
             <div className="flex items-start space-x-2.5">
-              <Link href={`/@${getUsername(video.creator_details.profile, video.did)}`} className="flex-none mt-0.5">
+              <Link href={`/${getUsername(video.creator_details.profile, video.did)}`} className="flex-none mt-0.5">
                 <img
                   className="w-9 h-9 rounded-full"
                   src={video.creator_details?.profile.pfp}
@@ -59,8 +59,8 @@ const VideoCard = ({ video }) => {
                         {video.content.title}
                     </Link>
                     <Link
-                      href={`/@${getUsername(video.creator_details.profile, video.did)}`}
-                      className="flex w-fit items-center space-x-1.5 text-[14px] text-light"
+                      href={`/${getUsername(video.creator_details.profile, video.did)}`}
+                      className="flex hover:text-black dark:hover:text-white w-fit items-center space-x-1.5 text-[14px] text-light"
                     >
                       <span>{getUsername(video.creator_details.profile, video.did)}</span>
                     </Link>
