@@ -12,11 +12,11 @@ export const livepeerClient = () => {
 export const playerTheme = {
   colors: {
     accent: '#fff',
-    progressLeft: '#8B5CF6',
-    loading: '#8B5CF6'
+    progressLeft: '#ef466f',
+    loading: '#ef466f'
   },
   fonts: {
-    display: 'Matter'
+    display: 'Roboto'
   },
   fontSizes: {
     timeFontSize: '12px'
@@ -31,5 +31,8 @@ export const playerTheme = {
     thumbActive: '7px',
     trackActive: '3px',
     trackInactive: '3px'
-  }
+  },
+  radii: {
+    containerBorderRadius: '0px',
+  },
 }

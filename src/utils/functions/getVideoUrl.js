@@ -8,8 +8,8 @@ export const getOriginalVideoUrl = (video) => {
   return url
 }
 
-export const getPlaybackIdFromUrl = (video) => {
-  const url = video.VideoURLs[0]
-  const playbackId = url.split('/').pop()
+export const getPlaybackIdFromUrl = (url) => {
+  const pathname = new URL(url).pathname
+  const playbackId = pathname.split('/')[2]
   return playbackId
 }

@@ -1,5 +1,4 @@
 import useAppStore from '@store/app'
-import usePersistStore from '@store/persist'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import DropZone from './DropZone'
@@ -11,16 +10,11 @@ import { GlobalContext } from '@context/app'
 
 function Upload() {
     const router = useRouter()
-    const { orbis } = useContext(GlobalContext);
-    const {isLoggedIn, user} = usePersistStore()
+    const { orbis, isLoggedIn, user } = useContext(GlobalContext);
     const uploadedVideo = useAppStore((state) => state.uploadedVideo)
     const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
     const setResetUploadedVideo = useAppStore((state) => state.setResetUploadedVideo)
     const [loading, setLoading] = useState(false)
-    // const [newPostHash, setNewPostHash] = useState(null)
-    // const [mediaID, setMediaId] = useState(null)
-    // const videoStreamInterval = null
-
 
     useEffect(() => {
         if (!isLoggedIn) {

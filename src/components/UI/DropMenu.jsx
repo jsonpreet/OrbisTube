@@ -9,12 +9,7 @@ export const NextLink = ({ href, children, ...rest }) => (
   </Link>
 )
 
-const DropMenu = ({
-  trigger,
-  children,
-  positionClassName,
-  position = 'right'
-}) => (
+const DropMenu = ({ trigger, children, positionClassName, position = 'right' }) => (
   <Menu as="div" className="relative">
     <Menu.Button as="div" className="flex cursor-pointer">
       {trigger}

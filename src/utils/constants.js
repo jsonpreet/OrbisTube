@@ -40,7 +40,7 @@ export const DEFAULT_SEO = {
   },
 };
 
-export const APP_CONTEXT = '21b51aba82824ef290949bdf26ab4427';
+export const APP_CONTEXT = 'kjzl6cwe1jw146citufva4acuo2s64ld0gxap1w2q3rdp54o4y7uu6n2vavfc1l' //'21b51aba82824ef290949bdf26ab4427';
 
 export const WEB3_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDIzNGI1OTY0MUYzODA5ODcwN2NCNzIyZkU1MzVlZTc2MzBmNjZiOTYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzAyNzM1OTg4ODksIm5hbWUiOiJ2b3JiaXMifQ.Kr9ZTOzckP2nEJRwMWW8rhu7WsW9EvxoM8sSnXlfa9M';
 

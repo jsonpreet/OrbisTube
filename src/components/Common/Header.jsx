@@ -1,15 +1,12 @@
-import { HOME } from '@utils/paths'
-import Link from 'next/link'
-import { APP } from '@utils/constants'
-import Image from 'next/image'
 import ThemeSwitch from './ThemeSwitch'
-import usePersistStore from '@app/store/persist'
 import { NewVideoMenu, UserMenu } from './Menu'
 import { Search } from './Search'
+import { useContext } from 'react'
+import { GlobalContext } from '@context/app'
 
 
 const Header = () => {
-  const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
+  const { isLoggedIn } = useContext(GlobalContext)
   return (
     <>
       <div className='relative items-center flex justify-start md:justify-between flex-row z-30 h-16'>
