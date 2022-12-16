@@ -4,12 +4,11 @@ import { useRef } from 'react'
 import { Player } from '@livepeer/react'
 
 const PlayerInstance = ({ video, ratio, source, poster }) => {
-  const playerRef = useRef()
+  const playerRef = useRef(null)
 
   return (
     <div className='md:relative z-[5]'>
       <Player
-        mediaElementRef={playerRef}
         poster={poster}
         src={source}
         aspectRatio={ratio}
