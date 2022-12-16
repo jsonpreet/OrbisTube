@@ -13,7 +13,6 @@ const VideoPlayer = dynamic(() => import('../Player/VideoPlayer'), {
 
 const Video = ({ views, video }) => {
   const userProfile = video.creator_details;
-
   return (
     <>
       <VideoPlayer

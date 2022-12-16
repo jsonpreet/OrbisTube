@@ -61,7 +61,7 @@ function Upload() {
             setLoading(false);
         }
         if (assets && assets[0] && assets[0].status?.phase === 'ready') {
-            setUploadedVideo({ videoURL: `${VIDEO_CDN_URL}/asset/${assets[0]?.playbackId}/video` })
+            setUploadedVideo({ videoURL: `https://livepeer-vod.studio/hls/${assets[0]?.playbackId}/video` })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status, assets])
