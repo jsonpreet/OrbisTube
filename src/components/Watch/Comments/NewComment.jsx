@@ -1,24 +1,46 @@
 import { Button } from '@components/UI/Button'
-import { useState } from 'react'
-import InputMentions from '../../UI/InputMentions'
+import { useContext, useState } from 'react'
+import InputMentions from '@components/UI/InputMentions'
 import { toast } from 'react-hot-toast'
-import { useDidToAddress } from '@utils/functions/getDidToAddress'
-import { useGetUsername } from '@utils/functions/getProfileName'
+import { ProfilePicture } from '@utils/functions/getProfilePicture'
+import { GlobalContext } from '@context/app'
+import { APP_CONTEXT } from '@utils/constants'
 
 
-const NewComment = ({ video, refetch }) => {
+const NewComment = ({ reply, video, refetch, isReply = false }) => {
     const channel = video.creator_details;
+    const { orbis, isLoggedIn, user } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const [showButtons, setShowButtons] = useState(false)
     const [comment, setComment] = useState('')
-    const { address } = useDidToAddress(channel.did);
-    const username = useGetUsername(channel.profile, address, channel.did);
+    const [mentions, setMentions] = useState([])
 
 
     const submitComment = async () => {
         setLoading(true);
         if (comment.trim().length > 0) {
-            
+            try {
+                const request = {
+                    mentions: mentions,
+                    context:APP_CONTEXT,
+                    body: comment,
+                    master: video.stream_id,
+                    reply_to: isReply ? reply.stream_id : null
+                }
+                let res = await orbis.createPost(request);
+                if (res && res.status === 200) {
+                    setComment('');
+                    setLoading(false);
+                    setShowButtons(false);
+                    toast.success('Congratulations! Comment Posted.');
+                }
+            } catch (error) {
+                console.log(error)
+                toast.error(`Error: ${error.message}`);
+            }
+            finally {
+                refetch()
+            }
         } else {
             setLoading(false);
             toast.error('Please write something to post.');
@@ -28,6 +50,7 @@ const NewComment = ({ video, refetch }) => {
     const cancel = () => {
         setShowButtons(false)
         setComment('')
+        setLoading(false)
     }
 
     const onFocus = () => {
@@ -37,12 +60,7 @@ const NewComment = ({ video, refetch }) => {
     return (
         <div className="mt-1 mb-5 flex space-x-3">
             <div className="flex-none">
-                <img
-                    className="w-10 h-10 rounded-full"
-                    src={channel.profile.pfp}
-                    alt={username}
-                    draggable={false}
-                />
+                <ProfilePicture details={user} imgClass={`object-cover rounded-full bg-dropdown w-8 h-8 ${isReply ? `md:w-8 md:h-8` : `md:w-10 md:h-10`}`} />
             </div>
             <div className="flex flex-col flex-1 space-y-2 md:space-y-3">
                 <div>
@@ -51,6 +69,10 @@ const NewComment = ({ video, refetch }) => {
                         autoComplete="off"
                         value={comment}
                         onFocus={onFocus}
+                        onAdd={(id, display) => {
+                            let mention = { 'did': id, 'username': display }
+                            setMentions([...mentions, mention])
+                        }}
                         onContentChange={(value) => {
                             setComment(value)
                         }}
@@ -59,8 +81,8 @@ const NewComment = ({ video, refetch }) => {
                 </div>
                 {showButtons ?
                     <div className='flex justify-end space-x-3'>
-                        <Button variant='light' onClick={cancel} disabled={loading}>Cancel</Button>
-                        <Button onClick={submitComment} disabled={loading}>Comment</Button>
+                        <Button variant='light' onClick={cancel}>Cancel</Button>
+                        <Button onClick={submitComment} loading={loading}  disabled={loading}>Comment</Button>
                     </div>
                 : null}    
             </div>

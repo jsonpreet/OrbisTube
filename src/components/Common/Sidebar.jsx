@@ -2,8 +2,8 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FiHome } from 'react-icons/fi'
-import { MdOutlineSubscriptions } from 'react-icons/md'
-import { FEED, HOME} from '@utils/paths'
+import { MdHistory, MdOutlineSubscriptions, MdOutlineVideoLibrary } from 'react-icons/md'
+import { FEED, HISTORY, HOME, LIBRARY} from '@utils/paths'
 import { CREATOR_VIDEO_CATEGORIES } from '@data/categories'
 import { APP } from '@app/utils/constants'
 import { useState } from 'react'
@@ -59,6 +59,34 @@ const Sidebar = () => {
                 <div className={`flex items-center`}>
                   <MdOutlineSubscriptions size={20} />
                   <p className={`flex ml-6`}>Subscriptions</p>
+                </div>
+              </Link>
+              <Link
+                href={LIBRARY}
+                className={clsx(
+                  'rounded-lg px-3 py-2 group hover-primary',
+                  {
+                    'active-primary font-bold ': isActivePath(LIBRARY),
+                  },
+                )}
+              >
+                <div className={`flex items-center`}>
+                  <MdOutlineVideoLibrary size={21} />
+                  <p className={`flex ml-6`}>Library</p>
+                </div>
+              </Link>
+              <Link
+                href={HISTORY}
+                className={clsx(
+                  'rounded-lg px-3 py-2 group hover-primary',
+                  {
+                    'active-primary font-bold ': isActivePath(HISTORY),
+                  },
+                )}
+              >
+                <div className={`flex items-center`}>
+                  <MdHistory size={21} />
+                  <p className={`flex ml-6`}>History</p>
                 </div>
               </Link>
             </div>

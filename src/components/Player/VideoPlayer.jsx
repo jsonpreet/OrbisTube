@@ -14,6 +14,7 @@ const PlayerInstance = ({ video, ratio, source, poster }) => {
         objectFit="contain"
         showPipButton={true}
         autoPlay={false}
+        loop={true}
         showTitle={false}
         showUploadingIndicator={false}
       />

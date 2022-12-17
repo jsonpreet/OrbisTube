@@ -7,22 +7,32 @@ import { useContext, useState } from 'react'
 import { GlobalContext } from '@context/app'
 import { useRouter } from 'next/router'
 
-const DeleteModal = ({ rootRef, show, setShow, video }) => {
+const DeleteModal = ({ rootRef, show, setShow, video, isComment = false, refetch }) => {
     const { orbis } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const router = useRouter()
+    let message = isComment ? `Comment Deleted` : `Video Deleted`
+    let heading = isComment ? `Delete Comment` : `Delete Video`
     const hideVideo = async () => {
         setLoading(true)
-        let res = await orbis.deletePost(video.stream_id);
-        if (res.status === 200) {
-            toast.success('Video Deleted!')
-            setTimeout(() => router.push(`/${getUsername(video.creator_details.profile, video.did)}`, undefined, { shallow: true }), 1000)
+        try {
+            let res = await orbis.deletePost(video.stream_id);
+            console.log(res)
+        } catch (error) {
+
+        } finally {
+            toast.success(message)
+            if (!isComment) {
+                setTimeout(() => router.push(`/${getUsername(video.creator_details.profile, video.did)}`, undefined, { shallow: true }), 1000)
+            } 
+            setShow(false)
+            refetch()
             setLoading(false)
         }
     }
     return (
         <Modal
-            title="Delete Video"
+            title={heading}
             onClose={() => setShow(false)}
             show={show}
             ref={rootRef}

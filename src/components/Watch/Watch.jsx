@@ -10,16 +10,45 @@ import { APP } from "@utils/constants"
 import Video from "./Video"
 import About from "./About"
 import Comments from "./Comments/Comments"
+import { useSupabaseClient } from "@supabase/auth-helpers-react"
 
 function Watch({ post, loading, isError }) {
     const router = useRouter()
     const post_id = router.query.id;
+    const supabase = useSupabaseClient()
     const { orbis, isLoggedIn, user } = useContext(GlobalContext)
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
     const setVideoWatchTime = useAppStore((state) => state.setVideoWatchTime)
     const [video, setVideo] = useState(post)
     
     const isVideoOwner = isLoggedIn ? user.did === post.creator_details?.did : false
+    
+    useEffect(() => {
+        if (isLoggedIn && video) {
+            addToHistory()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [video, isLoggedIn, user])
+
+    const addToHistory = async() => {
+        console.log(video.stream_id, 'adding to history');
+        try {
+            const { data: post, error } = await supabase.from('history').select('*').eq('stream_id', video.stream_id).eq('user', user.did);
+            if (post && post.length > 0) {
+                await supabase.from('history').update({ lastwatched: new Date() }).eq('stream_id', video.stream_id).eq('user', user.did);
+            } else {
+                const request = { user: user.did, stream_id: video.stream_id, lastwatched: new Date() }
+
+                supabase.from('history').insert([request]).then((res) => {
+                    if (res.error) {
+                        console.log(video.stream_id, 'watched', res.error);
+                    }
+                })
+            }
+        } catch (error) {
+            console.log(video.stream_id, 'watched', error);
+        }
+    }
 
     if (isError) {
         return <Custom500 />

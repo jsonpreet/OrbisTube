@@ -28,8 +28,8 @@ const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowE
   }, [video, user])
 
   const isAlreadyAddedToWatchLater = () => {
-    supabase.from('watchlater').select('*').eq('user', user.did).eq('posthash', video.stream_id).then((res) => {
-      if (res.data.length > 0) {
+    supabase.from('watchlater').select('*').eq('user', user.did).eq('stream_id', video.stream_id).then((res) => {
+      if (res && res.data.length > 0) {
         setAlreadyAddedToWatchLater(true)
       } else {
         setAlreadyAddedToWatchLater(false)
@@ -41,7 +41,7 @@ const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowE
   }
 
   const addToWatchLater = () => {
-    supabase.from('watchlater').insert([{ user: user.did, posthash: video.stream_id }]).then((res) => {
+    supabase.from('watchlater').insert([{ user: user.did, stream_id: video.stream_id }]).then((res) => {
       if (res.error) {
         console.error(video.stream_id, 'watched', res.error);
       } else {
@@ -51,21 +51,13 @@ const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowE
   }
 
   const removeFromWatchLater = () => {
-    supabase.from('watchlater').delete().eq('user', user.did).eq('posthash', video.stream_id).then((res) => {
+    supabase.from('watchlater').delete().eq('user', user.did).eq('stream_id', video.stream_id).then((res) => {
       if (res.error) {
         console.error(video.stream_id, 'watched', res.error);
       } else {
         setAlreadyAddedToWatchLater(false)
       }
     })
-  }
-
-  const onHideVideo = async() => {
-    let res = await orbis.deletePost(video.stream_id);
-    if (res.status === 200) {
-      toast.success('Video Deleted!')
-      setTimeout(() => router.push('/', undefined, { shallow: true }), 1000)
-    }
   }
 
   const onClickWatchLater = () => {
@@ -123,7 +115,7 @@ const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowE
           <button
             type="button"
             onClick={() => setShowReportModal()}
-            className="inline-flex items-center px-3 py-2 space-x-3 text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
+            className="inline-flex items-center px-3 py-2 space-x-3 hover-primary"
           >
             <FiFlag size={18} className="ml-0.5" />
             <span className="whitespace-nowrap">Report</span>

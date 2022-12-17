@@ -12,6 +12,7 @@ import { GlobalContext } from '@app/context/app'
 import ReportModal from '@components/Common/Modals/ReportModal'
 import DeleteModal from '@components/Common/Modals/DeleteModal'
 import EditModal from '@components/Common/Modals/EditModal'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 
 
@@ -33,14 +34,16 @@ const VideoCard = ({ video }) => {
           <EditModal video={video} show={showEditModal} setShow={setShowEditModal} />
           <Link href={`/watch/${video.stream_id}`}>
             <div className="relative rounded-none md:rounded-xl aspect-w-16 overflow-hidden aspect-h-9">
-              <img
-                src={video.content.data.Thumbnail}
-                draggable={false}
+              <LazyLoadImage
+                delayTime={1000}
                 className={clsx(
-                  'object-center bg-primary w-full h-full md:rounded-xl lg:w-full lg:h-full',
-                  'object-cover'
+                'object-center bg-gray-100 dark:bg-gray-900 w-full h-full rounded-lg lg:w-full lg:h-full object-cover'
                 )}
-                alt="thumbnail"
+                alt={`Video by ${getUsername(video.creator_details.profile, video.did)}`}
+                wrapperClassName='w-full'
+                effect="blur"
+                placeholderSrc='https://placekitten.com/360/220'
+                src={video.content.data.Thumbnail}
               />
               <ThumbnailOverlays video={video} />
             </div>

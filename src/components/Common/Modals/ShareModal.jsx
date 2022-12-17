@@ -36,8 +36,8 @@ const ShareModal = ({ rootRef, show, setShow, video }) => {
       panelClassName="w-full max-w-lg"
     >
       <div className="w-full px-5 mt-2">
-        <SimpleBar className='md:h-[70px] h-auto w-full'>
-          <div className="md:flex md:justify-center grid grid-cols-4 md:grid-cols-1 md:items-center pb-4 md:gap-0 gap-3 flex-nowrap max-w-md">
+        <SimpleBar className='h-auto w-full'>
+          <div className="md:flex md:justify-center grid grid-cols-4 md:grid-cols-1 md:items-center md:gap-0 gap-3 flex-nowrap max-w-md">
             <div className='md:mr-4 mr-0'>
               <button
                 type="button"

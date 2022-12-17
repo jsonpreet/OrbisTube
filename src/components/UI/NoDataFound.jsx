@@ -1,13 +1,16 @@
-import usePersistStore from '@app/store/persist'
-import { DESO_CONFIG } from '@app/utils/constants'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
-import { Button } from './Button'
 
-export const NoDataFound = ({imageSize = 'md:w-20 w-10', image = `/videso.png`, text = 'No data found', heading = 'No data found', withImage = false, isCenter = false, isHeading = false, button, isLoginButton = false, isButton = false }) => {
-  
-  const { setLoggedIn, isLoggedIn, user, setUser } = usePersistStore()
-  const [loading, setLoading] = useState(false)
+export const NoDataFound = ({
+  imageSize = 'md:w-20 w-10',
+  image = `/logo.png`,
+  text = 'No data found',
+  heading = 'No data found',
+  withImage = false,
+  isCenter = false,
+  isHeading = false,
+  button,
+  isButton = false
+}) => {
 
   return (
     <div

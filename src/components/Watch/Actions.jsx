@@ -31,12 +31,8 @@ const Actions = ({ video }) => {
             <ReportModal video={video} show={showReportModal} setShow={setShowReportModal} />
             <div className="flex items-center md:justify-end mt-4 space-x-2 md:space-x-4 md:mt-0">
                 <Reactions video={video} />
-                <Button
-                    variant="light"
-                    onClick={() => setShowShare(true)}
-                    className='h-10'
-                >
-                    <span className="flex items-center space-x-0 md:space-x-3">
+                <Button variant="light" onClick={() => setShowShare(true)}>
+                    <span className='flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 outline-none space-x-1.5'>
                         <RiShareForwardLine size={22} />
                         <span className='hidden md:block'>Share</span>
                     </span>
@@ -47,7 +43,7 @@ const Actions = ({ video }) => {
                             variant="light"
                             className='md:!p-0 md:w-10 max-w-[40px] w-auto h-10' 
                         >
-                            <span className="flex items-center space-x-2 md:space-x-3">
+                            <span className="flex items-center space-x-2 md:space-x-3 dark:group-hover:text-brand2-400 group-hover:text-brand2-500">
                                 <BsThreeDots size={22} />
                             </span>
                         </Button>
