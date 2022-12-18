@@ -5,9 +5,13 @@ import { NextSeo } from 'next-seo';
 import { APP } from '@utils/constants';
 import { useContext } from 'react';
 import { GlobalContext } from '@context/app';
+import { Loader2 } from '@components/UI/Loader';
 
 function Library() {
-    const { orbis, user, isLoggedIn } = useContext(GlobalContext);
+    const { orbis, user, isLoggedIn, isConnected } = useContext(GlobalContext);
+    if (!isConnected) {
+        return <div className='flex items-center justify-center'><Loader2/></div>
+    }
     return (
         <>
             <NextSeo

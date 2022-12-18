@@ -14,7 +14,6 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react"
 
 function Watch({ post, loading, isError }) {
     const router = useRouter()
-    const post_id = router.query.id;
     const supabase = useSupabaseClient()
     const { orbis, isLoggedIn, user } = useContext(GlobalContext)
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)

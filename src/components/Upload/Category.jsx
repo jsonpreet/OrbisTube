@@ -20,10 +20,10 @@ const Category = ({category, setCategory}) => {
                 <div className="relative mt-1">
                     <Listbox.Button className="w-full text-sm py-2.5 px-3 bg-primary border theme-border rounded-md focus:outline-none text-left">
                         <span className="block truncate">
-                        {category.title}
+                            {category.title}
                         </span>
                         <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                        <BsCheck size={17} />
+                            <BsCheck size={17} />
                         </span>
                     </Listbox.Button>
                     <Transition

@@ -107,9 +107,9 @@ function UploadForm({onUpload, onCancel}) {
                                     <Combobox value={language} onChange={setLanguage}>
                                     {/* <Listbox value={language} onChange={setLanguage}> */}
                                         <div className="relative mt-1">
-                                            <div className="relative w-full cursor-default overflow-hidden bg-primary border theme-border rounded-md text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-300 sm:text-sm">
+                                            <div className="relative w-full cursor-default overflow-hidden bg-primary border theme-border rounded-md text-left focus:outline-none focus-visible:ring-0 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-300 sm:text-sm">
                                                 <Combobox.Input
-                                                    className="w-full border-none py-2.5 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+                                                    className="w-full bg-primary border theme-border rounded-md dark:text-white focus-visible:ring-0 text-black border-none py-2.5 pl-3 pr-10 text-sm leading-5 focus:ring-0"
                                                     displayValue={(language) => language}
                                                     onChange={(event) => setQuery(event.target.value)}
                                                 />
@@ -127,9 +127,9 @@ function UploadForm({onUpload, onCancel}) {
                                             leaveTo="opacity-0"
                                             afterLeave={() => setQuery('')}
                                         >
-                                            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md dropdown-shadow bg-dropdown py-1 text-base focus:outline-none sm:text-sm">
                                                 {filteredLanguage.length === 0 && query !== '' ? (
-                                                    <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                                                    <div className="relative cursor-default select-none py-2 px-4 text-light">
                                                         Nothing found.
                                                     </div>
                                                 ) : (
@@ -138,7 +138,7 @@ function UploadForm({onUpload, onCancel}) {
                                                         key={lang}
                                                         className={({ active }) =>
                                                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                                            active ? 'bg-brand-600 text-white' : 'text-gray-900'
+                                                            active ? 'bg-gray-100 dark:bg-gray-800' : 'dark:text-white text-gray-900'
                                                         }`
                                                         }
                                                         value={lang}
@@ -155,7 +155,7 @@ function UploadForm({onUpload, onCancel}) {
                                                     {selected ? (
                                                     <span
                                                         className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                                        active ? 'text-white' : 'text-brand-600'
+                                                        active ? 'text-white' : 'text-brand-600 dark:text-white'
                                                         }`}
                                                     >
                                                         <BsCheck className="h-5 w-5" aria-hidden="true" />

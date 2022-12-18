@@ -26,8 +26,6 @@ const History = () => {
             const { data, error } = await supabase.from('history').select('*').limit(32).eq('user', user.did).order('id', { ascending: false } );
             if (data.length > 0) {
                 getVideos(data);
-                setLoading(false)
-                setFetched(true)
             } else {
                 setLoading(false)
                 setNoDataFound(true)
@@ -41,7 +39,6 @@ const History = () => {
     }
 
     const getVideos = async (ids) => {
-        console.log(ids)
         const posts = [];
         for (let i = 0; i < ids.length; i++) {
             let query = orbis.getPost(ids[i].stream_id);
@@ -56,10 +53,13 @@ const History = () => {
             if(data) {
                 posts.push(data);
                 setVideos(posts)
-        console.log('posts', posts)
+                setLoading(false)
+                setFetched(true)
 
             } else {
                 setVideos([]);
+                setLoading(false)
+                setNoDataFound(true)
             }
         }
     }
@@ -87,18 +87,18 @@ const History = () => {
         return <NoDataFound 
             isCenter
             withImage
-            title="Something went wrong"
-            description="We are unable to fetch the latest videos. Please try again later."
-          />
+            isHeading={true}
+            heading="Something went wrong"
+            text="We are unable to fetch the latest videos. Please try again later."
+        />
     } 
 
-    if (isFetched && (videos.length === 0 || noData)) {
+    if (!isLoading && (videos.length === 0 || noData)) {
         return <NoDataFound 
             isCenter
             withImage
-            title="Something went wrong"
-            description="We are unable to fetch the latest videos. Please try again later."
-          />
+            text="No Videos Found!"
+        />
     } 
 
     if (isLoading) {

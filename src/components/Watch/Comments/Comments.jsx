@@ -1,4 +1,3 @@
-import usePersistStore from '@store/persist'
 import CommentsShimmer from '@components/Shimmers/CommentsShimmer'
 import dynamic from 'next/dynamic'
 import { useContext, useEffect, useState } from 'react'
@@ -58,10 +57,9 @@ const Comments = ({ video, isVideoOwner }) => {
                 <>
                     <div className=" space-y-4">
                         {comments?.map((comment) => {
-                            console.log(comment.reply_to ? comment : null)
                             return (
                                 comment.reply_to ?
-                                    <div>
+                                    <div key={`${comment.stream_id}`}>
                                         <div className='flex items-center mb-2'>
                                             <div className='border-t-2 border-l-2 border-gray-700 mt-2 w-5 h-5 flex items-end ml-4'></div>
                                             <div className='flex space-x-3 items-center'>

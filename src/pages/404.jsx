@@ -12,7 +12,7 @@ export default function Custom500() {
         <title>500 - Server Error</title>
       </Head>
       <div className="flex flex-col items-center justify-start h-full mt-10 md:mt-20">
-        <Image src='/videso.png' alt={APP.Name} height={35} width={31} />
+        <Image src='/logo.png' alt={APP.Name} height={35} width={35} />
         <div className="py-10 text-center">
           <h1 className="mb-4 text-3xl font-bold">
             Looks like something went wrong!

@@ -1,10 +1,13 @@
 import { CardShimmer } from '@components/Shimmers/VideoCardShimmer'
 import dynamic from 'next/dynamic'
 import Actions from './Actions'
+import Info from './Info'
+import { useContext } from 'react'
+import { GlobalContext } from '@context/app'
 
-const Info = dynamic(() => import('./Info'), {
-  ssr: false
-})
+// const Info = dynamic(() => import('./Info'), {
+//   loading: () => <InfoShimmer />
+// })
 
 const VideoPlayer = dynamic(() => import('../Player/VideoPlayer'), {
   loading: () => <CardShimmer />,
@@ -13,6 +16,7 @@ const VideoPlayer = dynamic(() => import('../Player/VideoPlayer'), {
 
 const Video = ({ views, video }) => {
   const userProfile = video.creator_details;
+  const { isLoggedIn, user, isConnected } = useContext(GlobalContext)
   return (
     <>
       <VideoPlayer
@@ -27,7 +31,7 @@ const Video = ({ views, video }) => {
             </h1>
         </div>
         <div className='flex md:flex-row flex-col justify-between md:items-center mt-3 flex-shrink-0'>
-          <Info channel={userProfile} video={video}/>
+          <Info user={user} isConnected={isConnected} isLoggedIn={isLoggedIn} channel={userProfile} video={video}/>
           <Actions video={video} />
         </div>
       </div>

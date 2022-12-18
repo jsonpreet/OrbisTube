@@ -79,35 +79,38 @@ const Search = () => {
                                 </div>
                                 <div
                                     className={clsx(
-                                    'md:absolute w-full mt-1 py-3 text-base bg-white overflow-hidden dark:bg-theme rounded-lg drop-shadow-xl focus:outline-none sm:text-sm',
+                                    'md:absolute w-full mt-1 py-3 text-base bg-secondary overflow-hidden rounded-lg drop-shadow-xl focus:outline-none sm:text-sm',
                                     { hidden: !showResults}
                                     )}
                                 >
                                     <div className="overflow-y-auto max-h-[80vh] no-scrollbar focus:outline-none">
-                                    {results.length > 0 && results.map((channel) => (
-                                        <div
-                                            key={channel.did}
-                                            className="relative pl-3 pr-4 cursor-default select-none hover:bg-gray-100 dark:hover:bg-gray-900"
-                                        >
-                                            <Link
-                                            href={`/@${getUsername(channel?.details.profile, channel.did)}`}
-                                                key={getUsername(channel?.details.profile, channel.did)}
-                                            onClick={() => clearSearch()}
-                                            className="flex flex-col justify-center py-2 space-y-1 rounded-xl"
-                                            >
-                                            <span className="flex items-center justify-between">
-                                                <div className="inline-flex items-start w-3/4 space-x-2">
-                                                    <ProfilePicture imgClass='w-8 h-8 rounded-full' details={channel.details}/>
-                                                    <div className="flex items-center space-x-1">
-                                                        <p className=" mt-1 text-sm">
-                                                            <span>{getUsername(channel?.details.profile, channel.did)}</span>
-                                                        </p>
-                                                    </div>
+                                        {results.length > 0 && results.map((channel) => {
+                                            return (
+                                                <div
+                                                    key={channel.did}
+                                                    className="relative pl-3 pr-4 cursor-default select-none hover-primary"
+                                                >
+                                                    <Link
+                                                        href={`/${getUsername(channel?.details.profile, channel.did)}`}
+                                                        key={getUsername(channel?.details.profile, channel.did)}
+                                                        onClick={() => clearSearch()}
+                                                        className="flex flex-col justify-center py-2 space-y-1 rounded-xl"
+                                                    >
+                                                        <span className="flex items-center justify-between">
+                                                            <div className="inline-flex items-start w-3/4 space-x-2">
+                                                                <ProfilePicture imgClass='w-8 h-8 rounded-full' details={channel.details} />
+                                                                <div className="flex items-center space-x-1">
+                                                                    <p className=" mt-1 text-sm">
+                                                                        <span>{getUsername(channel?.details.profile, channel.did)}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </Link>
                                                 </div>
-                                            </span>
-                                            </Link>
-                                        </div>
-                                    ))}
+                                            )
+                                        }
+                                    )}
                                     {!results?.length && !loading && (
                                         <div className="relative p-5 text-center cursor-default select-none">
                                             No results found.

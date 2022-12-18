@@ -27,8 +27,6 @@ const Videos = () => {
             const { data, error } = await supabase.from('history').select('*').limit(32).eq('user', user.did).order('id', { ascending: false } );
             if (data.length > 0) {
                 getVideos(data);
-                setLoading(false)
-                setFetched(true)
             } else {
                 setLoading(false)
                 setNoDataFound(true)
@@ -56,9 +54,13 @@ const Videos = () => {
             if(data) {
                 posts.push(data);
                 setVideos(posts)
+                setLoading(false)
+                setFetched(true)
 
             } else {
                 setVideos([]);
+                setLoading(false)
+                setNoDataFound(true)
             }
         }
     }
@@ -68,17 +70,17 @@ const Videos = () => {
         return <NoDataFound 
             isCenter
             withImage
-            title="Something went wrong"
-            description="We are unable to fetch the latest videos. Please try again later."
+            isHeading={true}
+            heading="Something went wrong"
+            text="We are unable to fetch the latest videos. Please try again later."
           />
     } 
 
-    if (isFetched && (videos.length === 0 || noData)) {
+    if (!isLoading && (videos.length === 0 || noData)) {
         return <NoDataFound 
             isCenter
             withImage
-            title="Something went wrong"
-            description="We are unable to fetch the latest videos. Please try again later."
+            text="No Videos Found!."
           />
     } 
 

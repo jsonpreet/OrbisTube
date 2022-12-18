@@ -31,7 +31,7 @@ export const DEFAULT_SEO = {
     description: "OrbisTube is a decentralized video-sharing social media platform built with Orbis.",
     images: [
       {
-        url: 'https://orbistube.xyz/meta.png',
+        url: '/meta.png',
         width: 1200,
         height: 630,
         alt: 'OrbisTube',

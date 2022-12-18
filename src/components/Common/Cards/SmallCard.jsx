@@ -13,6 +13,7 @@ import DeleteModal from '@components/Common/Modals/DeleteModal'
 import EditModal from '@components/Common/Modals/EditModal'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { isBrowser } from 'react-device-detect'
+import { ProfilePicture } from '@utils/functions/getProfilePicture'
 
 
 
@@ -21,8 +22,8 @@ const VideoCardSmall = ({ video }) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
     const [showReportModal, setShowReportModal] = useState(false)
-    const uploadedVideo = useAppStore((state) => state.uploadedVideo)
-    const { address } = useDidToAddress(video.creator_details?.did);
+    const { address } = useDidToAddress(video.creator_details?.did)
+    const username = getUsername(video.creator_details.profile, address, video.did)
 
     return (
         <>
@@ -35,14 +36,14 @@ const VideoCardSmall = ({ video }) => {
                 <Link href={`/watch/${video.stream_id}`}>
                     <div className="relative rounded-none md:rounded-xl aspect-w-16 overflow-hidden aspect-h-9">
                         <LazyLoadImage
-                            delayTime={1000}
+                            delayTime={100}
                             className={clsx(
-                            'object-center bg-gray-100 dark:bg-gray-900 w-full h-full rounded-lg lg:w-full lg:h-full object-cover'
+                            'object-center bg-secondary w-full h-full rounded-lg lg:w-full lg:h-full object-cover'
                             )}
-                            alt={`Video by ${getUsername(video.creator_details.profile, video.did)}`}
+                            alt={`Video by ${username}`}
                             wrapperClassName='w-full'
                             effect="blur"
-                            placeholderSrc='https://placekitten.com/360/220'
+                            placeholderSrc='/placeholder.png'
                             src={video.content.data.Thumbnail}
                         />
                         <ThumbnailOverlays video={video} />
@@ -50,13 +51,8 @@ const VideoCardSmall = ({ video }) => {
                 </Link>
                 <div className="py-2">
                     <div className="flex items-start space-x-2.5">
-                        {isBrowser ? <Link href={`/${getUsername(video.creator_details.profile, video.did)}`} className="flex-none mt-0.5">
-                            <img
-                                className="w-9 h-9 rounded-full"
-                                src={video.creator_details?.profile.pfp}
-                                alt={getUsername(video?.creator_details.profile, video.did)}
-                                draggable={false}
-                            />
+                        {isBrowser ? <Link href={`/${video.creator_details.profile !== null ? username : video.creator_details.did}`} className="flex-none mt-0.5">
+                            <ProfilePicture details={video?.creator_details} imgClass='object-cover rounded-full bg-dropdown w-8 h-8 md:w-9 md:h-9'/>
                         </Link> : null}
                         <div className="grid flex-1">
                             <div className='flex w-full items-start justify-between '>
@@ -68,10 +64,10 @@ const VideoCardSmall = ({ video }) => {
                                         {video.content.title}
                                     </Link>
                                     <Link
-                                        href={`/${getUsername(video.creator_details.profile, video.did)}`}
+                                        href={`/${video.creator_details.profile !== null ? username : video.creator_details.did}`}
                                         className="flex hover:text-black dark:hover:text-white w-fit items-center space-x-1.5 text-[14px] text-light"
                                     >
-                                        <span>{getUsername(video.creator_details.profile, video.did)}</span>
+                                        <span>{username}</span>
                                     </Link>
                                     <div className="flex overflow-hidden text-[13px] text-light">
                                         <span className="whitespace-nowrap">

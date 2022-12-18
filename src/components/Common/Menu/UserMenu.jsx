@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Button } from '../../UI/Button';
 import { GlobalContext } from '@context/app';
 import ConnectButton from '../ConnectButton';
@@ -12,10 +12,14 @@ import ThemeSwitch from '../ThemeSwitch';
 import { MdExitToApp } from 'react-icons/md';
 import { getUsername } from '@utils/functions/getProfileName'
 import { SETTINGS } from '@utils/paths';
+import { useDidToAddress } from '@utils/functions/getDidToAddress';
 
 function UserMenu() {
     const { orbis, setLoggedIn, isLoggedIn, user, setUser } = useContext(GlobalContext)
-    async function logout() {
+    const [loading, setLoading] = useState(false)
+    const { address } = useDidToAddress(user?.did)
+    const username = getUsername(user?.profile, address, user?.did)
+    const logout = async () => {
         setLoading(true)
         let res = await orbis.logout();
         if (res.result === 'Logged out from Orbis and Ceramic.') {
@@ -42,7 +46,7 @@ function UserMenu() {
                             <div className="pt-2 text-sm">
                                 <Menu.Item
                                     as={NextLink}
-                                    href={`/${getUsername(user, user.did)}`}
+                                    href={`/${username}`}
                                     className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                                 >
                                     <FaRegUserCircle size="20" />
@@ -52,7 +56,7 @@ function UserMenu() {
                                 </Menu.Item>
                                 
                                 <Link
-                                    href={`/${getUsername(user, user.did)}/${SETTINGS}`}
+                                    href={`/${username}/${SETTINGS}`}
                                     className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                                 >
                                     <HiOutlineCog size="20" />

@@ -12,10 +12,10 @@ TimeAgo.addLocale(en);
 
 /** Initiate the Orbis class object */
 
-import Loading from '@components/Common/Loading';
 import { lazy, Suspense } from 'react';
 import { DefaultSeo } from 'next-seo';
 import { DEFAULT_SEO } from '@utils/constants';
+import FullPageLoader from '@components/UI/FullPageLoader';
 const Providers = lazy(() => import('../components/Common/Providers'));
 const Layout = lazy(() => import('../components/Common/Layout'));
 
@@ -23,7 +23,7 @@ const Layout = lazy(() => import('../components/Common/Layout'));
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<FullPageLoader />}>
         <DefaultSeo {...DEFAULT_SEO}/>
         <Providers pageProps={pageProps}>
           <Layout>

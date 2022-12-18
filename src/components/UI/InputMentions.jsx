@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 import { useContext, useId } from 'react'
 import { Mention, MentionsInput } from 'react-mentions'
-import { GlobalContext } from '@app/context/app';
+import { GlobalContext } from '@context/app';
+import { ProfilePicture } from '@utils/functions/getProfilePicture';
 
 const InputMentions = ({ label, validationError, onFocus, onAdd, value, onContentChange, mentionsSelector, ...props }) => {
     const id = useId()
@@ -15,9 +16,11 @@ const InputMentions = ({ label, validationError, onFocus, onAdd, value, onConten
             if (!error && profiles) {
                 const channels = profiles.map((channel) => ({
                     id: channel.did,
+                    did: channel.did,
                     username: channel.details.profile.username,
                     display: channel.details.profile.username,
                     picture: channel.details.profile.pfp,
+                    details: channel.details
                 }))
                 callback(channels)
             }
@@ -62,12 +65,7 @@ const InputMentions = ({ label, validationError, onFocus, onAdd, value, onConten
                         'dark:bg-[#fff]/[0.1] bg-gray-100': focused
                         })}
                     >
-                        <img
-                            src={suggestion?.picture}
-                            className="w-7 h-7 rounded-full"
-                            alt={suggestion?.display}
-                            draggable={false}
-                        />
+                        <ProfilePicture imgClass='w-8 h-8 rounded-full' details={suggestion.details}/>
                         <div className="overflow-hidden">
                             <p className="leading-4 truncate">
                                 {suggestion?.display}

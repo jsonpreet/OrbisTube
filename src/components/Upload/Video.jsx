@@ -14,7 +14,6 @@ function UploadVideo() {
     const uploadedVideo = useAppStore((state) => state.uploadedVideo)
     const setUploadedVideo = useAppStore((state) => state.setUploadedVideo)
     const videoRef = useRef(null)
-    console.log(uploadedVideo)
 
     const analyseVideo = async (currentVideo) => {
         setUploadedVideo({ buttonText: 'Analysing Video...', loading: true })

@@ -11,6 +11,7 @@ import Options from './Options'
 import Reactions from './Reactions'
 import NewComment from './NewComment'
 import { GlobalContext } from '@context/app'
+import { useDidToAddress } from '@utils/functions/getDidToAddress'
 
 const Comment = ({ video, comment, refetch }) => {
     const { orbis, isLoggedIn, user } = useContext(GlobalContext)
@@ -20,6 +21,8 @@ const Comment = ({ video, comment, refetch }) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showReportModal, setShowReportModal] = useState(false)
     const [showSubComment, setShowSubComment] = useState(false)
+    const { address } = useDidToAddress(userProfile?.did)
+    const username = getUsername(userProfile?.profile, address, userProfile?.did)
     return (
         <>
             <ReportModal isComment={true} video={comment} show={showReportModal} setShow={setShowReportModal} />
@@ -27,7 +30,7 @@ const Comment = ({ video, comment, refetch }) => {
             <div className="flex items-start justify-between group">
                 <div className="flex flex-1 items-start justify-between">
                     <Link
-                    href={`/${getUsername(userProfile.profile, userProfile.did)}`}
+                    href={`/${comment.creator_details.profile !== null ? username : comment.creator_details.did}`}
                     className="flex-none mr-3 mt-0.5"
                     >
                         <ProfilePicture details={userProfile} imgClass='object-cover rounded-full bg-dropdown w-8 h-8'/>
@@ -35,10 +38,10 @@ const Comment = ({ video, comment, refetch }) => {
                     <div className="flex flex-col items-start flex-1 mr-2">
                         <span className="flex items-center mb-1 space-x-1">
                             <Link
-                            href={`/${getUsername(userProfile.profile, userProfile.did)}`}
+                            href={`/${comment.creator_details.profile !== null ? username : comment.creator_details.did}`}
                             className="flex items-center space-x-1.5 text-sm font-medium"
                             >
-                                <span>{getUsername(userProfile.profile, userProfile.did)}</span>
+                                <span>{username}</span>
                             </Link>
                             <span className="middot" />
                             <span className="inline-flex items-center opacity-70 space-x-1 text-xs">

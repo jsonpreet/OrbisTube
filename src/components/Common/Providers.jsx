@@ -8,12 +8,14 @@ import { useEffect, useState } from 'react';
 import { LivepeerConfig } from '@livepeer/react';
 import NextNProgress from 'nextjs-progressbar';
 import { livepeerClient, playerTheme } from '@utils/functions/getLivePeer';
+import FullPageLoader from '@components/UI/FullPageLoader';
 
 let orbis = new Orbis();
 
 const Providers = ({ children, pageProps }) => {
     const [user, setUser] = useState(null);
     const [isLoggedIn, setLoggedIn] = useState(false);
+    const [isConnected, setisConnected] = useState(false);
     const [supabase] = useState(() => createBrowserSupabaseClient())
     useEffect(() => {
         if(!user) {
@@ -29,6 +31,7 @@ const Providers = ({ children, pageProps }) => {
         if(res && res.status == 200) {
             setUser(res.details);
             setLoggedIn(true);
+            setisConnected(true);
         }
     }
     return (
@@ -36,7 +39,7 @@ const Providers = ({ children, pageProps }) => {
         <NextNProgress color="#8B5CF6" showOnShallow={true} />
             <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
                 <LivepeerConfig client={livepeerClient()} theme={playerTheme}>
-                    <GlobalContext.Provider value={{ isLoggedIn, setLoggedIn, user, setUser, orbis }}>
+                    <GlobalContext.Provider value={{ isLoggedIn, setLoggedIn, user, setUser, orbis, isConnected }}>
                         {children}
                     </GlobalContext.Provider>
                 </LivepeerConfig>

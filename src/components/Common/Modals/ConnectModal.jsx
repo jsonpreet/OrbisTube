@@ -1,49 +1,27 @@
 import { sleep } from '@utils/functions'
 import Modal from '@components/UI/Modal'
 import { GlobalContext } from '@context/app'
-import usePersistStore from '@store/persist'
-import WalletConnectProvider from '@walletconnect/web3-provider'
 import { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
+import { Button } from '@app/components/UI/Button'
+import clsx from 'clsx'
 
 const ConnectModal = ({ rootRef, show, setShowModal }) => {
-    const { orbis, isLoggedIn, setLoggedIn, user, setUser } = useContext(GlobalContext)
-    const [loading, setLoading] = useState(false)
+    const { orbis, setLoggedIn, setUser } = useContext(GlobalContext)
     const [status, setStatus] = useState(0);
-
-    /** Returns a valid provider to use to connect the user's wallet */
-    async function getProvider() {
-        let provider = null;
-        if(window.ethereum) {
-            provider = window.ethereum;
-
-            /** Return provider to use */
-            return provider;
-        } else {
-            /** Create WalletConnect Provider */
-            provider = new WalletConnectProvider({
-                infuraId: "9bf71860bc6c4560904d84cd241ab0a0",
-            });
-
-            /** Enable session (triggers QR Code modal) */
-            await provider.enable();
-
-            /** Return provider to use */
-            return provider;
-        }
-    }
+    const [statusM, setStatusM] = useState(0);
 
     /** Call the Orbis SDK to connect to Ceramic */
     async function connect() {
         /** Show loading state */
-        setStatus(1);
+        setStatusM(1);
 
         let res = await orbis.connect();
 
         /** Parse result and update status */
         switch (res.status) {
             case 200:
-                setStatus(2);
+                setStatusM(2);
                 /** Save user details returned by the connect function in state */
                 console.log("Connected to Ceramic: ", res);
                 toast.success("Connected to Ceramic.");
@@ -55,10 +33,10 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
             default:
                 console.log("Couldn't connect to Ceramic: ", res.error.message);
 			    toast.error("Error connecting to Ceramic.");
-                setStatus(3);
+                setStatusM(3);
                 /** Wait for 2 seconds before resetting the button */
                 await sleep(2000);
-                setStatus(0);
+                setStatusM(0);
         }
     }
 
@@ -128,21 +106,33 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
             onClose={() => setShowModal(false)}
             show={show}
             ref={rootRef}
-            panelClassName="w-full max-w-lg"
+            panelClassName="w-full max-w-md"
         >
-            <div className="w-full px-5 mt-2 flex md:max-w-xs justify-center mx-auto flex-col space-y-3">
-                <button
+            <div className="w-full px-3 mt-2 flex md:max-w-xs justify-center mx-auto flex-col space-y-3">
+                <Button
+                    loading={statusM === 1}
+                    variant='cbtn'
                     onClick={() => connect()}
-                    className='bg-[#f57b24] text-white px-4 py-2 rounded-lg'
+                    className={clsx('text-white px-4 py-2 rounded-lg', {
+                        'bg-green-500 hover:bg-green-600': statusM === 2,
+                        'bg-[#fa812a] hover:bg-[#e7701a]': statusM === 0 || statusM === 1,
+                        'bg-red-500 hover:bg-red-600': statusM === 3,
+                    })}
                 >
-                    Metamask
-                </button>
-                <button
+                    {statusM === 2 ? `Login Success` : statusM === 3 ? `Login Error` : `Metamask`}
+                </Button>
+                <Button
+                    loading={status === 1}
+                    variant='cbtn'
                     onClick={() => connect2()}
-                    className='bg-[#6b59ec] text-white px-4 py-2 rounded-lg'
+                    className={clsx('text-white px-4 py-2 rounded-lg', {
+                        'bg-green-500 hover:bg-green-600': status === 2,
+                        'bg-[#7967ff] hover:bg-[#6553e9]': status === 0 || status === 1,
+                        'bg-red-500 hover:bg-red-600': status === 3,
+                    })}
                 >
-                    Phantom
-                </button>
+                    {status === 2 ? `Login Success` : status === 3 ? `Login Error` : `Phantom`}
+                </Button>
             </div>
         </Modal>
     )

@@ -16,6 +16,27 @@ export const SuggestedVideosShimmer = () => {
   )
 }
 
+export const InfoShimmer = () => {
+  return (
+    <div className="flex items-center justify-between mt-4 w-full">
+      <span className="flex items-center justify-start w-1/2 space-x-2">
+        <div className="bg-white rounded-full w-10 h-10 dark:bg-gray-700" />
+        <div className="flex flex-col md:w-40 space-y-1">
+          <div className="h-3 w-full bg-white rounded-md dark:bg-gray-700" />
+          <div className="w-1/2 h-2 bg-white rounded-md  dark:bg-gray-700" />
+        </div>
+        <div className="w-1/2 h-10 bg-white rounded-full dark:bg-gray-700" />
+      </span>
+      <span className="flex items-center justify-end flex-1 space-x-2">
+        <div className="w-16 h-10 hidden md:block bg-white rounded-full dark:bg-gray-700" />
+        <div className="w-16 h-10 bg-white rounded-full dark:bg-gray-700" />
+        <div className="w-16 h-10 bg-white rounded-full dark:bg-gray-700" />
+        <div className="w-16 h-10 bg-white rounded-full dark:bg-gray-700" />
+      </span>
+    </div>
+  )
+}
+
 export const WatchVideoShimmer = () => {
   return (
     <div className="grid grid-cols-1 gap-y-4 md:gap-4 xl:grid-cols-4">
