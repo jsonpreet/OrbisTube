@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
                         <Header isSidebarCollapsed={isSidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed} />
                         <div className="pt-6 pb-0 lg:pb-12">
                             <div className="">
-                                <div className={`max-w-full w-full mx-auto md:pl-0 p-0 md:pt-0 md:p-5 `}>
+                                <div className={`max-w-full w-full mx-auto md:px-0 p-0 md:pt-0 md:p-5 `}>
                                     {children}
                                 </div>
                             </div>

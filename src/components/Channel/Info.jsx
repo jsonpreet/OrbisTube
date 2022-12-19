@@ -1,25 +1,25 @@
 import ChannelLinks from './Links';
-import Tooltip from '../UI/Tooltip';
 import { useContext, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { formatNumber } from '@utils/functions';
 import { getCoverPicture } from '@utils/functions/getCoverPicture';
-import { Button } from '../UI/Button';
+import { Button } from '@components/UI/Button';
 import Link from 'next/link';
 import { useDidToAddress } from '@utils/functions/getDidToAddress';
-import { getUsername } from '@utils/functions/getProfileName';
-import { ProfilePicture } from '@utils/functions/getProfilePicture';
+import { getDisplay, getUsername } from '@utils/functions/getProfileName';
+import { ProfileBadges, ProfilePicture } from '@utils/functions/getProfilePicture';
 import { GlobalContext } from '@context/app';
 
 function ChannelInfo({ channel }) {
     const { orbis, user, isLoggedIn, isConnected } = useContext(GlobalContext);
-    const cover = getCoverPicture(channel)
+    const cover = getCoverPicture(channel.details.profile)
     const [subscribing, setSubscribing] = useState(false)
     const followRef = useRef(null);
     const [follow, setFollow] = useState(false)
     const { address } = useDidToAddress(channel?.did)
     const [followers, setFollowers] = useState(channel?.count_followers)
     const username = getUsername(channel, address, channel?.did)
+    const displayName = getDisplay(channel.details.profile, address, channel?.did)
 
     useEffect(() => {
         if (isLoggedIn && user) {
@@ -68,7 +68,7 @@ function ChannelInfo({ channel }) {
                     backgroundPosition: 'center',
                     
                 }} className="bg-white bg-no-repeat w-full bg-cover object-cover relative rounded-xl border theme-border md:h-72 h-28 dark:bg-gray-700">
-                    {/* <ChannelLinks channel={channel} /> */}
+                    <ChannelLinks channel={channel} />
                 </div>
                 <div className="relative z-10 w-full mx-auto flex items-center md:space-x-5">
                     <div className="w-20 h-20 bg-white border-white border-4 dark:border-gray-900 rounded-full md:relative md:-mt-10 -mt-7 absolute -top-2 md:w-32 md:h-32 md:ml-0 ml-4 dark:bg-gray-700">
@@ -78,12 +78,13 @@ function ChannelInfo({ channel }) {
                         <div className='flex space-x-10 items-center justify-between md:justify-end w-full -mb-0 -mt-0 md:-mb-1'>
                             <div className='flex flex-col mt-4 md:mt-0 mb-2 flex-none md:flex-1 items-start'>
                                 <div className='flex items-center'>
-                                    <Tooltip placement='top' contentClass='text-[12px]' title={getUsername(channel, address, channel?.did)}>
-                                        <h3 className='text-xl md:text-2xl mr-1 md:mr-2 tracking-wide leading-0 hover:opacity-100 opacity-80'>{getUsername(channel, address, channel?.did)}</h3>
-                                    </Tooltip>    
+                                    <span className='text-xl md:text-2xl mr-1 md:mr-2 tracking-wide leading-0 flex space-x-1 items-center'>
+                                        <span>{displayName}</span>
+                                        <ProfileBadges details={channel.details} imgClass='w-6 h-6' />
+                                    </span>   
                                 </div>
                                 <div className='flex md:-mt-0 -mt-1 items-center'>
-                                    <p className='text-sm tracking-wide text-light leading-0'>{getUsername(channel, address, channel?.did)}</p>
+                                    <p className='text-sm tracking-wide text-light leading-0'>{username}</p>
                                 </div>
                                 <div className='flex mt-2 md:mt-1.5 items-center'>
                                     <span className="leading-none text-light">

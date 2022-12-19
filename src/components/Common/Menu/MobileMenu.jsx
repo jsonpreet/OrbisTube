@@ -1,14 +1,15 @@
-import usePersistStore from '@app/store/persist'
-import { EXPLORE, FEED, HOME, LIBRARY, STORI } from '@app/utils/paths'
+import { GlobalContext } from '@context/app'
+import { EXPLORE, FEED, HOME, LIBRARY } from '@utils/paths'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useContext } from 'react'
 import { FiHome } from 'react-icons/fi'
-import { MdOutlineSubscriptions, MdOutlineVideoLibrary, MdSlowMotionVideo } from 'react-icons/md'
+import { MdOutlineSubscriptions, MdOutlineVideoLibrary } from 'react-icons/md'
 
 const MobileMenu = () => {
   const router = useRouter()
-  const { isLoggedIn } = usePersistStore()
+  const { orbis, setLoggedIn, isLoggedIn, user, setUser } = useContext(GlobalContext)
 
   const isActivePath = (path) => router.pathname === path
 
@@ -34,18 +35,6 @@ const MobileMenu = () => {
           />
           <span className="text-xs">Home</span>
         </Link>
-        {/* <Link
-          href={STORI}
-          className="flex flex-col space-y-1 items-center justify-center w-full"
-        >
-          <MdSlowMotionVideo size={21}
-            className={clsx({
-              'active-secondary': isActivePath(STORI) || router.pathname === '/stori',
-              'active-secondary': isActivePath(STORI) || router.pathname === '/stori/[id]',
-            })}
-          />
-          <span className="text-xs">Stori</span>
-        </Link> */}
         <Link
           href={FEED}
           className="flex flex-col space-y-1 items-center justify-center w-full"

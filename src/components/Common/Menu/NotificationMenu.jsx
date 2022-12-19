@@ -1,38 +1,45 @@
-import DropMenu from '@app/components/UI/DropMenu'
-import useAppStore from '@app/store/app'
-import usePersistStore from '@app/store/persist'
-import React, { useState } from 'react'
+import { APP_CONTEXT } from '@utils/constants'
+import { GlobalContext } from '@context/app'
+import { useContext, useEffect, useState } from 'react'
 import { CgBell } from 'react-icons/cg'
+import { NOTIFICATIONS } from '@app/utils/paths'
+import Link from 'next/link'
 
 function NotificationMenu() {
-    const hasNewNotification = useAppStore((state) => state.hasNewNotification)
-    const isLoggedIn = usePersistStore((state) => state.isLoggedIn)
-    const [loading, setLoading] = useState(false)
-    const [showShowModal, setSearchModal] = useState(false)
+    const { orbis, isConnected } = useContext(GlobalContext)
+    const [notificationsCount, setNotificationsCount] = useState(0)
+    
+    useEffect(() => {
+        if (orbis && isConnected) {
+            // Get notifications count after few seconds
+            setTimeout(() => {
+                getNotificationsCount()
+            }, 1500)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [orbis, isConnected])
+    
+    const getNotificationsCount = async () => {
+        try {
+            let { data, error } = await orbis.getNotificationsCount({context: APP_CONTEXT, type: 'social'});
+            if (error) {
+                console.log(error)
+            } else {
+                setNotificationsCount(data.count_new_notifications)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <>
-            <DropMenu
-                trigger={
-                    <button className="text-secondary hover-primary flex items-center justify-center w-10 h-10 rounded-full flex-none">
-                        <CgBell size={24} />
-                    </button>
-                }
-                >
-                <div className="py-2 my-1 overflow-hidden rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 divide-y dropdown-shadow max-h-96 bg-dropdown theme-divider border theme-border w-56 md:w-80">
-                    <div className="flex flex-col space-y-1 text-sm transition duration-150 ease-in-out rounded-lg">
-                        <div className="inline-flex items-center p-2 py-3 space-x-2 rounded-lg">
-                            <div className='flex items-center space-x-1'>
-                                <h3 className="text-base truncate leading-4">
-                                    Notifications
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="p-2 text-sm">
-                        Coming Soon
-                    </div>
-                </div>
-            </DropMenu>
+            <Link href={NOTIFICATIONS} className="text-secondary hover-primary relative flex items-center justify-center w-10 h-10 rounded-full flex-none mr-4">
+                <CgBell size={24} />
+                {notificationsCount > 0 && (
+                    <span className="absolute flex w-2 h-2 bg-red-500 rounded-full top-2 right-0.5" />
+                )}
+            </Link>
         </>
     )
 }

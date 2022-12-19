@@ -12,7 +12,6 @@ import { useRouter } from 'next/router'
 import { GlobalContext } from '@context/app'
 import DeleteModal from '@components/Common/Modals/DeleteModal'
 import EditModal from '@components/Common/Modals/EditModal'
-import ReportModal from '@components/Common/Modals/ReportModal'
 
 const Actions = ({ video }) => {
     const router = useRouter()
@@ -20,7 +19,6 @@ const Actions = ({ video }) => {
     const [showShare, setShowShare] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
-    const [showReportModal, setShowReportModal] = useState(false)
     const isVideoOwner = isLoggedIn ? user.did === video.creator_details?.did : false
 
     return (
@@ -28,7 +26,6 @@ const Actions = ({ video }) => {
             <ShareModal video={video} show={showShare} setShowShare={setShowShare} />
             <DeleteModal video={video} show={showDeleteModal} setShow={setShowDeleteModal} />
             <EditModal video={video} show={showEditModal} setShow={setShowEditModal} />
-            <ReportModal video={video} show={showReportModal} setShow={setShowReportModal} />
             <div className="flex items-center md:justify-end mt-4 space-x-2 md:space-x-4 md:mt-0">
                 <Reactions video={video} />
                 <Button variant="light" onClick={() => setShowShare(true)}>
@@ -70,13 +67,6 @@ const Actions = ({ video }) => {
                                     </button>
                                 </>
                             )}
-                            <button 
-                                onClick={() => setShowReportModal(true)}
-                                className='inline-flex items-center px-3 py-2 space-x-3 hover-primary'
-                            >
-                                <FiFlag size={18} className="ml-0.5" />
-                                <span className="whitespace-nowrap">Report</span>
-                            </button>
                         </div>
                     </div>
                 </DropMenu>

@@ -1,12 +1,11 @@
 import useCleanPostBody from '@utils/functions/getCleanPostBody'
-import { getUsername } from '@utils/functions/getProfileName'
+import { getDisplay, getUsername } from '@utils/functions/getProfileName'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import ReactTimeAgo from 'react-time-ago'
 import { ProfilePicture } from '@utils/functions/getProfilePicture'
 import DeleteModal from '@components/Common/Modals/DeleteModal'
-import ReportModal from '@components/Common/Modals/ReportModal'
 import Options from './Options'
 import Reactions from './Reactions'
 import NewComment from './NewComment'
@@ -19,13 +18,12 @@ const Comment = ({ video, comment, refetch }) => {
     const userProfile = comment.creator_details;
     const body = useCleanPostBody(comment, characterLimit);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const [showReportModal, setShowReportModal] = useState(false)
     const [showSubComment, setShowSubComment] = useState(false)
     const { address } = useDidToAddress(userProfile?.did)
     const username = getUsername(userProfile?.profile, address, userProfile?.did)
+    const displayName = getDisplay(userProfile?.profile, address, userProfile?.did)
     return (
         <>
-            <ReportModal isComment={true} video={comment} show={showReportModal} setShow={setShowReportModal} />
             <DeleteModal refetch={refetch} isComment={true} video={comment} show={showDeleteModal} setShow={setShowDeleteModal} />
             <div className="flex items-start justify-between group">
                 <div className="flex flex-1 items-start justify-between">
@@ -41,7 +39,7 @@ const Comment = ({ video, comment, refetch }) => {
                             href={`/${comment.creator_details.profile !== null ? username : comment.creator_details.did}`}
                             className="flex items-center space-x-1.5 text-sm font-medium"
                             >
-                                <span>{username}</span>
+                                <span>{displayName}</span>
                             </Link>
                             <span className="middot" />
                             <span className="inline-flex items-center opacity-70 space-x-1 text-xs">
@@ -82,8 +80,6 @@ const Comment = ({ video, comment, refetch }) => {
                     comment={comment}
                     setShowDeleteModal={setShowDeleteModal}
                     showDeleteModal={showDeleteModal}
-                    setShowReportModal={setShowReportModal}
-                    showReportModal={showReportModal}
                 />
             </div>
         </>

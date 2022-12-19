@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 import { BiUpload } from 'react-icons/bi';
 import { GlobalContext } from '@context/app';
 import { useDidToAddress } from '@utils/functions/getDidToAddress';
-import makeBlockie from 'ethereum-blockies-base64';
 import { LANGUAGES } from '@data/languages';
 import { Combobox, Transition } from '@headlessui/react';
 import { HiChevronUpDown } from 'react-icons/hi2';

@@ -13,7 +13,7 @@ import { GlobalContext } from '@app/context/app'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 
-const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowEditModal, setShowDeleteModal, setShowReportModal, setShowShareModal }) => {
+const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowEditModal, setShowDeleteModal, setShowShareModal }) => {
   const router = useRouter()
   const { orbis, isLoggedIn, user } = useContext(GlobalContext)
   const supabase = useSupabaseClient();
@@ -112,14 +112,6 @@ const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowE
               </button>
             </>
           )}
-          <button
-            type="button"
-            onClick={() => setShowReportModal()}
-            className="inline-flex items-center px-3 py-2 space-x-3 hover-primary"
-          >
-            <FiFlag size={18} className="ml-0.5" />
-            <span className="whitespace-nowrap">Report</span>
-          </button>
         </div>
       </div>
     </DropMenu>

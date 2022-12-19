@@ -7,7 +7,6 @@ import ChannelShimmer from '@components/Shimmers/ChannelShimmer';
 import { Loader2 } from '@components/UI/Loader';
 import { NoDataFound } from '@components/UI/NoDataFound';
 import { NextSeo } from 'next-seo';
-//import ChannelInfo from './Info';
 import { getUsername } from '@utils/functions/getProfileName';
 import { useDidToAddress } from '@utils/functions/getDidToAddress';
 import { APP } from '@utils/constants';
@@ -22,6 +21,10 @@ const ChannelInfo = dynamic(() => import("./Info"), {
 });
 
 const About = dynamic(() => import("./Tabs/About"), {
+  suspense: true,
+});
+
+const Community = dynamic(() => import("./Tabs/Community"), {
   suspense: true,
 });
 
@@ -90,7 +93,7 @@ const Channel = ({ isError, channel : profile, loading, isDid }) => {
                     <ChannelInfo channel={channel}/>
                     <div className="realtive mb-5 mx-auto">
                         <Tab.Group as="div" className="w-full" defaultIndex={0}>
-                            <Tab.List className="flex overflow-x-auto no-scrollbar">
+                            <Tab.List className="flex items-center justify-center no-scrollbar">
                                 {channelTabs && Object.keys(channelTabs).map((key) => {
                                     return (
                                         <TabItem
@@ -110,6 +113,11 @@ const Channel = ({ isError, channel : profile, loading, isDid }) => {
                                 <Tab.Panel className="py-6 focus:outline-none">
                                     <Suspense fallback={<Loader/>}>
                                         <About channel={channel} />
+                                    </Suspense>
+                                </Tab.Panel>
+                                <Tab.Panel className="py-6 focus:outline-none">
+                                    <Suspense fallback={<Loader/>}>
+                                        <Community channel={channel} />
                                     </Suspense>
                                 </Tab.Panel>
                             </Tab.Panels>

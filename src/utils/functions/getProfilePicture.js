@@ -5,6 +5,28 @@ export function getProfilePicture(profile, address) {
   return profile.data?.Avatar ? profile.data?.Avatar : profile.pfp ? profile.pfp : makeBlockie(address)
 }
 
+export function ProfileBadges({details, imgClass}) {
+  if (!details) {
+    return null;
+  }
+  console.log(imgClass)
+  const classes = imgClass ? imgClass : "w-3 h-3";
+  return(
+    <>
+      {details.profile?.isHuman &&
+        <div>
+          <img src="/icons/human-verified.png" className={classes} />
+        </div>
+      }
+      {details.profile?.pfpIsNft &&
+        <div>
+          <img src={"/icons/nft-verified-"+details.profile?.pfpIsNft.chain+".png"} className={classes} />
+        </div>
+      }
+    </>
+  );
+}
+
 export function ProfilePicture({details, imgClass}) {
   const { address } = useDidToAddress(details?.did);
 
@@ -18,12 +40,12 @@ export function ProfilePicture({details, imgClass}) {
       <div className="flex items-start">
         {details.profile?.isHuman &&
           <div>
-            <img src="/icons/human-verified.png" className='w-3 h-3' />
+            <img src="/icons/human-verified.png" className="w-3 h-3" />
           </div>
         }
         {details.profile?.pfpIsNft &&
           <div>
-            <img src={"/icons/nft-verified-"+details.profile?.pfpIsNft.chain+".png"} className='w-3 h-3' />
+            <img src={"/icons/nft-verified-"+details.profile?.pfpIsNft.chain+".png"} className="w-3 h-3" />
           </div>
         }
       </div>
@@ -43,12 +65,12 @@ export function ProfilePicture({details, imgClass}) {
   }
 
   return(
-    <div className="flex space-x-1 items-center">
+    <div className="">
       {/** Show profile picture image */}
       <PfpImg className={imgClass} />
 
       {/** Show profile badges such as PoH and verified NFTs */}
-      <ProfileBadges />
+      {/* <ProfileBadges /> */}
     </div>
   )
 }

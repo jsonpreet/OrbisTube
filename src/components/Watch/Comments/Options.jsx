@@ -6,7 +6,7 @@ import { IoTrashOutline } from 'react-icons/io5'
 import { FiFlag } from 'react-icons/fi'
 import clsx from 'clsx'
 
-const Options = ({ comment, showOnHover = true, setShowDeleteModal, showDeleteModal, setShowReportModal, showReportModal }) => {
+const Options = ({ comment, showOnHover = true, setShowDeleteModal, showDeleteModal}) => {
     const { isLoggedIn, user } = useContext(GlobalContext)
     return (
         <DropMenu
@@ -37,14 +37,6 @@ const Options = ({ comment, showOnHover = true, setShowDeleteModal, showDeleteMo
                         </button>
                     : null
                     }
-                    <button
-                        type="button"
-                        onClick={() => setShowReportModal(true)}
-                        className="inline-flex items-center px-3 py-2 space-x-3 text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
-                    >
-                        <FiFlag size={18} className="ml-0.5" />
-                        <span className="whitespace-nowrap">Report</span>
-                    </button>
                 </div>
             </div>
         </DropMenu>

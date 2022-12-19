@@ -8,7 +8,7 @@ var patternMentions = /\B@[a-z0-9_.⍙-]+/gi;
 
 /** Turns a did:pkh into a clean address and chain object */
 export default function useCleanPostBody(post, characterLimit) {
-  return parseMarkdown(post, characterLimit);;
+  return parseMarkdown(post, characterLimit);
 }
 
 /** This is a simple implementation of markdown, would love for this part to be improved by an external contributor */

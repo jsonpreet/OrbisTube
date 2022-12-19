@@ -5,13 +5,12 @@ import ThumbnailOverlays from './ThumbnailOverlays'
 import VideoOptions from './Options'
 import ShareModal from '@components/Common/Modals/ShareModal'
 import { useDidToAddress } from '@utils/functions/getDidToAddress'
-import { getUsername } from '@utils/functions/getProfileName'
+import { getDisplay, getUsername } from '@utils/functions/getProfileName'
 import ReactTimeAgo from 'react-time-ago'
-import ReportModal from '@components/Common/Modals/ReportModal'
 import DeleteModal from '@components/Common/Modals/DeleteModal'
 import EditModal from '@components/Common/Modals/EditModal'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { ProfilePicture } from '@utils/functions/getProfilePicture'
+import { ProfileBadges, ProfilePicture } from '@utils/functions/getProfilePicture'
 
 
 
@@ -19,16 +18,15 @@ const VideoCard = ({ video }) => {
   const [showShareModal, setShowShareModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
-  const [showReportModal, setShowReportModal] = useState(false)
   const { address } = useDidToAddress(video.creator_details?.did)
   const username = getUsername(video.creator_details.profile, address, video.did)
+  const displayName = getDisplay(video.creator_details.profile, address, video.did)
 
   return (
     <>
       {video.content.data ?
         <div className="relative group">
           <ShareModal video={video} show={showShareModal} setShow={setShowShareModal} />
-          <ReportModal video={video} show={showReportModal} setShow={setShowReportModal} />
           <DeleteModal video={video} show={showDeleteModal} setShow={setShowDeleteModal} />
           <EditModal video={video} show={showEditModal} setShow={setShowEditModal} />
           <Link href={`/watch/${video.stream_id}`}>
@@ -63,9 +61,10 @@ const VideoCard = ({ video }) => {
                     </Link>
                     <Link
                       href={`/${video.creator_details.profile !== null ? username : video.creator_details.did}`}
-                      className="flex hover:text-black dark:hover:text-white w-fit items-center space-x-1.5 text-[14px] text-light"
+                      className="flex hover:text-black dark:hover:text-white w-fit items-center space-x-1 text-[14px] text-light"
                     >
-                      <span>{username}</span>
+                      <span>{displayName}</span>
+                      <ProfileBadges details={video?.creator_details} />
                     </Link>
                     <div className="flex overflow-hidden text-[13px] text-light">
                       <span className="whitespace-nowrap">
@@ -80,7 +79,6 @@ const VideoCard = ({ video }) => {
                   <VideoOptions
                     video={video}
                     setShowShareModal={setShowShareModal}
-                    setShowReportModal={setShowReportModal}
                     setShowEditModal={setShowEditModal}
                     setShowDeleteModal={setShowDeleteModal}
                   />

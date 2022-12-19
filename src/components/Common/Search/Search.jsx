@@ -9,7 +9,7 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { GlobalContext } from '@context/app';
 import Modal from '@components/UI/Modal';
 import { getUsername } from '@utils/functions/getProfileName';
-import { getProfilePicture, ProfilePicture } from '@utils/functions/getProfilePicture';
+import { getProfilePicture, ProfileBadges, ProfilePicture } from '@utils/functions/getProfilePicture';
 import { RiSearch2Line } from 'react-icons/ri';
 
 
@@ -100,9 +100,10 @@ const Search = () => {
                                                             <div className="inline-flex items-start w-3/4 space-x-2">
                                                                 <ProfilePicture imgClass='w-8 h-8 rounded-full' details={channel.details} />
                                                                 <div className="flex items-center space-x-1">
-                                                                    <p className=" mt-1 text-sm">
+                                                                    <span className=" mt-1 flex items-center space-x-1 text-sm">
                                                                         <span>{getUsername(channel?.details.profile, channel.did)}</span>
-                                                                    </p>
+                                                                        <ProfileBadges details={channel.details} />
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </span>

@@ -1,10 +1,15 @@
 import { GlobalContext } from "@context/app";
-import { VideoCard } from "@components/Common/Cards"
+// import { VideoCard } from "@components/Common/Cards"
 import TimelineShimmer from "@components/Shimmers/TimelineShimmer"
 import { NoDataFound } from "@components/UI/NoDataFound"
 import { useContext, useEffect, useState } from "react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { APP_CONTEXT } from "@app/utils/constants";
+import dynamic from "next/dynamic";
+
+const VideoCard = dynamic(() => import("../../Common/Cards/Video"), {
+  suspense: true,
+});
 
 
 const Videos = ({channel}) => {
@@ -19,7 +24,7 @@ const Videos = ({channel}) => {
     useEffect(() => {
         getVideos()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [channel])
+    }, [channel, orbis])
 
     const getVideos = async () => {
         try {

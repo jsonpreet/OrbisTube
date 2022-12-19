@@ -2,10 +2,10 @@ import { NoDataFound } from '@components/UI/NoDataFound';
 import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '@context/app';
 import Carousel from "react-multi-carousel";
-import VideoCardSmall from '@components/Common/Cards/SmallCard';
 import { isBrowser } from 'react-device-detect';
-import TimelineShimmer from '../Shimmers/TimelineShimmer';
+import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { VideoCard } from '@components/Common/Cards';
 
 const History = () => {
     const { orbis, user, isLoggedIn } = useContext(GlobalContext);
@@ -115,7 +115,7 @@ const History = () => {
                         <>
                             {videos.map((video) => {
                                 return (
-                                    <VideoCardSmall userProfile={video.ProfileEntryResponse} key={`${video.PostHashHex}`} video={video} />
+                                    <VideoCard userProfile={video.ProfileEntryResponse} key={`${video.PostHashHex}`} video={video} />
                                 )
                             })}
                         </>
@@ -129,7 +129,7 @@ const History = () => {
                         >
                             {videos.map((video) => {
                                     return (
-                                        <VideoCardSmall userProfile={video.ProfileEntryResponse} key={`${video.PostHashHex}`} video={video} />
+                                        <VideoCard userProfile={video.ProfileEntryResponse} key={`${video.PostHashHex}`} video={video} />
                                     )
                                 })
                             }
