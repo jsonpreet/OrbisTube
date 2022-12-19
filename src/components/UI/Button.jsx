@@ -18,7 +18,7 @@ export const Button = ({className = '', size = 'md', variant = 'primary', loadin
           'bg-transparent md:rounded-full': variant === 'secondary',
           'bg-red-500 border border-red-500 md:rounded-full': variant === 'danger',
           'dark-button md:rounded-full': variant === 'dark',
-          'light-button-secondary md:rounded-full': variant === 'light',
+          'light-button-secondary group-hover:bg-brand-700 hover:bg-brand-700 md:rounded-full': variant === 'light',
           'bg-white md:rounded-full': variant === 'white',
         },
         className
@@ -29,7 +29,7 @@ export const Button = ({className = '', size = 'md', variant = 'primary', loadin
       <span
         className={clsx('relative z-0 flex items-center justify-center ', {
           'text-white': variant !== 'secondary' && variant !== 'outlined' && variant !== 'light' && variant !== 'dark' && variant !== 'none',
-        }, { 'text-secondary': variant === 'light' }, 
+        }, { 'text-secondary group-hover:text-white': variant === 'light' }, 
           { 'dark-button-text': variant === 'dark'}, 
           { 'dark-text': variant === 'none' },
           {'space-x-2': size !== 'small'}

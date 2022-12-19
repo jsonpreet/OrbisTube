@@ -2,14 +2,13 @@ import makeBlockie from "ethereum-blockies-base64";
 import { useDidToAddress } from "./getDidToAddress";
 
 export function getProfilePicture(profile, address) {
-  return profile.data?.Avatar ? profile.data?.Avatar : profile.pfp ? profile.pfp : makeBlockie(address)
+  return profile ? profile.data?.Avatar ? profile.data?.Avatar : profile.pfp ? profile.pfp : makeBlockie(address) : makeBlockie(address)
 }
 
 export function ProfileBadges({details, imgClass}) {
   if (!details) {
     return null;
   }
-  console.log(imgClass)
   const classes = imgClass ? imgClass : "w-3 h-3";
   return(
     <>

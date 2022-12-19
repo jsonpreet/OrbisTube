@@ -38,7 +38,6 @@ const VideoCard = ({ video }) => {
                 )}
                 alt={`Video by ${username}`}
                 wrapperClassName='w-full'
-                effect="blur"
                 placeholderSrc='/placeholder.png'
                 src={video.content.data.Thumbnail}
               />

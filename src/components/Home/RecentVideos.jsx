@@ -1,10 +1,8 @@
 import { VideoCard } from '@components/Common/Cards';
 import TimelineShimmer from '@components/Shimmers/TimelineShimmer';
 import { Loader2 } from '@components/UI/Loader';
-import { NoDataFound } from '@components/UI/NoDataFound';
 import { GlobalContext } from '@context/app';
-import usePersistStore from '@store/persist';
-import { APP, APP_CONTEXT } from '@utils/constants';
+import { APP_CONTEXT } from '@utils/constants';
 import { useContext, useEffect, useState } from 'react';
 
 function RecentVideos() {

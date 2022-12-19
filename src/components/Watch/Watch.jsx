@@ -11,6 +11,7 @@ import Video from "./Video"
 import About from "./About"
 import Comments from "./Comments/Comments"
 import { useSupabaseClient } from "@supabase/auth-helpers-react"
+import SuggestedVideos from "./Suggestions"
 
 function Watch({ post, loading, isError }) {
     const router = useRouter()
@@ -81,7 +82,7 @@ function Watch({ post, loading, isError }) {
                         video.content.data.Comments ? <Comments video={video} isVideoOwner={isVideoOwner} /> : null}
                 </div>
                 <div className="w-full md:min-w-[300px] md:max-w-[400px]">
-                    {/* <SuggestedVideos video={video} currentVideoId={video?.PostHashHex} /> */}
+                    <SuggestedVideos video={video} channel={post.creator_details} currentVideoId={video?.stream_id} />
                 </div>
             </div>
         </>

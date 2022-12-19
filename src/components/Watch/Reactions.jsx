@@ -87,7 +87,7 @@ function Reactions({video, iconSize = '21', showButton = true}) {
         <>
             <div className='flex space-x-2 md:space-x-4'>
                 <Button variant={showButton ? "light" : "none"} onClick={() => like()} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`}>
-                    <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 outline-none', {
+                    <span className={clsx('flex items-center dark:group-hover:text-white group-hover:text-white outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': liked
                     },
                         { 'space-x-1.5': showButton },
@@ -96,21 +96,16 @@ function Reactions({video, iconSize = '21', showButton = true}) {
                     )}>
                         <FiThumbsUp size={iconSize}
                             className={clsx({
-                                'text-brand2-500 dark:text-brand2-400': liked,
                                 'animate-bounce': liking
                             })}
                         />
-                        <span
-                            className={clsx({
-                                'text-brand2-500 dark:text-brand2-400': liked
-                            })}
-                        >
+                        <span>
                             {likes > 0 ? formatNumber(likes) : ''}
                         </span>
                     </span>
                 </Button>
                 <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} onClick={() => dislike()} className={`group ${showButton ? `h-10` : `!p-0`}`}>
-                    <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 outline-none', {
+                    <span className={clsx('flex items-center dark:group-hover:text-white group-hover:text-white outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': disliked
                     },
                         { 'space-x-1.5':  showButton && disliked },
@@ -119,22 +114,17 @@ function Reactions({video, iconSize = '21', showButton = true}) {
                     )}>
                         <FiThumbsDown size={iconSize}
                             className={clsx({
-                                'text-brand2-500 dark:text-brand2-400': disliked,
                                 'animate-bounce': disliking
                             })}
                         />
 
-                        <span
-                            className={clsx({
-                                'text-brand2-500 dark:text-brand2-400': disliked
-                            })}
-                        >
+                        <span>
                             {dislikes > 0 ? formatNumber(dislikes) : ''}
                         </span>
                     </span>
                 </Button>
                 <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} onClick={() => reaction()} className={`group ${showButton ? `h-10` : `!p-0`}`}>
-                    <span className={clsx('flex items-center dark:group-hover:text-brand2-400 group-hover:text-brand2-500 outline-none', {
+                    <span className={clsx('flex items-center dark:group-hover:text-white group-hover:text-white outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': reacted
                     },
                         { 'space-x-1.5': showButton && reacted },
@@ -143,23 +133,17 @@ function Reactions({video, iconSize = '21', showButton = true}) {
                     )}>
                         {reacted ? <FaSmile size={iconSize}
                             className={clsx({
-                                'text-brand2-500 dark:text-brand2-400': reacted,
                                 'animate-bounce': reacting
                             })}
                         /> :
                             <FaRegSmile size={iconSize}
                                 className={clsx({
-                                    'text-brand2-500 dark:text-brand2-400': reacted,
                                     'animate-bounce': reacting
                                 })}
                             />
                         }
 
-                        <span
-                            className={clsx({
-                                'text-brand2-500 dark:text-brand2-400': reacted
-                            })}
-                        >
+                        <span>
                             {reactions > 0 ? formatNumber(reactions) : ''}
                         </span>
                     </span>

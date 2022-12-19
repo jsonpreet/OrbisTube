@@ -9,11 +9,13 @@ import { APP } from '@app/utils/constants'
 import { useState } from 'react'
 import SimpleBar from 'simplebar-react';
 import Image from 'next/image'
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs'
+import { LivePeer } from '../../utils/Icons'
 
 const Sidebar = () => {
   const router = useRouter()
   const [showMore, setShowMore] = useState(false)
-  const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 16;
+  const loadCount = showMore ? CREATOR_VIDEO_CATEGORIES.length : 10;
 
 
   const isActivePath = (path) => router.pathname === path
@@ -47,7 +49,7 @@ const Sidebar = () => {
                    <p className={`flex ml-6`}>Home</p>
                 </div>
               </Link>
-              <Link
+              {/* <Link
                 href={FEED}
                 className={clsx(
                   'rounded-lg px-3 py-2 group hover-primary',
@@ -60,7 +62,7 @@ const Sidebar = () => {
                   <MdOutlineSubscriptions size={20} />
                   <p className={`flex ml-6`}>Subscriptions</p>
                 </div>
-              </Link>
+              </Link> */}
               <Link
                 href={LIBRARY}
                 className={clsx(
@@ -116,7 +118,7 @@ const Sidebar = () => {
                   )
                 }
               })}
-              {/* {
+              {
                 !showMore ?
                   <div key={`showMore`} onClick={() => setShowMore(!showMore)} className="cursor-pointer rounded-lg px-3 py-2 group hover-primary">
                     <div className="flex items-center">
@@ -131,10 +133,10 @@ const Sidebar = () => {
                       <p className='ml-6'>Show Less</p>
                     </div>
                   </div>
-              } */}
+              }
             </div>
             <div className="h-[1px] mt-4 mb-6 relative theme-border-bg" />
-            <div className='flex w-full px-3 text-sm text-primary mt-4 space-x-1'>
+            <div className='flex flex-col w-full px-3 text-sm text-primary space-y-3'>
               <span>Powered by</span>
               <Link
                 className="text-primary text-primary-hover text-sm font-medium"
@@ -145,6 +147,14 @@ const Sidebar = () => {
                 <span>▲</span>
                 <span>Vercel</span>
               </Link>
+              <Link 
+                className="text-primary text-primary-hover text-sm font-medium flex space-x-2 items-center"
+                href='https://livepeer.org'
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                  <LivePeer className='w-3 h-4'/> <span>LivePeer</span>
+                </Link>
             </div>
             <div className='flex flex-col px-3 text-sm text-primary mt-4'>
               <p>© 2022 {APP.Name}</p>

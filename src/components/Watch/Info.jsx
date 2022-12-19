@@ -74,12 +74,9 @@ function Info({ video, channel, isLoggedIn, user, isConnected }) {
                             <span>{displayName}</span>  
                             <ProfileBadges details={video?.creator_details} />
                         </Link>
-                        {!loading ?
-                            <span className="text-[14px] leading-4 text-secondary">
-                                {formatNumber(followers)} {followers > 1 ? `subscribers` : `subscriber`}
-                            </span>
-                            : <div className="h-2 bg-gray-300 rounded dark:bg-gray-700" />
-                        }
+                        <span className="text-[14px] leading-4 text-secondary">
+                            {formatNumber(followers)} {followers > 1 ? `subscribers` : `subscriber`}
+                        </span>
                     </div>
                 </div>
                 {channel && channel.did !== user?.did ?

@@ -17,7 +17,7 @@ function About({ channel }) {
         return (
             <>
                 <div className='max-w-7xl mx-auto md:px-0 px-4'>
-                    <div className='flex flex-col bg-secondary rounded-lg border theme-border p-4 space-y-6'>
+                    <div className='flex flex-col bg-secondary rounded-lg p-4 space-y-6'>
                         <div className="flex flex-col">
                             <h3 className='mb-5'>Description</h3>
                             <div className='overflow-hidden leading-6 text-sm break-words'>
@@ -117,6 +117,13 @@ function About({ channel }) {
     } else {
         return (
             <>
+                <div className='max-w-7xl mx-auto md:px-0 px-4'>
+                    <div className='flex flex-col bg-secondary rounded-lg p-4 space-y-6'>
+                        <div className="flex flex-col">
+                            No About Information 
+                        </div>
+                    </div>
+                </div>
             </>
         )
     }

@@ -47,7 +47,7 @@ function Notifications() {
 
     return (
         <>
-            <div className="w-full max-w-7xl mx-auto bg-secondary border theme-border rounded-xl">
+            <div className="w-full max-w-7xl mx-auto bg-secondary rounded-lg">
                 <div className="flex flex-col space-y-1 border-b theme-border text-sm">
                     <div className="inline-flex items-center p-6 space-x-2">
                         <h3 className="text-base font-bold uppercase leading-4">

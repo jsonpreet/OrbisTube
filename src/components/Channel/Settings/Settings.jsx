@@ -264,7 +264,7 @@ function Settings() {
                                 </div>
                             </div>
                             <div className='flex w-full md:flex-row flex-col space-x-0 space-y-0 md:space-y-0 md:space-x-10 mt-5'>
-                                <div className='flex bg-secondary p-4 rounded-xl border theme-border w-full flex-col'>
+                                <div className='flex bg-secondary p-4 rounded-lg w-full flex-col'>
                                     <div className='mb-4 flex flex-col space-y-2'>
                                         <label className='font-medium text-sm'>Channel Name</label>
                                         <input
@@ -378,7 +378,7 @@ function Settings() {
                                         </Button>
                                     </div>
                                 </div>
-                                <div className='flex bg-secondary p-4 rounded-xl border theme-border w-full flex-col'>
+                                <div className='flex bg-secondary p-4 rounded-lg w-full flex-col'>
                                     <div className='mb-4 flex flex-col space-y-2'>
                                         <label className='font-medium text-sm'>Twitter</label>
                                         <div className='flex'>
