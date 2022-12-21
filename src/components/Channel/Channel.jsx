@@ -53,11 +53,12 @@ const Channel = ({ isError, channel : profile, loading, isDid }) => {
         2: "Community",
         1: "About",
     }
+        console.log(channel)
 
     const changeTab = (index) => {
         setSelectedTab(index);
         const tab = channelTabs[index].toLowerCase()
-        router.replace(`/${username}/${tab}`);
+        router.replace(`/${channel.username !== null ? username : channel.did}/${tab}`);
     }
 
     const getDefaultTab = (tab) => {

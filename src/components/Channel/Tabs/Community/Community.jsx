@@ -12,14 +12,11 @@ import { Loader2 } from '@components/UI/Loader'
 import InputMentions from '@components/UI/InputMentions'
 import { Post } from './Post'
 
-function Community() {
+function Community({channel}) {
     const router = useRouter()
-    const { channel } = router.query
     const supabase = useSupabaseClient()
     const { orbis, isLoggedIn, user, isConnected } = useContext(GlobalContext)
     const { address } = useDidToAddress(user?.did)
-    const username = getUsername(user, address, user?.did)
-    const displayName = getDisplay(user?.profile, address, user?.did)
     const [communityCreated, setCommunityCreated] = useState(false)
     const [fetched, setFetched] = useState(false)
     const [community, setCommunity] = useState([])
@@ -31,45 +28,43 @@ function Community() {
 
     useEffect(() => {
         checkCommunity()
-        if (community) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [channel])
+
+    useEffect(() => {
+        if (community && community.length > 0) {
             fetchCommunityPosts()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [community])
 
     const fetchCommunityPosts = async () => {
-        console.log(channel, 'fetching community posts');
-        let { data: profile, error: profileError } = channel.includes('did') ? await orbis.getProfile(channel) : await orbis.getProfilesByUsername(channel);
-        if (profile && profile.length > 0) {
-            let { data, error } = await orbis.getPosts({ did: profile[0].did, context: community.channel });
-            if (data && data.length > 0) {
-                setPosts(data)
-                setFetched(true)
-            } else {
-                console.log(error)
-                toast.error('Something went wrong, please try again later.');
-            }
+        console.log(channel.did, 'fetching community posts');
+        let { data, error } = await orbis.getPosts({ did: channel.did, context: community[0].channel });
+        if (data && data.length > 0) {
+            setPosts(data)
+            setFetched(true)
         } else {
-            console.log(profileError)
+            console.log(error)
             toast.error('Something went wrong, please try again later.');
         }
     }
 
     const checkCommunity = async () => {
-        console.log(channel, 'Checking user community');
+        console.log(channel.did, 'Checking user community');
         try {
-            const { data: community, error } = await supabase.from('communities').select('*').eq('user', channel);
+            const { data: community, error } = await supabase.from('communities').select('*').eq('user', channel.did);
             if (community && community.length > 0) {
-                console.log(channel, 'community fetched', community);
+                console.log(channel.did, 'community fetched', community);
                 setCommunityCreated(true)
-                setCommunity(community[0])
+                setCommunity(community)
                 setFetching(false)
             } else {
                 setCommunityCreated(false)
                 setFetching(false)
             }
         } catch (error) {
-            console.log(channel, 'community', error);
+            console.log(channel.did, 'community', error);
             toast.error('Something went wrong, please try again later.');
         }
     }
@@ -90,16 +85,16 @@ function Community() {
             setCommunityCreated(true)
             try {
                 const request = {
-                    creator: username,
+                    creator: channel.did,
                     channel: res.doc,
                 }
                 supabase.from('communities').insert([request]).then((res) => {
                     if (res.error) {
-                        console.log(username, 'community created', res.error);
+                        console.log(channel.did, 'community created', res.error);
                     }
                 })
             } catch (error) {
-                console.log(username, 'community', error);
+                console.log(channel.did, 'community', error);
             }
         } else {
             setLoading(false);
@@ -111,9 +106,9 @@ function Community() {
     const createPost = async () => {
         setLoading(true)
         if (!description) return
-        const { data: community, error } = await supabase.from('communities').select('*').eq('user', channel);
+        const { data: community, error } = await supabase.from('communities').select('*').eq('user', channel.did);
         if (community && community.length > 0) {
-            let res = await orbis.createPost({ body: description, mentions: mentions, context: community.channel });
+            let res = await orbis.createPost({ body: description, mentions: mentions, context: community[0].channel });
             if (res && res.status === 200) {
                 setLoading(false)
                 toast.success('Post created successfully');
@@ -139,7 +134,7 @@ function Community() {
                             </div>
                             : communityCreated ? (
                                 <>
-                                    {isLoggedIn &&
+                                    {isLoggedIn && user.did === channel.did &&
                                         <div className="flex w-full mb-10 items-start justify-start space-x-4">
                                             <div className="flex space-x-2 items-center">
                                                 <ProfilePicture details={user} imgClass="w-10 h-10 rounded-full" />
@@ -172,7 +167,7 @@ function Community() {
                                 {posts && posts.length > 0 ? (
                                     <div className="flex flex-col bg-secondary rounded-lg divide-y divide-gray-100">
                                         {posts.map((post, index) => {
-                                            return <Post key={index} refetch={fetchCommunityPosts} post={post} />
+                                            return <Post channel={channel} key={index} refetch={fetchCommunityPosts} post={post} />
                                         })}
                                     </div>   
                                  ): fetched ? (
@@ -185,7 +180,7 @@ function Community() {
                                 }
                             </>
                         ) : (
-                            <div className="flex flex-col p-8 space-y-4">
+                            <div className="flex flex-col p-8 space-y-4  bg-secondary rounded-lg">
                                 <p>We are excited to announce that you can now create a community for your channel under the OrbisTube Group! This community will be publicly available for all to join, and we believe it will be a great way for you to connect with your audience and foster a sense of belonging among your viewers.</p>
                                 <p>To get started, simply go to the OrbisTube Group page and click on the &quot;Create Community&quot; button. From there, you can customize your community by giving it a name, description, and setting the rules for participation. You can also invite your viewers to join the community by sharing a link to it on your channel or social media.</p>
                                 <div>

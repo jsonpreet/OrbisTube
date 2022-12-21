@@ -46,7 +46,7 @@ function UserMenu() {
                             <div className="pt-2 text-sm">
                                 <Menu.Item
                                     as={NextLink}
-                                    href={`/${username}`}
+                                    href={`/${user.profile !== null ? username : user.did}`}
                                     className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                                 >
                                     <FaRegUserCircle size="20" />

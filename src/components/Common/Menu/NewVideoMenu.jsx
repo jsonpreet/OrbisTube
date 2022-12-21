@@ -1,11 +1,12 @@
 import { RiVideoAddLine } from 'react-icons/ri'
-import Link from 'next/link';
 import DropMenu, { NextLink } from '@components/UI/DropMenu';
 import { Button } from '@components/UI/Button';
 import { Menu } from '@headlessui/react';
 import { BsPencilSquare } from 'react-icons/bs';
 import { useDidToAddress } from '@utils/functions/getDidToAddress';
 import { getUsername } from '@utils/functions/getProfileName';
+import { SlCamrecorder } from "react-icons/sl";
+import { HiStatusOnline } from "react-icons/hi";
 
 function NewVideoMenu({user}) {
     const { address } = useDidToAddress(user?.did)
@@ -29,21 +30,31 @@ function NewVideoMenu({user}) {
                             href={`/upload`}
                             className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                         >
-                            <RiVideoAddLine size="20" />
+                            <SlCamrecorder size="20" />
                             <span className="truncate whitespace-nowrap">
                                 Upload Video
                             </span>
                         </Menu.Item>
-                        
-                        <Link
-                            href={`/${username}/community`}
+                        <Menu.Item
+                            as={NextLink}
+                            href={`/${user.profile !== null ? username : user.did}/community`}
                             className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                         >
                             <BsPencilSquare size="20" />
                             <span className="truncate whitespace-nowrap">
                                 Create Post
                             </span>
-                        </Link>
+                        </Menu.Item>
+                        <Menu.Item
+                            as={NextLink}
+                            href={`/${user.profile !== null ? username : user.did}/live`}
+                            className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
+                        >
+                            <HiStatusOnline size="22" />
+                            <span className="truncate whitespace-nowrap">
+                                Go Live
+                            </span>
+                        </Menu.Item>
                     </div>
                 </div>
             </DropMenu>

@@ -14,9 +14,8 @@ import clsx from "clsx"
 import DeleteModal from "@app/components/Common/Modals/DeleteModal"
 import Options from "./Options"
 
-export const Post = ({ post, refetch }) => {
+export const Post = ({ post, refetch, channel }) => {
     const router = useRouter()
-    const { channel } = router.query
     const supabase = useSupabaseClient()
     const { orbis, isLoggedIn, user, isConnected } = useContext(GlobalContext)
     const { address } = useDidToAddress(post?.creator_details?.did)
@@ -31,7 +30,7 @@ export const Post = ({ post, refetch }) => {
     const createComment = async () => {
         if (!comment) return
         setLoading(true)
-        const { data: community, error } = await supabase.from('communities').select('*').eq('user', channel);
+        const { data: community, error } = await supabase.from('communities').select('*').eq('user', channel.did);
         if (community && community.length > 0) {
             let res = await orbis.createPost({ body: comment, mentions: mentions, context: community[0].channel, master: post.stream_id, reply_to: post.stream_id });
             if (res && res.status === 200) {
