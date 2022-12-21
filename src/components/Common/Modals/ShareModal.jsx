@@ -19,7 +19,7 @@ import {
 } from 'next-share';
 import { BiCopy } from 'react-icons/bi';
 
-const ShareModal = ({ rootRef, show, setShow, video }) => {
+const ShareModal = ({ rootRef, show, setShowShare, video }) => {
   const [copy] = useCopyToClipboard()
 
   const onCopyVideoUrl = async () => {
@@ -30,7 +30,7 @@ const ShareModal = ({ rootRef, show, setShow, video }) => {
   return (
     <Modal
       title="Share"
-      onClose={() => setShow(false)}
+      onClose={() => setShowShare(false)}
       show={show}
       ref={rootRef}
       panelClassName="w-full max-w-lg"

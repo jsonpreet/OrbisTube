@@ -1,5 +1,6 @@
 import makeBlockie from "ethereum-blockies-base64";
 import { useDidToAddress } from "./getDidToAddress";
+import imageCdn from "./imageCdn";
 
 export function getProfilePicture(profile, address) {
   return profile ? profile.data?.Avatar ? profile.data?.Avatar : profile.pfp ? profile.pfp : makeBlockie(address) : makeBlockie(address)
@@ -53,9 +54,10 @@ export function ProfilePicture({details, imgClass}) {
 
   const PfpImg = ({ className }) => {
     if(details.profile?.data?.Avatar !== undefined && details.profile?.data?.Avatar !== null) {
-      return <img className={className} src={details.profile?.data?.Avatar} alt="pfp" />
+      return <img className={className} src={imageCdn(details.profile?.data?.Avatar, 
+      'avatar_lg')} alt="pfp" />
     } else if(details.profile?.pfp) {
-      return <img className={className} src={details.profile?.pfp} alt="pfp" />
+      return <img className={className} src={imageCdn(details.profile?.pfp, 'avatar_lg')} alt="pfp" />
     } else if(address) {
       return <img className={className} src={makeBlockie(address)} alt="pfp" />
     } else {

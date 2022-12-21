@@ -16,7 +16,7 @@ export const Button = ({className = '', size = 'md', variant = 'primary', loadin
           'primary-button md:rounded-full':
            variant === 'primary',
           'bg-transparent md:rounded-full': variant === 'secondary',
-          'bg-red-500 border border-red-500 md:rounded-full': variant === 'danger',
+          'bg-red-500 md:rounded-full': variant === 'danger',
           'dark-button md:rounded-full': variant === 'dark',
           'light-button-secondary group-hover:bg-brand-700 hover:bg-brand-700 md:rounded-full': variant === 'light',
           'bg-white md:rounded-full': variant === 'white',

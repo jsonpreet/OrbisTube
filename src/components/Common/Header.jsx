@@ -6,7 +6,7 @@ import { GlobalContext } from '@context/app'
 
 
 const Header = () => {
-  const { isLoggedIn } = useContext(GlobalContext)
+  const { isLoggedIn, user } = useContext(GlobalContext)
   return (
     <>
       <div className='relative items-center flex justify-start md:justify-between flex-row z-30 h-16'>
@@ -15,7 +15,7 @@ const Header = () => {
           {isLoggedIn ? (
             <>
               <NotificationMenu />
-              <NewVideoMenu />
+              <NewVideoMenu user={user} />
             </>
           ) : <div className='mr-1'><ThemeSwitch/></div>} 
           <UserMenu/>

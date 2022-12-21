@@ -24,7 +24,7 @@ const Comment = ({ video, comment, refetch }) => {
     const displayName = getDisplay(userProfile?.profile, address, userProfile?.did)
     return (
         <>
-            <DeleteModal refetch={refetch} isComment={true} video={comment} show={showDeleteModal} setShow={setShowDeleteModal} />
+            <DeleteModal title='Delete Comment' message='Comment Deleted' refetch={refetch} isComment={true} video={comment} show={showDeleteModal} setShow={setShowDeleteModal} />
             <div className="flex items-start justify-between group">
                 <div className="flex flex-1 items-start justify-between">
                     <Link

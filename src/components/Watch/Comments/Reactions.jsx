@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { FaRegSmile, FaSmile } from "react-icons/fa";
 import { FiThumbsDown, FiThumbsUp } from "react-icons/fi";
 import { Button } from "@components/UI/Button";
+import { toast } from "react-hot-toast";
 
 function Reactions({comment, iconSize = '14', setShowSubComment, showSubComment, refetch}) {
     const [likes, setLikes] = useState(comment.count_likes)
@@ -46,6 +47,8 @@ function Reactions({comment, iconSize = '14', setShowSubComment, showSubComment,
     }
 
     const like = async () => {
+        if (!isLoggedIn)
+            return toast.error('You need to be connected to do this action');
         setLiking(true)
         let res = await orbis.react(comment.stream_id, 'like');
         if (res.status === 200) {
@@ -59,6 +62,8 @@ function Reactions({comment, iconSize = '14', setShowSubComment, showSubComment,
     }
 
     const dislike = async () => {
+        if (!isLoggedIn)
+            return toast.error('You need to be connected to do this action');
         setDisLiking(true)
         let res = await orbis.react(comment.stream_id, 'downvote');
         if (res.status === 200) {
@@ -72,6 +77,8 @@ function Reactions({comment, iconSize = '14', setShowSubComment, showSubComment,
     }
 
     const reaction = async () => {
+        if (!isLoggedIn)
+            return toast.error('You need to be connected to do this action');
         setReacting(true)
         let res = await orbis.react(comment.stream_id, 'haha');
         if (res.status === 200) {

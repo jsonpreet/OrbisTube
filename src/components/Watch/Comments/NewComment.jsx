@@ -25,7 +25,7 @@ const NewComment = ({ reply, video, refetch, isReply = false }) => {
                     context:APP_CONTEXT,
                     body: comment,
                     master: video.stream_id,
-                    reply_to: isReply ? reply.stream_id : null
+                    reply_to: isReply ? reply.stream_id : video.stream_id
                 }
                 let res = await orbis.createPost(request);
                 if (res && res.status === 200) {

@@ -16,8 +16,8 @@ function ChannelInfo({ channel }) {
     const [subscribing, setSubscribing] = useState(false)
     const followRef = useRef(null);
     const [follow, setFollow] = useState(false)
-    const { address } = useDidToAddress(channel?.did)
     const [followers, setFollowers] = useState(channel?.count_followers)
+    const { address } = useDidToAddress(channel?.did)
     const username = getUsername(channel, address, channel?.did)
     const displayName = getDisplay(channel.details.profile, address, channel?.did)
 

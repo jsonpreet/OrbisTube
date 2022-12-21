@@ -2,22 +2,23 @@ import { GlobalContext } from "@context/app";
 import { formatNumber} from "@utils/functions";
 import clsx from "clsx";
 import { useContext, useEffect, useState } from "react";
-import { FaRegSmile, FaSmile } from "react-icons/fa";
+import { FaCommentDots, FaRegSmile, FaSmile } from "react-icons/fa";
 import { FiThumbsDown, FiThumbsUp } from "react-icons/fi";
 import { Button } from "@components/UI/Button";
 import { toast } from "react-hot-toast";
 
-function Reactions({video, iconSize = '21', showButton = true}) {
-    const [likes, setLikes] = useState(video.count_likes)
-    const [dislikes, setDisLikes] = useState(video.count_downvotes)
-    const [reactions, setReactions] = useState(video.count_haha)
+function Reactions({ post, iconSize = '17', setShowNewComment, showNewComment }) {
+    const [likes, setLikes] = useState(post.count_likes)
+    const [dislikes, setDisLikes] = useState(post.count_downvotes)
+    const [reactions, setReactions] = useState(post.count_haha)
+    const [comments, setComments] = useState(post.count_replies)
     const [liked, setLiked] = useState(false)
     const [disliked, setDisLiked] = useState(false)
     const [reacted, setReacted] = useState(false)
     const [liking, setLiking] = useState(false)
     const [disliking, setDisLiking] = useState(false)
     const [reacting, setReacting] = useState(false)
-    const { orbis, user } = useContext(GlobalContext)
+    const { orbis, user, isLoggedIn } = useContext(GlobalContext)
 
     useEffect(() => {
         if(user) {
@@ -28,7 +29,7 @@ function Reactions({video, iconSize = '21', showButton = true}) {
 
     /** If user is connected we check if it has reacted to this post */
     const getUserReaction = async() => {
-        let { data, error, status } = await orbis.api.from("orbis_reactions").select('type').eq('post_id', video.stream_id).eq('creator', user.did);
+        let { data, error, status } = await orbis.api.from("orbis_reactions").select('type').eq('post_id', post.stream_id).eq('creator', user.did);
 
         if(error) {
             console.log("Error getting reactions: ", error);
@@ -50,7 +51,7 @@ function Reactions({video, iconSize = '21', showButton = true}) {
         if (!isLoggedIn)
             return toast.error('You need to be connected to do this action');
         setLiking(true)
-        let res = await orbis.react(video.stream_id, 'like');
+        let res = await orbis.react(post.stream_id, 'like');
         if (res.status === 200) {
             setLikes(likes + 1)
             setDisLikes(dislikes - 1)
@@ -65,7 +66,7 @@ function Reactions({video, iconSize = '21', showButton = true}) {
         if (!isLoggedIn)
             return toast.error('You need to be connected to do this action');
         setDisLiking(true)
-        let res = await orbis.react(video.stream_id, 'downvote');
+        let res = await orbis.react(post.stream_id, 'downvote');
         if (res.status === 200) {
             setDisLikes(dislikes + 1)
             setLikes(likes - 1)
@@ -80,7 +81,7 @@ function Reactions({video, iconSize = '21', showButton = true}) {
         if (!isLoggedIn)
             return toast.error('You need to be connected to do this action');
         setReacting(true)
-        let res = await orbis.react(video.stream_id, 'haha');
+        let res = await orbis.react(post.stream_id, 'haha');
         if (res.status === 200) {
             setReactions(reactions + 1)
             setReacted(true)
@@ -92,14 +93,20 @@ function Reactions({video, iconSize = '21', showButton = true}) {
     
     return (
         <>
-            <div className='flex space-x-2 md:space-x-4'>
-                <Button variant={showButton ? "light" : "none"} onClick={() => like()} size={showButton ? 'md' : 'small'} className={`group ${showButton ? `h-10` : `!p-0`}`}>
-                    <span className={clsx('flex items-center dark:group-hover:text-white group-hover:text-white outline-none', {
+            <div className='flex space-x-2 mt-4 md:space-x-4'>
+                <Button variant={"none"} size={'small'} className={`group !p-0`} onClick={() => setShowNewComment(!showNewComment)}>
+                    <span className='flex items-center dark:group-hover:text-white group-hover:text-brand2-400 outline-none space-x-1.5'>
+                        <FaCommentDots size={iconSize}/>
+                        <span>
+                            {comments > 0 ? formatNumber(comments) : '0'}
+                        </span>
+                    </span>
+                </Button>
+                <Button variant={"none"} size={'small'} className={`group !p-0`} onClick={() => like()}>
+                    <span className={clsx('flex items-center dark:group-hover:text-white group-hover:text-brand2-400 outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': liked
                     },
-                        { 'space-x-1.5': showButton },
-                        { 'mt-1.5': !showButton },
-                        { 'space-x-1.5 md:space-x-3': likes > 0 }
+                        { 'space-x-1.5': likes > 0 }
                     )}>
                         <FiThumbsUp size={iconSize}
                             className={clsx({
@@ -111,13 +118,11 @@ function Reactions({video, iconSize = '21', showButton = true}) {
                         </span>
                     </span>
                 </Button>
-                <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} onClick={() => dislike()} className={`group ${showButton ? `h-10` : `!p-0`}`}>
-                    <span className={clsx('flex items-center dark:group-hover:text-white group-hover:text-white outline-none', {
+                <Button variant={"none"} size={'small'} className={`group !p-0`} onClick={() => dislike()}>
+                    <span className={clsx('flex items-center dark:group-hover:text-white group-hover:text-brand2-400 outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': disliked
                     },
-                        { 'space-x-1.5':  showButton && disliked },
-                        { 'mt-1.5': !showButton },
-                        { 'space-x-1.5 md:space-x-3': dislikes > 0 }
+                        { 'space-x-1.5': dislikes > 0 }
                     )}>
                         <FiThumbsDown size={iconSize}
                             className={clsx({
@@ -130,13 +135,11 @@ function Reactions({video, iconSize = '21', showButton = true}) {
                         </span>
                     </span>
                 </Button>
-                <Button variant={showButton ? "light" : "none"} size={showButton ? 'md' : 'small'} onClick={() => reaction()} className={`group ${showButton ? `h-10` : `!p-0`}`}>
-                    <span className={clsx('flex items-center dark:group-hover:text-white group-hover:text-white outline-none', {
+                <Button variant={"none"} size={'small'} className={`group !p-0`} onClick={() => reaction()}>
+                    <span className={clsx('flex items-center dark:group-hover:text-white group-hover:text-brand2-400 outline-none', {
                         'text-brand2-500 dark:text-brand2-400 font-semibold': reacted
                     },
-                        { 'space-x-1.5': showButton && reacted },
-                        { 'mt-1.5': !showButton },
-                        { 'space-x-1.5 md:space-x-3': reactions > 0 }
+                        { 'space-x-1.5': reactions > 0 }
                     )}>
                         {reacted ? <FaSmile size={iconSize}
                             className={clsx({

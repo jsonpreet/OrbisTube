@@ -34,42 +34,40 @@ const Actions = ({ video }) => {
                         <span className='hidden md:block'>Share</span>
                     </span>
                 </Button>
-                <DropMenu
-                    trigger={
-                        <Button
-                            variant="light"
-                            className='md:!p-0 md:w-10 max-w-[40px] w-auto h-10' 
-                        >
-                            <span className="flex items-center space-x-2 md:space-x-3 dark:group-hover:text-white group-hover:text-white">
-                                <BsThreeDots size={22} />
-                            </span>
-                        </Button>
-                    }
-                >
-                    <div className="py-2 my-1 rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 w-44">
-                        <div className="flex flex-col text-[14px] transition duration-150 ease-in-out rounded-lg">
-                            {isVideoOwner && (
-                                <>
-                                    <button 
-                                        onClick={() => setShowEditModal(true)}
-                                        className='inline-flex items-center px-3 py-2 space-x-3 hover-primary'
-                                    >
-                                        <BsPencilSquare size={18} className="ml-0.5" />
-                                        <span className="whitespace-nowrap">Edit Video</span>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowDeleteModal(true)}
-                                        className="inline-flex items-center px-3 py-2 space-x-3 text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
-                                    >
-                                        <IoTrashOutline size={18} className="ml-0.5" />
-                                        <span className="whitespace-nowrap">Delete</span>
-                                    </button>
-                                </>
-                            )}
+                {isVideoOwner && (
+                    <DropMenu
+                        trigger={
+                            <Button
+                                variant="light"
+                                className='md:!p-0 md:w-10 max-w-[40px] w-auto h-10' 
+                            >
+                                <span className="flex items-center space-x-2 md:space-x-3 dark:group-hover:text-white group-hover:text-white">
+                                    <BsThreeDots size={22} />
+                                </span>
+                            </Button>
+                        }
+                    >
+                        <div className="py-2 my-1 rounded-lg dropdown-shadow bg-dropdown outline-none ring-0 focus:outline-none focus:ring-0 w-44">
+                            <div className="flex flex-col text-[14px] transition duration-150 ease-in-out rounded-lg">
+                                <button 
+                                    onClick={() => setShowEditModal(true)}
+                                    className='inline-flex items-center px-3 py-2 space-x-3 hover-primary'
+                                >
+                                    <BsPencilSquare size={18} className="ml-0.5" />
+                                    <span className="whitespace-nowrap">Edit Video</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setShowDeleteModal(true)}
+                                    className="inline-flex items-center px-3 py-2 space-x-3 text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
+                                >
+                                    <IoTrashOutline size={18} className="ml-0.5" />
+                                    <span className="whitespace-nowrap">Delete</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </DropMenu>
+                    </DropMenu>
+                )}
             </div>     
         </>
     )

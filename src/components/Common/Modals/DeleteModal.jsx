@@ -7,12 +7,10 @@ import { useContext, useState } from 'react'
 import { GlobalContext } from '@context/app'
 import { useRouter } from 'next/router'
 
-const DeleteModal = ({ rootRef, show, setShow, video, isComment = false, refetch }) => {
+const DeleteModal = ({ rootRef, title='Delete Video', message='Video Deleted', show, setShow, video, isPost = false, isComment = false, refetch }) => {
     const { orbis } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const router = useRouter()
-    let message = isComment ? `Comment Deleted` : `Video Deleted`
-    let heading = isComment ? `Delete Comment` : `Delete Video`
     const hideVideo = async () => {
         setLoading(true)
         try {
@@ -22,7 +20,7 @@ const DeleteModal = ({ rootRef, show, setShow, video, isComment = false, refetch
 
         } finally {
             toast.success(message)
-            if (!isComment) {
+            if (!isComment && !isPost) {
                 setTimeout(() => router.push(`/${getUsername(video.creator_details.profile, video.did)}`, undefined, { shallow: true }), 1000)
             } 
             setShow(false)
@@ -32,7 +30,7 @@ const DeleteModal = ({ rootRef, show, setShow, video, isComment = false, refetch
     }
     return (
         <Modal
-            title={heading}
+            title={title}
             onClose={() => setShow(false)}
             show={show}
             ref={rootRef}

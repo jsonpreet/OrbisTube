@@ -1,16 +1,13 @@
-import usePersistStore from '@store/persist'
+
 import DropMenu from '@components/UI/DropMenu'
 import clsx from 'clsx'
 import { BsPencilSquare, BsThreeDotsVertical } from 'react-icons/bs'
-import { FiFlag } from 'react-icons/fi'
 import { RiShareForwardLine } from 'react-icons/ri'
 import WatchLater from '@components/Common/WatchLater'
 import { useContext, useEffect, useState } from 'react'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import { Menu } from '@headlessui/react'
 import { IoTrashOutline } from 'react-icons/io5'
 import { GlobalContext } from '@app/context/app'
-import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 
 const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowEditModal, setShowDeleteModal, setShowShareModal }) => {
@@ -21,15 +18,15 @@ const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowE
   const [alreadyAddedToWatchLater, setAlreadyAddedToWatchLater] = useState(false)
 
   useEffect(() => {
-    if (video && user) {
+    if (video && user && isLoggedIn) {
       isAlreadyAddedToWatchLater();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [video, user])
+  }, [video, user, isLoggedIn])
 
   const isAlreadyAddedToWatchLater = () => {
     supabase.from('watchlater').select('*').eq('user', user.did).eq('stream_id', video.stream_id).then((res) => {
-      if (res && res.data.length > 0) {
+      if (res && res?.data?.length > 0) {
         setAlreadyAddedToWatchLater(true)
       } else {
         setAlreadyAddedToWatchLater(false)
