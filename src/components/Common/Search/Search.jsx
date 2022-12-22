@@ -63,7 +63,7 @@ const Search = () => {
         <>
             {isBrowser ? (
                 <>
-                    <div className="md:w-96 flex">
+                    <div className="md:w-96 hidden md:flex">
                         <div ref={ref} className='w-full mx-auto'>
                             <div className="relative mt-1">
                                 <div className="relative w-full drop-shadow-[0_0px_10px_rgba(0,0,0,0.15)] overflow-hidden cursor-default bg-white dark:bg-black rounded-lg">
@@ -129,7 +129,7 @@ const Search = () => {
                         title="Search"
                         onClose={() => setShowSearchModal(false)}
                         show={showSearchModal}
-                        panelClassName="max-w-md min-h-[50vh]"
+                        panelClassName="max-w-md px-4 min-h-[50vh]"
                     >
                         <div className="relative w-full overflow-hidden cursor-default border shadow-inner customBorder bg-primary dark:border-gray-800 mb-3 rounded-full">
                             <input
@@ -142,35 +142,33 @@ const Search = () => {
                                 {loading ? <Loader2 className='w-5 h-5'/> : <AiOutlineSearch size={24} />}
                             </div>
                         </div>
-                        {/* {results.length > 0 && results.map((channel) => (
-                            <div
-                                key={channel.ProfilePublicKeyBase58Check}
-                                className="relative cursor-default select-none hover:bg-gray-100 -ml-4 -mr-4 px-4 dark:hover:bg-gray-900"
-                            >
-                            <Link
-                                href={`/@${channel.Username}`}
-                                key={channel.Username}
-                                onClick={() => clearSearch()}
-                                className="flex flex-col justify-center py-2 space-y-1 rounded-xl"
-                            >
-                                <span className="flex items-center justify-between">
-                                    <div className="inline-flex items-start w-3/4 space-x-2">
-                                        <img
-                                        className="w-6 h-6 rounded-full"
-                                        src={getProfilePicture(channel)}
-                                        draggable={false}
-                                        alt={channel?.Username}
-                                        />
-                                        <div className="flex items-center space-x-1">
-                                            <p className="text-sm">
-                                                <span>{channel.Username}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </span>
-                            </Link>
-                        </div>
-                        ))} */}
+                        {results.length > 0 && results.map((channel) => {
+                            return (
+                                <div
+                                    key={channel.did}
+                                    className="relative cursor-default select-none hover:bg-gray-100 -ml-4 -mr-4 px-4 dark:hover:bg-gray-900"
+                                >
+                                    <Link
+                                        href={`/${getUsername(channel?.details.profile, channel.did)}`}
+                                        key={getUsername(channel?.details.profile, channel.did)}
+                                        onClick={() => clearSearch()}
+                                        className="flex flex-col justify-center py-2 space-y-1 rounded-xl"
+                                    >
+                                        <span className="flex items-center justify-between">
+                                            <div className="inline-flex items-start w-3/4 space-x-2">
+                                                <ProfilePicture imgClass='w-8 h-8 rounded-full' details={channel.details} />
+                                                <div className="flex items-center space-x-1">
+                                                    <span className=" mt-1 flex items-center space-x-1 text-sm">
+                                                        <span>{getUsername(channel?.details.profile, channel.did)}</span>
+                                                        <ProfileBadges details={channel.details} />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </Link>
+                                </div>
+                            )}
+                        )}
                         {showResults && results?.length === 0 && !loading && (
                         <div className="relative p-5 text-center cursor-default select-none">
                             No results found.

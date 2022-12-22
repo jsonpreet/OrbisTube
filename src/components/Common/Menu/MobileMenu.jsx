@@ -20,7 +20,7 @@ const MobileMenu = () => {
           'grid py-2 bg-dropdown space-between',
           {
             'grid-cols-4': isLoggedIn,
-            'grid-cols-3' : !isLoggedIn,
+            'grid-cols-2' : !isLoggedIn,
           }
         )}
       >
@@ -34,17 +34,6 @@ const MobileMenu = () => {
             })}
           />
           <span className="text-xs">Home</span>
-        </Link>
-        <Link
-          href={FEED}
-          className="flex flex-col space-y-1 items-center justify-center w-full"
-        >
-          <MdOutlineSubscriptions size={21}
-            className={clsx({
-              'active-secondary': isActivePath(FEED)
-            })}
-          />
-          <span className="text-xs">Subscriptions</span>
         </Link>
         <Link
           href={EXPLORE}

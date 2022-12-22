@@ -5,11 +5,27 @@ import { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Button } from '@app/components/UI/Button'
 import clsx from 'clsx'
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 const ConnectModal = ({ rootRef, show, setShowModal }) => {
     const { orbis, setLoggedIn, setUser } = useContext(GlobalContext)
     const [status, setStatus] = useState(0);
     const [statusM, setStatusM] = useState(0);
+
+    let wallet_connect_provider = new WalletConnectProvider({
+        infuraId: "27e484dcd9e3efcfd25a83a78777cdf1",
+    });
+
+    async function walletConntec() {
+        /** Enable session (triggers QR Code modal) */
+        await wallet_connect_provider.enable();
+
+        let res = await orbis.connect_v2({
+            provider: wallet_connect_provider,
+            lit: true
+        });
+    }
+      
 
     /** Call the Orbis SDK to connect to Ceramic */
     async function connect() {
@@ -120,6 +136,18 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
                     })}
                 >
                     {statusM === 2 ? `Login Success` : statusM === 3 ? `Login Error` : `Metamask`}
+                </Button>
+                <Button
+                    loading={status === 1}
+                    variant='cbtn'
+                    onClick={() => walletConntec()}
+                    className={clsx('text-white px-4 py-2 rounded-lg', {
+                        'bg-green-500 hover:bg-green-600': status === 2,
+                        'bg-[#7967ff] hover:bg-[#6553e9]': status === 0 || status === 1,
+                        'bg-red-500 hover:bg-red-600': status === 3,
+                    })}
+                >
+                    {status === 2 ? `Login Success` : status === 3 ? `Login Error` : `Wallet Connect`}
                 </Button>
                 <Button
                     loading={status === 1}
