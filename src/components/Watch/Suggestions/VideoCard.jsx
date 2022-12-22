@@ -42,7 +42,7 @@ const SuggestedVideoCard = ({ video }) => {
                                     alt={`Video by ${username}`}
                                     wrapperClassName='w-full'
                                     placeholderSrc='/placeholder.png'
-                                    src={video.content.data.Thumbnail}
+                                    src={video.content.data.Thumbnail !== '' ? video.content.data.Thumbnail : '/placeholder.png'}
                                 />
                                 <ThumbnailOverlays video={video} />
                             </div>

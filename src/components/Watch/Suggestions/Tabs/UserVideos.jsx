@@ -47,7 +47,7 @@ function UserVideos({channel, currentVideoId}) {
         <>
             {!isLoading && isFetched ? (
                 <>
-                    <div className='bg-secondary p-4 rounded-lg'>
+                    <div className='bg-secondary flex flex-col space-y-3 p-4 rounded-lg'>
                         {videos.map(video => {
                             return (
                                 <SuggestedVideoCard channel={channel} key={`${video.stream_id}`} video={video} />

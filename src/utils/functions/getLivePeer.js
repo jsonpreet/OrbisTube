@@ -1,12 +1,10 @@
 import { createReactClient, studioProvider } from '@livepeer/react'
-
 export const livepeerClient = () => {
-
-    return createReactClient({
-        provider: studioProvider({
-            apiKey: process.env.NEXT_PUBLIC_LIVEPEER_KEY,
-        }),
-    });
+  return createReactClient({
+    provider: studioProvider({
+      apiKey: process.env.NEXT_PUBLIC_LIVEPEER_KEY,
+    }),
+  });
 }
 
 export const playerTheme = {

@@ -45,16 +45,6 @@ function NewVideoMenu({user}) {
                                 Create Post
                             </span>
                         </Menu.Item>
-                        <Menu.Item
-                            as={NextLink}
-                            href={`/${user.profile !== null ? username : user.did}/live`}
-                            className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
-                        >
-                            <HiStatusOnline size="22" />
-                            <span className="truncate whitespace-nowrap">
-                                Go Live
-                            </span>
-                        </Menu.Item>
                     </div>
                 </div>
             </DropMenu>

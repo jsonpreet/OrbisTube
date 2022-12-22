@@ -21,7 +21,6 @@ const VideoCard = ({ video }) => {
   const { address } = useDidToAddress(video.creator_details?.did)
   const username = getUsername(video.creator_details.profile, address, video.did)
   const displayName = getDisplay(video.creator_details.profile, address, video.did)
-
   return (
     <>
       {video.content.data ?
@@ -39,7 +38,7 @@ const VideoCard = ({ video }) => {
                 alt={`Video by ${username}`}
                 wrapperClassName='w-full'
                 placeholderSrc='/placeholder.png'
-                src={video.content.data.Thumbnail}
+                src={video.content.data.Thumbnail !== '' ? video.content.data.Thumbnail : '/placeholder.png'}
               />
               <ThumbnailOverlays video={video} />
             </div>

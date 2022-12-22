@@ -17,7 +17,7 @@ function Reactions({video, iconSize = '21', showButton = true}) {
     const [liking, setLiking] = useState(false)
     const [disliking, setDisLiking] = useState(false)
     const [reacting, setReacting] = useState(false)
-    const { orbis, user } = useContext(GlobalContext)
+    const { orbis, user, isLoggedIn } = useContext(GlobalContext)
 
     useEffect(() => {
         if(user) {

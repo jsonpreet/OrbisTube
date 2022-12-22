@@ -51,7 +51,7 @@ function RecentVideos() {
     }
 
     /** Perform query against Orbis API */
-    let query = orbis.getPosts({context: APP_CONTEXT, only_master: true}, _page);
+    let query = orbis.getPosts({context: APP_CONTEXT, only_master: true, algorithm: "all-context-master-posts" }, _page);
     const { data, error, status } = await query;
 
     /** Handle API query errors */
