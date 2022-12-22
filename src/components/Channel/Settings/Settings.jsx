@@ -82,22 +82,23 @@ function Settings() {
     const handleCover = async (e) => {
         setUploadingCover(true);
         try {
+            const extraData = getProfileExtraData(user.profile);
             const file = e.target.files[0]
             const imageURI = await new StorageClient().storeFiles(file);
             const request = {
                 ...user.profile,
                 data: {
-                    Avatar: eextraData?.Avatar !== undefined ? extraData?.Avatar : null,
-                    DisplayName: displayName,
-                    Description: description,
-                    Location: location,
+                    Avatar: extraData?.Avatar !== undefined ? extraData?.Avatar : null,
+                    DisplayName: displayName ? displayName : null,
+                    Description: description ? description : null,
+                    Location: location ? location : null,
                     Languages: languages,
-                    TwitterURL: twitterLink,
-                    InstagramURL: instagramLink,
-                    YoutubeURL: youtubeLink,
-                    DiscordURL: discordLink,
-                    WebsiteTitle: websiteTitle,
-                    WebsiteURL: websiteLink,
+                    TwitterURL: twitterLink ? twitterLink : null,
+                    InstagramURL: instagramLink ? instagramLink : null,
+                    YoutubeURL: youtubeLink ? youtubeLink : null,
+                    DiscordURL: discordLink ? discordLink : null,
+                    WebsiteTitle: websiteTitle ? websiteTitle : null,
+                    WebsiteURL: websiteLink ? websiteLink : null,
                     Cover: imageURI,
                 }
             }
@@ -133,16 +134,16 @@ function Settings() {
                 ...user.profile,
                 data: {
                     Cover: extraData?.Cover !== undefined ? extraData?.Cover : null,
-                    DisplayName: displayName,
-                    Description: description,
-                    Location: location,
+                    DisplayName: displayName ? displayName : null,
+                    Description: description ? description : null,
+                    Location: location ? location : null,
                     Languages: languages,
-                    TwitterURL: twitterLink,
-                    InstagramURL: instagramLink,
-                    YoutubeURL: youtubeLink,
-                    DiscordURL: discordLink,
-                    WebsiteTitle: websiteTitle,
-                    WebsiteURL: websiteLink,
+                    TwitterURL: twitterLink ? twitterLink : null,
+                    InstagramURL: instagramLink ? instagramLink : null,
+                    YoutubeURL: youtubeLink ? youtubeLink : null,
+                    DiscordURL: discordLink ? discordLink : null,
+                    WebsiteTitle: websiteTitle ? websiteTitle : null,
+                    WebsiteURL: websiteLink ? websiteLink : null,
                     Avatar: imageURI,
                 }
             }
@@ -179,24 +180,25 @@ function Settings() {
         setLoading(true);
         const extraData = getProfileExtraData(user.profile);
         const payload = {
-            description: user.profile?.description,
-            pfp: user.profile?.pfp,
-            username: user.profile?.username,
+            description: user.profile ? user.profile.description : null,
+            pfp: user.profile ? user.profile.pfp : null,
+            username: user.profile ? user.profile.username : null,
             data: {
                 Avatar: extraData?.Avatar !== undefined ? extraData?.Avatar : null,
                 Cover: extraData?.Cover !== undefined ? extraData?.Cover : null,
-                DisplayName: displayName,
-                Description: description,
-                Location: location,
+                DisplayName: displayName ? displayName : null,
+                Description: description ? description : null,
+                Location: location ? location : null,
                 Languages: languages,
-                TwitterURL: twitterLink,
-                InstagramURL: instagramLink,
-                YoutubeURL: youtubeLink,
-                DiscordURL: discordLink,
-                WebsiteTitle: websiteTitle,
-                WebsiteURL: websiteLink,
+                TwitterURL: twitterLink ? twitterLink : null,
+                InstagramURL: instagramLink ? instagramLink : null,
+                YoutubeURL: youtubeLink ? youtubeLink : null,
+                DiscordURL: discordLink ? discordLink : null,
+                WebsiteTitle: websiteTitle ? websiteTitle : null,
+                WebsiteURL: websiteLink ? websiteLink : null,
             }
         }
+        console.log(payload)
         try {
             const {data, error} = await orbis.updateProfile(payload);
             if (error) {

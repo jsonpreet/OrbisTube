@@ -10,7 +10,8 @@ import { HiStatusOnline } from "react-icons/hi";
 
 function NewVideoMenu({user}) {
     const { address } = useDidToAddress(user?.did)
-    const username = getUsername(user?.profile, address, user?.did)
+    const profile = user?.details?.profile !== null ? user?.details?.profile : null
+    const username = getUsername(profile, address, user?.did)
     return (
         <>
             <DropMenu
@@ -37,7 +38,7 @@ function NewVideoMenu({user}) {
                         </Menu.Item>
                         <Menu.Item
                             as={NextLink}
-                            href={`/${user.profile !== null ? username : user.did}/community`}
+                            href={`/${profile?.username !== null ? username : user.did}/community`}
                             className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                         >
                             <BsPencilSquare size="20" />

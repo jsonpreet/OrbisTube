@@ -19,6 +19,8 @@ const SuggestedVideoCard = ({ video }) => {
     const { address } = useDidToAddress(video.creator_details?.did)
     const username = getUsername(video.creator_details?.profile, address, video.did)
     const displayName = getDisplay(video.creator_details?.profile, address, video.did)
+    
+    const profile = video.creator_details.profile !== null ? video.creator_details.profile : null
   
     return (
     <>
@@ -51,7 +53,7 @@ const SuggestedVideoCard = ({ video }) => {
                     <div className="px-3 py-3 md:py-0 md:px-2.5 flex flex-row justify-between w-full">
                         <div className='flex space-x-2.5 md:space-x-0'>
                             <div className="md:hidden flex flex-col">
-                                <Link href={`/${video.creator_details.profile !== null ? username : video.creator_details.did}`} className="flex-none mt-0.5">
+                                <Link href={`/${profile?.username !== null ? username : video.creator_details.did}`} className="flex-none mt-0.5">
                                     <ProfilePicture details={video?.creator_details} imgClass='object-cover rounded-full bg-dropdown w-8 h-8 md:w-9 md:h-9'/>
                                 </Link>
                             </div>
@@ -69,7 +71,7 @@ const SuggestedVideoCard = ({ video }) => {
                                 <div className='flex md:space-y-1 space-y-0 flex-col items-start'>
                                     <div className="truncate">
                                         <Link
-                                            href={`/${video.creator_details.profile !== null ? username : video.creator_details.did}`}
+                                            href={`/${profile?.username !== null ? username : video.creator_details.did}`}
                                             className="flex hover:text-black dark:hover:text-white w-fit items-center space-x-1 text-[14px] text-light"
                                         >
                                             <span>{displayName}</span>

@@ -164,34 +164,42 @@ function Community({channel}) {
                                             </div>
                                         </div>
                                     }
-                                {posts && posts.length > 0 ? (
-                                    <div className="flex flex-col bg-secondary rounded-lg divide-y divide-gray-100">
-                                        {posts.map((post, index) => {
-                                            return <Post channel={channel} key={index} refetch={fetchCommunityPosts} post={post} />
-                                        })}
-                                    </div>   
-                                 ): fetched ? (
-                                    <div className="flex flex-col items-center justify-center">
-                                        <p className="text-black text-center">No posts yet</p>
-                                    </div>
-                                ) : <div className="flex flex-col items-center justify-center">
-                                        <Loader2 />
-                                    </div>
-                                }
-                            </>
-                        ) : (
-                            <div className="flex flex-col p-8 space-y-4  bg-secondary rounded-lg">
-                                <p>We are excited to announce that you can now create a community for your channel under the OrbisTube Group! This community will be publicly available for all to join, and we believe it will be a great way for you to connect with your audience and foster a sense of belonging among your viewers.</p>
-                                <p>To get started, simply go to the OrbisTube Group page and click on the &quot;Create Community&quot; button. From there, you can customize your community by giving it a name, description, and setting the rules for participation. You can also invite your viewers to join the community by sharing a link to it on your channel or social media.</p>
-                                <div>
-                                    <Button
-                                        loading={loading}
-                                        onClick={() => createCommunity()}
-                                    >
-                                        Create Community
-                                    </Button>
+                                    {posts && posts.length > 0 ? (
+                                        <div className="flex flex-col bg-secondary rounded-lg divide-y divide-gray-100">
+                                            {posts.map((post, index) => {
+                                                return <Post channel={channel} key={index} refetch={fetchCommunityPosts} post={post} />
+                                            })}
+                                        </div>   
+                                    ): fetched ? (
+                                        <div className="flex flex-col items-center justify-center">
+                                            <p className="text-black text-center">No posts yet</p>
+                                        </div>
+                                    ) : <div className="flex flex-col items-center justify-center">
+                                            <Loader2 />
+                                        </div>
+                                    }
+                                </>
+                            ) : (
+                                <div className="flex flex-col p-8 space-y-4  bg-secondary rounded-lg">
+                                    {isLoggedIn && user.did === channel.did ?
+                                        <>
+                                            <p>We are excited to announce that you can now create a community for your channel under the OrbisTube Group! This community will be publicly available for all to join, and we believe it will be a great way for you to connect with your audience and foster a sense of belonging among your viewers.</p>
+                                            <p>To get started, simply go to the OrbisTube Group page and click on the &quot;Create Community&quot; button. From there, you can customize your community by giving it a name, description, and setting the rules for participation. You can also invite your viewers to join the community by sharing a link to it on your channel or social media.</p>
+                                            <div>
+                                                <Button
+                                                    loading={loading}
+                                                    onClick={() => createCommunity()}
+                                                >
+                                                    Create Community
+                                                </Button>
+                                            </div>
+                                        </>
+                                        :
+                                        <div className="flex flex-col items-center justify-center">
+                                            <p className="text-black text-center">No posts found</p>
+                                        </div>
+                                    }
                                 </div>
-                            </div>
                         )}
                     </div>
                 </div>

@@ -21,6 +21,7 @@ const VideoCard = ({ video }) => {
   const { address } = useDidToAddress(video.creator_details?.did)
   const username = getUsername(video.creator_details.profile, address, video.did)
   const displayName = getDisplay(video.creator_details.profile, address, video.did)
+  const profile = video.creator_details.profile !== null ? video.creator_details.profile : null
   return (
     <>
       {video.content.data ?
@@ -45,7 +46,7 @@ const VideoCard = ({ video }) => {
           </Link>
           <div className="py-2">
             <div className="flex items-start space-x-2.5">
-              <Link href={`/${video.creator_details.profile !== null ? username : video.creator_details.did}`} className="flex-none mt-0.5">
+              <Link href={`/${profile?.username !== null ? username : video.creator_details.did}`} className="flex-none mt-0.5">
                 <ProfilePicture details={video?.creator_details} imgClass='object-cover rounded-full bg-dropdown w-8 h-8 md:w-9 md:h-9'/>
               </Link>
               <div className="grid flex-1">
@@ -58,7 +59,7 @@ const VideoCard = ({ video }) => {
                       {video.content.title}
                     </Link>
                     <Link
-                      href={`/${video.creator_details.profile !== null ? username : video.creator_details.did}`}
+                      href={`/${profile?.username !== null ? username : video.creator_details.did}`}
                       className="flex hover:text-black dark:hover:text-white w-fit items-center space-x-1 text-[14px] text-light"
                     >
                       <span>{displayName}</span>

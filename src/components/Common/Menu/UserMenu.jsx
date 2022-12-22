@@ -18,7 +18,8 @@ function UserMenu() {
     const { orbis, setLoggedIn, isLoggedIn, user, setUser } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const { address } = useDidToAddress(user?.did)
-    const username = getUsername(user?.profile, address, user?.did)
+    const profile = user?.details?.profile !== null ? user?.details?.profile : null
+    const username = getUsername(profile, address, user?.did)
     const logout = async () => {
         setLoading(true)
         let res = await orbis.logout();
@@ -37,7 +38,7 @@ function UserMenu() {
                             variant='none'
                             className="!p-0 ml-1.5 flex-none"
                         >
-                            <ProfilePicture details={user} imgClass='object-cover rounded-full bg-dropdown w-8 h-8 md:w-9 md:h-9'/>
+                            <ProfilePicture details={user?.details} imgClass='object-cover rounded-full bg-dropdown w-8 h-8 md:w-9 md:h-9'/>
                         </Button>
                     }
                 >
@@ -46,7 +47,7 @@ function UserMenu() {
                             <div className="pt-2 text-sm">
                                 <Menu.Item
                                     as={NextLink}
-                                    href={`/${user.profile !== null ? username : user.did}`}
+                                    href={`/${profile?.username !== null ? username : user.did}`}
                                     className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                                 >
                                     <FaRegUserCircle size="20" />
@@ -56,7 +57,7 @@ function UserMenu() {
                                 </Menu.Item>
                                 
                                 <Link
-                                    href={`/${username}/${SETTINGS}`}
+                                    href={`/${profile?.username !== null ? username : user.did}/${SETTINGS}`}
                                     className="inline-flex w-full items-center px-3 py-2 space-x-3 hover-primary"
                                 >
                                     <HiOutlineCog size="20" />

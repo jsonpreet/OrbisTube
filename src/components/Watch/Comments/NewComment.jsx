@@ -60,7 +60,7 @@ const NewComment = ({ reply, video, refetch, isReply = false }) => {
     return (
         <div className="mt-1 mb-5 flex space-x-3">
             <div className="flex-none">
-                <ProfilePicture details={user} imgClass={`object-cover rounded-full bg-dropdown w-8 h-8 ${isReply ? `md:w-8 md:h-8` : `md:w-10 md:h-10`}`} />
+                <ProfilePicture details={user?.details} imgClass={`object-cover rounded-full bg-dropdown w-8 h-8 ${isReply ? `md:w-8 md:h-8` : `md:w-10 md:h-10`}`} />
             </div>
             <div className="flex flex-col flex-1 space-y-2 md:space-y-3">
                 <div>

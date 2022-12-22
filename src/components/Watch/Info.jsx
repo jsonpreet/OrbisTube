@@ -17,8 +17,9 @@ function Info({ video, channel, isLoggedIn, user, isConnected }) {
     const followRef = useRef(null);
     const [follow, setFollow] = useState(false)
     const { address } = useDidToAddress(channel?.did)
-    const username = getUsername(channel?.profile, address, channel?.did)
-    const displayName = getDisplay(channel?.profile, address, channel?.did)
+    const profile = channel?.profile !== null ? channel?.profile : null
+    const username = getUsername(profile, address, channel?.did)
+    const displayName = getDisplay(profile, address, channel?.did)
 
     useEffect(() => {
         if (isLoggedIn && user) {
@@ -63,12 +64,12 @@ function Info({ video, channel, isLoggedIn, user, isConnected }) {
         <>
             <div className='flex items-center md:justify-start overflow-hidden flex-1 justify-between space-x-3'>
                 <div className='flex space-x-2'>
-                    <Link href={`/${video.creator_details.profile !== null ? username : video.creator_details.did}`} className="flex-none">
+                    <Link href={`/${profile?.username !== null ? username : video.creator_details.did}`} className="flex-none">
                         <ProfilePicture details={channel} imgClass='object-cover rounded-full bg-dropdown w-8 h-8 md:w-10 md:h-10'/>
                     </Link>
                     <div className='flex flex-col'>
                         <Link
-                            href={`/${video.creator_details.profile !== null ? username : video.creator_details.did}`}
+                            href={`/${profile?.username !== null ? username : video.creator_details.did}`}
                             className="flex items-center w-fit space-x-1.5 font-medium"
                         >
                             <span>{displayName}</span>  

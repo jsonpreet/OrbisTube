@@ -29,7 +29,7 @@ const Providers = ({ children, pageProps }) => {
 
         /** If SDK returns user details we save it in state */
         if(res && res.status == 200) {
-            setUser(res.details);
+            setUser(res);
             setLoggedIn(true);
             setisConnected(true);
         }

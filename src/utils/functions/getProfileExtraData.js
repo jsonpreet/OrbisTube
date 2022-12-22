@@ -1,3 +1,3 @@
 export const getProfileExtraData = (profile) => {
-    return profile.data;
+    return profile ? profile.data : null;
 }

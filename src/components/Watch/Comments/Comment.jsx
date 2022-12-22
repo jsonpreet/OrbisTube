@@ -20,15 +20,16 @@ const Comment = ({ video, comment, refetch }) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showSubComment, setShowSubComment] = useState(false)
     const { address } = useDidToAddress(userProfile?.did)
-    const username = getUsername(userProfile?.profile, address, userProfile?.did)
-    const displayName = getDisplay(userProfile?.profile, address, userProfile?.did)
+    const profile = comment.creator_details.profile !== null ? comment.creator_details.profile : null
+    const username = getUsername(profile, address, userProfile?.did)
+    const displayName = getDisplay(profile, address, userProfile?.did)
     return (
         <>
             <DeleteModal title='Delete Comment' message='Comment Deleted' refetch={refetch} isComment={true} video={comment} show={showDeleteModal} setShow={setShowDeleteModal} />
             <div className="flex items-start justify-between group">
                 <div className="flex flex-1 items-start justify-between">
                     <Link
-                    href={`/${comment.creator_details.profile !== null ? username : comment.creator_details.did}`}
+                    href={`/${profile?.username !== null ? username : comment.creator_details.did}`}
                     className="flex-none mr-3 mt-0.5"
                     >
                         <ProfilePicture details={userProfile} imgClass='object-cover rounded-full bg-dropdown w-8 h-8'/>
@@ -36,7 +37,7 @@ const Comment = ({ video, comment, refetch }) => {
                     <div className="flex flex-col items-start flex-1 mr-2">
                         <span className="flex items-center mb-1 space-x-1">
                             <Link
-                            href={`/${comment.creator_details.profile !== null ? username : comment.creator_details.did}`}
+                            href={`/${profile?.username !== null ? username : comment.creator_details.did}`}
                             className="flex items-center space-x-1.5 text-sm font-medium"
                             >
                                 <span>{displayName}</span>
