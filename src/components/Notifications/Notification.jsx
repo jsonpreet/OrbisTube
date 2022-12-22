@@ -13,7 +13,6 @@ function Notification({notification}) {
     const profile = user.profile !== null ? user.profile : null;
     const profileData = profile && profile.data !== null ? profile.data : null;
     const { address } = useDidToAddress(user?.did)
-    console.log(user?.did, profileData)
     const avatar1 = profileData ? profileData.Avatar !== null ? profileData.Avatar : profile.pfp : null;
     const avatar = avatar1 ? avatar1 : makeBlockie(address);
     const username = getUsername(user.profile, address, user.did)

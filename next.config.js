@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: process.env.NODE_ENV === 'production',
+  experimental: {
+    scrollRestoration: true,
+    newNextLinkBehavior: true
+  },
   images: {
     minimumCacheTTL: 360,
     deviceSizes: [96, 128, 256, 384, 512, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],

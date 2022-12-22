@@ -102,7 +102,7 @@ const VideoOptions = ({ video, isSuggested = false, showOnHover = true, setShowE
               <button
                 type="button"
                 onClick={() => setShowDeleteModal(true)}
-                className="inline-flex items-center px-3 py-2 space-x-3 text-red-500 opacity-100 hover:bg-red-100 dark:hover:bg-red-900"
+                className="inline-flex items-center px-3 py-2 space-x-3 hover:text-white text-red-500 hover:bg-red-500 dark:hover:bg-red-500"
               >
                 <IoTrashOutline size={18} className="ml-0.5" />
                 <span className="whitespace-nowrap">Delete</span>

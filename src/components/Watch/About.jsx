@@ -4,7 +4,7 @@ import ReactTimeAgo from 'react-time-ago'
 import useCleanPostBody from '@utils/functions/getCleanPostBody'
 import Tags from './Tags'
 
-const About = ({views, video }) => {
+const About = ({ video }) => {
     const body = useCleanPostBody(video);
     const [characterLimit, setCharacterLimit] = useState(200)
 

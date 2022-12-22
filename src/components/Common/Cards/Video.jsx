@@ -26,7 +26,7 @@ const VideoCard = ({ video }) => {
     <>
       {video.content.data ?
         <div className="relative group">
-          <ShareModal video={video} show={showShareModal} setShow={setShowShareModal} />
+          <ShareModal video={video} show={showShareModal} setShowShare={setShowShareModal} />
           <DeleteModal video={video} show={showDeleteModal} setShow={setShowDeleteModal} />
           <EditModal video={video} show={showEditModal} setShow={setShowEditModal} />
           <Link href={`/watch/${video.stream_id}`}>

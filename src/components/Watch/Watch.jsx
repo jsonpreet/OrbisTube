@@ -13,15 +13,15 @@ import Comments from "./Comments/Comments"
 import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import SuggestedVideos from "./Suggestions"
 
-function Watch({ post, loading, isError }) {
+function Watch({ post : video, loading, isError }) {
+    console.log(video)
     const router = useRouter()
     const supabase = useSupabaseClient()
     const { orbis, isLoggedIn, user } = useContext(GlobalContext)
     const addToRecentlyWatched = usePersistStore((state) => state.addToRecentlyWatched)
     const setVideoWatchTime = useAppStore((state) => state.setVideoWatchTime)
-    const [video, setVideo] = useState(post)
     
-    const isVideoOwner = isLoggedIn ? user.did === post.creator_details?.did : false
+    const isVideoOwner = isLoggedIn ? user.did === video.creator_details?.did : false
     
     useEffect(() => {
         if (isLoggedIn && video) {
@@ -82,7 +82,7 @@ function Watch({ post, loading, isError }) {
                         video.content.data.Comments ? <Comments video={video} isVideoOwner={isVideoOwner} /> : null}
                 </div>
                 <div className="w-full md:min-w-[300px] md:max-w-[400px]">
-                    <SuggestedVideos video={video} channel={post.creator_details} currentVideoId={video?.stream_id} />
+                    <SuggestedVideos video={video} channel={video.creator_details} currentVideoId={video?.stream_id} />
                 </div>
             </div>
         </>

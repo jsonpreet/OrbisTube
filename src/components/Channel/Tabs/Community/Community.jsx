@@ -137,7 +137,7 @@ function Community({channel}) {
                                     {isLoggedIn && user.did === channel.did &&
                                         <div className="flex w-full mb-10 items-start justify-start space-x-4">
                                             <div className="flex space-x-2 items-center">
-                                                <ProfilePicture details={user} imgClass="w-10 h-10 rounded-full" />
+                                                <ProfilePicture details={user?.details} imgClass="w-10 h-10 rounded-full" />
                                             </div>
                                             <div className='flex-1 space-y-3'>
                                                 <InputMentions

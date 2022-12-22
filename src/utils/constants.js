@@ -10,7 +10,7 @@ export const ALLOWED_VIDEO_TYPES = [
 export const APP = {
   Name: 'OrbisTube',
   URL: 'https://orbistube.xyz',
-  Description: 'OrbisTube is a decentralized video-sharing social media platform built with Orbis.',
+  Description: 'OrbisTube is a decentralized video-sharing social media platform built with Orbis & LivePeer.',
   Twitter: 'OrbisTube',
   Meta: {
     image: `/meta.png`,
@@ -20,7 +20,7 @@ export const APP = {
 
 export const DEFAULT_SEO = {
   title: "OrbisTube",
-  description: "OrbisTube is a decentralized video-sharing social media platform built with Orbis.",
+  description: "OrbisTube is a decentralized video-sharing social media platform built with Orbis & LivePeer.",
   canonical: "https://orbistube.xyz",
   openGraph: {
     type: 'website',
@@ -28,7 +28,7 @@ export const DEFAULT_SEO = {
     url: 'https://orbistube.xyz',
     siteName: 'OrbisTube',
     title: "OrbisTube",
-    description: "OrbisTube is a decentralized video-sharing social media platform built with Orbis.",
+    description: "OrbisTube is a decentralized video-sharing social media platform built with Orbis & LivePeer.",
     images: [
       {
         url: '/meta.png',
