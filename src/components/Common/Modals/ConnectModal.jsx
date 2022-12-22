@@ -16,7 +16,7 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
         infuraId: "27e484dcd9e3efcfd25a83a78777cdf1",
     });
 
-    async function walletConntec() {
+    const walletConnect = async() => {
         /** Enable session (triggers QR Code modal) */
         await wallet_connect_provider.enable();
 
@@ -24,11 +24,32 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
             provider: wallet_connect_provider,
             lit: true
         });
+
+        /** Parse result and update status */
+        switch (res.status) {
+            case 200:
+                setStatus(2);
+                /** Save user details returned by the connect function in state */
+                console.log("Connected to Ceramic: ", res);
+			    toast.success("Connected to Ceramic.");
+                const profile = await getUserDetails(res.did);
+                setUser(profile.result);
+                setLoggedIn(true);
+                setShowModal(false);
+                break;
+            default:
+                console.log("Couldn't connect to Ceramic: ", res.error.message);
+			    toast.error("Error connecting to Ceramic.");
+                setStatus(3);
+                /** Wait for 2 seconds before resetting the button */
+                await sleep(2000);
+                setStatus(0);
+        }
     }
       
 
     /** Call the Orbis SDK to connect to Ceramic */
-    async function connect() {
+    const connect = async() => {
         /** Show loading state */
         setStatusM(1);
 
@@ -56,7 +77,7 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
         }
     }
 
-    async function connect2() {
+    const connect2 = async() => {
         let res = await orbis.connect_v2({
             provider: window.phantom?.solana,
             chain: "solana",
@@ -86,7 +107,7 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
     }
 
      /** Load user details from indexer */
-    async function getUserDetails(did) {
+    const getUserDetails = async(did) => {
         let { data, error, status } = await orbis.getProfile(did);
 
         /** Returns error if any */
@@ -140,7 +161,7 @@ const ConnectModal = ({ rootRef, show, setShowModal }) => {
                 <Button
                     loading={status === 1}
                     variant='cbtn'
-                    onClick={() => walletConntec()}
+                    onClick={() => walletConnect()}
                     className={clsx('text-white px-4 py-2 rounded-lg', {
                         'bg-green-500 hover:bg-green-600': status === 2,
                         'bg-[#7967ff] hover:bg-[#6553e9]': status === 0 || status === 1,
