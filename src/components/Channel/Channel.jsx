@@ -53,7 +53,6 @@ const Channel = ({ isError, channel : profile, loading, isDid }) => {
         2: "Community",
         1: "About",
     }
-        console.log(channel)
 
     const changeTab = (index) => {
         setSelectedTab(index);

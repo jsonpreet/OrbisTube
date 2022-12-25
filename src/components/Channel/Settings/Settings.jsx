@@ -60,13 +60,13 @@ function Settings() {
 
     useEffect(() => {
         if (isLoggedIn) {
-            const cover = getCoverPicture(user.profile);
-            const avatar = getProfilePicture(user.profile, address);
+            const cover = getCoverPicture(user?.details?.profile);
+            const avatar = getProfilePicture(user?.details?.profile, address);
             setCover(cover);
             setAvatar(avatar)
-            const extraData = getProfileExtraData(user.profile);
-            setDisplayName(extraData?.DisplayName || user?.profile?.username)
-            setDescription(extraData?.Description || user?.profile?.description)
+            const extraData = getProfileExtraData(user?.details?.profile);
+            setDisplayName(extraData?.DisplayName || user?.details?.profile?.username)
+            setDescription(extraData?.Description || user?.details?.profile?.description)
             setLocation(extraData?.Location || '')
             setLanguages(extraData?.Languages || LANGUAGES[0])
             setTwitterLink(extraData?.TwitterURL || '')
@@ -82,11 +82,11 @@ function Settings() {
     const handleCover = async (e) => {
         setUploadingCover(true);
         try {
-            const extraData = getProfileExtraData(user.profile);
+            const extraData = getProfileExtraData(user?.details?.profile);
             const file = e.target.files[0]
             const imageURI = await new StorageClient().storeFiles(file);
             const request = {
-                ...user.profile,
+                ...user?.details?.profile,
                 data: {
                     Avatar: extraData?.Avatar !== undefined ? extraData?.Avatar : null,
                     DisplayName: displayName ? displayName : null,
@@ -127,11 +127,11 @@ function Settings() {
         setUploadingAvatar(true);
         try {
             
-            const extraData = getProfileExtraData(user.profile);
+            const extraData = getProfileExtraData(user?.details?.profile);
             const file = e.target.files[0]
             const imageURI = await new StorageClient().storeFiles(file);
             const request = {
-                ...user.profile,
+                ...user?.details?.profile,
                 data: {
                     Cover: extraData?.Cover !== undefined ? extraData?.Cover : null,
                     DisplayName: displayName ? displayName : null,
@@ -178,11 +178,11 @@ function Settings() {
     
     const updateChannel = async () => {
         setLoading(true);
-        const extraData = getProfileExtraData(user.profile);
+        const extraData = getProfileExtraData(user?.details?.profile);
         const payload = {
-            description: user.profile ? user.profile.description : null,
-            pfp: user.profile ? user.profile.pfp : null,
-            username: user.profile ? user.profile.username : null,
+            description: user?.details?.profile ? user?.details?.profile.description : null,
+            pfp: user?.details?.profile ? user?.details?.profile.pfp : null,
+            username: user?.details?.profile ? user?.details?.profile.username : null,
             data: {
                 Avatar: extraData?.Avatar !== undefined ? extraData?.Avatar : null,
                 Cover: extraData?.Cover !== undefined ? extraData?.Cover : null,

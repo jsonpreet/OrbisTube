@@ -19,7 +19,7 @@ const MobileMenu = () => {
         className={clsx(
           'grid py-2 bg-dropdown space-between',
           {
-            'grid-cols-4': isLoggedIn,
+            'grid-cols-3': isLoggedIn,
             'grid-cols-2' : !isLoggedIn,
           }
         )}
