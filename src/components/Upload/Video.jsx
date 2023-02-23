@@ -7,8 +7,8 @@ import ProgressBar from '../UI/ProgressBar'
 import imageCdn from '@utils/functions/imageCdn'
 import { getIsNSFW } from '@utils/functions/getIsNSFW'
 import * as tf from '@tensorflow/tfjs'
-import clsx from 'clsx'
 import * as nsfwjs from 'nsfwjs'
+import clsx from 'clsx'
 
 function UploadVideo() {
     const uploadedVideo = useAppStore((state) => state.uploadedVideo)
